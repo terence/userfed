@@ -1,0 +1,8 @@
+{
+    "name": "tool",
+    "require": {
+        "php": ">=5.3.3",
+        "beelab/bowerphp": "1.0.*@dev",
+	 "oyejorge/less.php": "~1.5"
+    }
+}

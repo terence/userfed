@@ -1,0 +1,53 @@
+#!/bin/sh
+# copy to .git/hooks directory, this file will run phpunit and phpmd before commit
+#
+DIR_PATH="$(pwd)" # current path
+
+MODULE_PATH="$DIR_PATH/userfed/code/module"
+CHECK_PATH="$MODULE_PATH"
+
+# Check PHPMD
+function runPHPMD()
+{
+	phpmd $CHECK_PATH text unusedcode
+	EXIST_CODE=$?
+	if [[ ${EXIST_CODE} -ne 0 ]]; then
+		echo ""
+		echo "[ERRROR] code = " ${EXIT_CODE}
+		echo "PHPMD detected  syntax problems."
+		echo "Commit aborted."
+		exit 1
+	else
+		echo ""
+		echo "PHPMD completed successfully"
+	fi
+}
+
+# check PHPUnit test
+function runPHPUnit()
+{
+	if [ -d "$CHECK_PATH/test" ]; then
+		cd "$CHECK_PATH/test"
+		phpunit
+	else
+		echo ""
+		echo "[ERROR]:"
+		echo "Module not has PHPUnit directory."
+		exit 1
+	fi
+	EXIST_CODE=$?
+	if [[ ${EXIST_CODE} -ne 0 ]]; then
+		echo ""
+		echo "[ERRROR] code = " ${EXIT_CODE}
+		echo "PHPUnit detected  syntax problems."
+		echo "Commit aborted."
+		exit 1
+	else
+		echo ""
+		echo "PHPUnit completed successfully"
+	fi
+}
+
+runPHPUnit
+runPHPMD
+

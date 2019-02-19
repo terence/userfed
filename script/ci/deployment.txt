@@ -1,0 +1,10 @@
+#install git to get component through composer
+download and install at http://git-scm.com/download/win
+#install composer
+download and install http://getcomposer.org/Composer-Setup.exe
+
+# Set Redirect URIs in setting Client ID for web application of google App.
+http://userfed.hometradies.com/oauth/invite-register/google
+http://userfed.hometradies.com/oauth/login-callback/google
+http://userfed.hometradies.com/oauth/register-callback/google
+http://userfed.hometradies.com/oauth/add-login-callback/google

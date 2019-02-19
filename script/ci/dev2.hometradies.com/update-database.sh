@@ -1,0 +1,5 @@
+mysql -hhero.hometradies.com -uht_dev2 -p'-8Xnf!b2db' -e "drop database ht_dev2"
+mysql -hhero.hometradies.com -uht_dev2 -p'-8Xnf!b2db' -e "create database ht_dev2 CHARACTER SET utf8 COLLATE utf8_unicode_ci;"
+mysql -hhero.hometradies.com -uht_dev2 -p'-8Xnf!b2db' ht_dev2 < "/home/ht_dev2/zf_projects/user-federation/userfed/document/database/database.sql"
+mysql -hhero.hometradies.com -uht_dev2 -p'-8Xnf!b2db' ht_dev2 < "/home/ht_dev2/zf_projects/user-federation/userfed/document/database/database-init.sql"
+mysql -hhero.hometradies.com -uht_dev2 -p'-8Xnf!b2db' ht_dev2 < "/home/ht_dev2/zf_projects/user-federation/userfed/document/deploy/dev2.hometradies.com/database-init-test.sql"
