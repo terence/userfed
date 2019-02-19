@@ -1,0 +1,95 @@
+<br>
+<div ng-controller="GeneralInfoController">
+    <div ng-hide="status.loaded">Loading...</div>
+    <div class="row" ng-show="status.loaded">
+        <div class="col-md-6 right-border">
+            <div class="form-group">
+                <strong>{{user.email}}&nbsp;</strong>
+                <span class="label-success label label-status" ng-show="user.is_enabled && !user.is_deleted && !status.loading">Enabled</span>
+                <span class="label-default label label-status" ng-show="!user.is_enabled && !user.is_deleted && !status.loading">Disabled</span>
+                <span class="label-default label label-status" ng-show="user.is_deleted && !status.loading">Deleted</span>
+                <span class="label-default label label-status text-muted" ng-show="status.loading">...</span>
+            </div>
+            <form novalidate method="post" name="generalForm">
+                <div class="form-group" ng-class="{ 'has-error': generalForm.firstname.$invalid && generalForm.firstname.$dirty }">
+                    <p>First name:</p>
+                    <input
+                        name="firstname"
+                        placeholder="First name"
+                        class="form-control"
+                        required="required"
+                        ng-value="{{user.firstname}}"
+                        ng-model="user.firstname"
+                        ng-disabled="status.loading"
+                        ng-model-options="{updateOn: 'blur'}"
+                    />
+                    <div class="text-danger text-right" ng-show="generalForm.firstname.$dirty && generalForm.firstname.$error.required">First name is required</div>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error': generalForm.lastname.$invalid && generalForm.lastname.$dirty }">
+                    <p>Last name:</p>
+                    <input
+                        name="lastname"
+                        placeholder="Last name"
+                        class="form-control"
+                        required="required"
+                        ng-value="{{user.lastname}}"
+                        ng-model="user.lastname"
+                        ng-disabled="status.loading"
+                        ng-model-options="{updateOn: 'blur'}"
+                    />
+                    <div class="text-danger text-right" ng-show="generalForm.lastname.$dirty && generalForm.lastname.$error.required">Last name is required</div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <p class="checkbox">
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    ng-value="user.is_enabled_checkbox"
+                                    ng-model="user.is_enabled_checkbox"
+                                    ng-checked="user.is_enabled_checkbox"
+                                    ng-disabled="status.loading"
+                                />&nbsp;<span ng-class="{ 'text-muted' : status.loading }">Enabled</span>
+                            </label>
+                        </p>
+                    </div>
+                </div>
+                <div class="alert alert-danger" ng-show="!status.loading && status.error">{{message}}</div>
+                <button name="submit" type="submit" class="btn btn-primary" ng-disabled="status.loading || generalForm.$invalid" ng-click="submit()" style="width:80px;">
+                    <span class="hide" ng-class="{ 'show' : status.loading }">
+                        <i class="fa fa-spinner fa-spin"></i>
+                    </span>
+                    <span ng-show="!status.loading">Save</span>
+                </button>
+            </form>
+        </div>
+        <div class="col-md-6 user-action-group">
+            <p ng-show="showGeneratePassword">
+                <a href="" class='text-muted'>
+                    <i class="fa fa-circle"></i>&nbsp;Generate password
+                </a>
+            </p>
+            <p ng-show="showDelete">
+                <a href="" class='text-muted' ng-click="delete()">
+                    <i class="fa fa-times"></i>&nbsp;Delete
+                </a>
+            </p>
+            <p ng-show="showRestore">
+                <a href="" class='text-muted' ng-click="restore()">
+                    <i class="fa fa-rotate-left"></i>&nbsp;Restore
+                </a>
+            </p>
+            <p>
+                <button
+                    class='btn'
+                    ng-click="permanentDelete()"
+                    ng-class="{'btn-danger': hover}" 
+                    ng-mouseenter="hover = true"
+                    ng-mouseleave="hover = false"
+                >
+                    Delete forever
+                </button>
+            </p>
+        </div>
+    </div>
+</div>

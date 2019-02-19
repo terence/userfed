@@ -1,0 +1,65 @@
+<!-- fake breadcrumb -->
+<ol class="breadcrumb">
+    <li><a href="/">Payroll</a></li>
+    <li><a ui-sref="company-list">Companies</a></li>
+    <li><a ui-sref="company-console({companyId:companyId, companyName:companyName})">{{companyName}}</a></li>
+    <li class="active">Employees</li>
+</ol>
+<!-- end fake breadcrumb -->
+<a class='btn btn-primary metarial-float-btn sync-users-btn' ng-click="syncEmployees()" title="Import employees from UserFed">
+    <i class="fa fa-refresh"></i>
+</a>
+<div ng-if="employees.items == undefined">
+    Loading data...
+</div>
+<p ng-if="employees.items != undefined && !employees.items.length">
+    No employees imported yet. Click <a href="" ng-click="syncEmployees()"><strong>here</strong></a> to import employees from UserFed
+</p>
+<table class="employee-2-panels-view-container">
+    <tr>
+        <td resizable class="employees-list-container" ng-class="{'empty' : employees.items != undefined && !employees.items.length}">
+            <table class="table table-condensed table-hover" ng-if="employees.items != undefined && employees.items.length">
+                <th>
+                    ID
+                </th>
+                <th>
+                    Employee Name
+                </th>
+                <th>
+                    Actions
+                </th>
+                <tr ng-repeat="emp in employees.items">
+                    <td>{{emp.id}}</td>
+                    <td>
+                        <a ui-sref="employees.detail({employeeId: emp.id})">
+                            {{emp.lastname}}, {{emp.firstname}}
+                        </a>
+                    </td>
+                    <td>
+            <!--            <a ui-sref="employee-detail({companyName: companyName, companyId: companyId, employeeId: emp.id})">Detail</a>
+                        &nbsp;&nbsp;&nbsp;-->
+                        <a ui-sref="employee-setup({companyName: companyName, companyId: companyId, employeeId: emp.id})">Setup</a>
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td class="employee-detail-container">
+            <div ui-view="employee-detail"></div>
+        </td>
+    </tr>
+</table>
+<script>
+    (function() {
+        // make container full height
+        var container = $(".employee-2-panels-view-container");
+        $(window).resize(function() {
+            container.css("min-height", $(window).height() - container.offset().top);
+        }).trigger("resize");
+        // spin effect for import employees button
+        $(".sync-users-btn").hover(function() {
+            $(this).find(".fa").addClass("fa-spin");
+        }, function() {
+            $(this).find(".fa").removeClass("fa-spin");
+        });
+    })();
+</script>

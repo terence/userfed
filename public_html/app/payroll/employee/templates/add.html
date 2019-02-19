@@ -1,0 +1,39 @@
+<!-- fake breadcrumb -->
+<ol class="breadcrumb">
+    <li><a href="/payroll/company">Payroll</a></li>
+    <li><a ui-sref="company-list">Companies</a></li>
+    <li><a ui-sref="company-console({companyId:companyId, companyName:companyName})">{{companyName}}</a></li>
+    <li><a ui-sref="employees({companyId:companyId, companyName:companyName})">Employees</a></li>
+    <li class="active">Add Employee</li>
+</ol>
+<!-- end fake breadcrumb -->
+
+<form class="form-horizontal" role="form" name="form" novalidate ng-submit="submit()" ng-controller='EmployeeTabController'>
+    <div class='box-container'>
+        <ul class="nav nav-tabs nav-justified" data-tabs="tabs">
+            <li role="presentation" ng-repeat="tab in tabs" ng-class="{'active' : isActive(tab.id)}">
+                <a ng-href="#{{tab.name}}" data-toggle="tab" ng-click="selectTab(tab.id, $event)">
+                    {{tab.label}}
+                </a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane" ng-repeat="tab in tabs" id="{{tab.name}}" ng-class="{'active' : isActive(tab.id)}">
+                <div ng-include="tab.template" ng-if="tab.template"></div>
+            </div>
+        </div>
+    </div>
+    <div class='button-containers text-center'>
+        <button class='btn btn-sm btn-default' type="button" ng-click="cancel()">Cancel</button>
+        <button class='btn btn-sm btn-default' type="button" ng-click="previous()" ng-disabled="!previousable()">Previous</button>
+        <button class='btn btn-sm btn-default' type="button" ng-click="next()" ng-hide="!nextable()">Next</button>
+        <button class='btn btn-sm btn-primary' type="submit" ng-show="!nextable()" ng-disabled="saving">
+            <span ng-hide="saving">Submit</span>
+            <span ng-show="saving">
+                <i class="fa fa-spin fa-spinner"></i>
+            </span>
+        </button>
+    </div>
+</form>
+<br>
+<toaster-container toaster-options="{'close-button':true, 'position-class': 'toast-bottom-right'}"></toaster-container>

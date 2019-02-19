@@ -1,0 +1,57 @@
+<div class="modal-header">
+    <h4 class="modal-title">Import employees from UserFed</h4>
+</div>
+<div class="modal-body userfed-users-container">
+    <div id="loading" ng-show="loading || importing"></div>
+    <div ng-hide="loading || (userfedUsers && !userfedUsers.length)">
+        <h5 class="opacity-shadow instruction" ng-hide="importResult">
+            Select users to import:
+        </h5>
+        <div class="list-container" ng-hide="importResult">
+            <table class="table table-condensed">
+                <tr ng-repeat="user in userfedUsers">
+                    <td>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" ng-click="updateSelected ($event, user)" ng-disabled="importing" ng-checked="isSelected(user)" />
+                                <span ng-if="user.lastname">{{user.lastname}}, </span>{{user.firstname}}
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <table class="table table-condensed opacity-shadow statistic-container" ng-hide="importResult">
+            <tr>
+                <td>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-click="toggleSelectAll($event)" ng-disabled="importing" ng-checked="selected.length == userfedUsers.length" />
+                            Select / Deselect all
+                        </label>
+                        <p class="pull-right">
+                            <strong>{{userfedUsers.length}}</strong> <span>total employees</span>
+                        </p>
+                    </div>
+                    <p class="pull-right">
+                        <strong>{{selected.length}}</strong> <span>employees to be imported</span>
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <div class="text-success" ng-show="importResult">
+            {{importResult.imported_employees.length}} / {{importResult.imported_employees.length + importResult.not_imported_employees.length}} employees successfully imported!
+        </div>
+        <div class="text-danger" ng-show="importResult">
+            {{importResult.not_imported_employees.length}} / {{importResult.imported_employees.length + importResult.not_imported_employees.length}} employees failed to import.
+        </div>
+    </div>
+    <div ng-show="userfedUsers && !userfedUsers.length">
+        No new employees fetched
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-sm btn-default" type="button" ng-click="cancel()" ng-disabled="importing" ng-hide="importResult">Cancel</button>
+    <button class="btn btn-sm btn-primary" type="button" ng-click="import()" ng-disabled="!selected.length || importing" ng-hide="importResult">Import</button>
+    <button class="btn btn-sm btn-success" type="button" ng-click="done()" ng-show="importResult">Done</button>
+</div>

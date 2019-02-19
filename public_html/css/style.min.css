@@ -1,0 +1,794 @@
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active {
+  background-color: #38bac6;
+}
+html,
+body {
+  height: 100%;
+}
+.main {
+  min-height: 100%;
+  height: auto;
+  margin: 0 auto -60px;
+  padding: 0 0 60px;
+}
+.btn[disabled],
+fieldset[disabled] .btn {
+  color: #333333 !important;
+}
+body {
+  min-width: 1170px;
+}
+.container {
+  min-width: 1170px;
+  max-width: none !important;
+}
+.breadcrumb {
+  background-color: white;
+}
+.breadcrumb a {
+  color: #555555;
+  font-size: large;
+}
+.breadcrumb a:hover,
+.breadcrumb a:active,
+.breadcrumb a:focus {
+  color: #53c4ce;
+  text-decoration: none;
+}
+.breadcrumb li + li:before,
+.breadcrumb .active {
+  font-size: large;
+}
+.breadcrumb li + li:before {
+  content: "\003e";
+  font-family: monospace;
+  font-size: x-large;
+}
+/*
+	Customize UI for header and footer
+*/
+/* 
+    Created on : Jul 28, 2014, 2:03:32 PM
+    Author     : Trexanh Lab
+*/
+.footer {
+  height: 60px;
+  background-color: #eeeeee;
+  padding-top: 15px;
+}
+table tbody tr td {
+  vertical-align: middle !important;
+}
+ul.admin-bar-my-account img {
+  width: 18px;
+}
+.positioning-style {
+  max-width: 300px;
+  padding: 6px;
+  margin: 0 auto;
+}
+.layout-plain {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: #fffcf0;
+  overflow-y: auto;
+}
+.layout-plain .row {
+  width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  margin-top: 20px;
+  background: #ffffff;
+  border: 1px solid #333333;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #999999;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #999999;
+}
+.layout-plain header {
+  margin-top: 16px;
+}
+.layout-plain .footer {
+  background-color: transparent;
+}
+.form-signin,
+.form-register {
+  max-width: 300px;
+  padding: 6px;
+  margin: 0 auto;
+}
+.form-signin .btn-group,
+.form-register .btn-group {
+  width: 100%;
+}
+.separator {
+  background: url(/image/bg-sep.gif) repeat-x center;
+  margin: 16px 0;
+}
+.separator h3 {
+  display: inline-block;
+  background: #eeeeee;
+  margin: 0 auto;
+  padding: 10px;
+  border-radius: 100%;
+  font-family: "Open Sans", Helvetica, arial, sans-serif;
+  font-size: larger;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 16px;
+  color: #999999;
+}
+.form-signin .form-group .form-control-feedback {
+  top: 6px;
+  right: 0;
+}
+.form-signin .form-group .form-control {
+  position: relative;
+  font-size: larger;
+  height: auto;
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.form-signin .form-group.has-error input {
+  border-bottom: 1px solid #a94442;
+}
+.form-signin .form-signin-heading {
+  margin-top: 0px;
+}
+label.error {
+  color: #d9534f;
+  padding: 2px 8px;
+  margin-top: 2px;
+  font-weight: inherit;
+}
+.overlay-bg {
+  opacity: 0.1;
+  -webkit-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+.overlay-bg:hover {
+  opacity: 1;
+}
+/* 
+    Document   : backend-form.less
+    Created on : Feb 19, 2014, 12:01:16 PM
+    Author     : Trexanhlab
+    Description: 
+*/
+.create-form {
+  max-width: 300px;
+  padding: 6px;
+  margin: 0 auto;
+}
+.has-feedback .form-control-feedback {
+  right: -5px;
+  top: 30px;
+}
+.icon-enabled {
+  color: limegreen;
+}
+.icon-disabled {
+  color: gray;
+}
+.icon-deleted {
+  color: orange;
+}
+.btn-restore {
+  color: orange;
+}
+.icon-disabled,
+.icon-enabled,
+.icon-deleted {
+  font-size: 0.7em;
+}
+.icon-remove {
+  color: red;
+}
+.icon-add {
+  color: green;
+}
+.server-select {
+  width: 90% !important;
+}
+/** Edit permission page **/
+.permissions-select {
+  width: 100%;
+}
+.permissions-select .selectable-filter,
+.permissions-select .selection-filter {
+  margin-bottom: 6px;
+}
+.permissions-select .selectable-filter input,
+.permissions-select .selection-filter input {
+  width: 100%;
+}
+.permissions-select .ms-list {
+  height: 400px;
+}
+.permissions-select .ms-optgroup-label {
+  font-weight: bold;
+}
+.permissions-select .ms-selectable li.ms-elem-selectable,
+.permissions-select .ms-selection li.ms-elem-selection {
+  padding: 0px 20px;
+  font-size: 13px;
+  font-weight: bold;
+  border-bottom: 0;
+  text-transform: lowercase;
+}
+/** End edit permission page **/.right-border {
+  border-right: 1px solid #dddddd;
+  padding-right: 16px;
+}
+.label-status {
+  font-size: 12px;
+  margin-left: 0.75em;
+  vertical-align: super;
+}
+.fa-facebook-square {
+  color: #3b5998;
+}
+.fa-google-plus-square {
+  color: #dd4b39;
+}
+.table.borderless td,
+.table.borderless th {
+  border: none;
+}
+.admin-users-nav {
+  margin-bottom: 15px;
+}
+[ng\:cloak],
+[ng-cloak],
+[data-ng-cloak],
+[x-ng-cloak],
+.ng-cloak,
+.x-ng-cloak {
+  display: none !important;
+}
+#wrapper .navbar {
+  margin-bottom: 0px;
+}
+.left-sidebar {
+  padding-left: 0px;
+  width: 180px;
+  padding-right: 0;
+  background-color: #f5f5f5;
+  margin-top: 20px;
+  position: fixed;
+  z-index: 3;
+  top: 50px;
+}
+.left-sidebar .menu-name {
+  width: 100%;
+  display: block;
+  text-decoration: none;
+}
+.left-sidebar nav i {
+  margin-right: 10px;
+}
+#adminmenuback {
+  position: fixed;
+  top: 51px;
+  bottom: 0;
+  z-index: 2;
+  width: 180px;
+  background-color: #f5f5f5;
+}
+.content-wrapper {
+  margin-left: 180px;
+  padding-left: 20px;
+  padding-right: 20px;
+  position: relative;
+  z-index: 1;
+  padding-top: 65px;
+}
+.collapse-sidebar #adminmenuback,
+.collapse-sidebar .left-sidebar {
+  width: 55px;
+}
+.collapse-sidebar #nav-sidebar .nav-item-label {
+  display: none;
+}
+.collapse-sidebar #nav-sidebar ul li a {
+  height: 40px;
+}
+.collapse-sidebar #nav-sidebar ul li a span {
+  margin-right: 0;
+}
+.collapse-sidebar ul.sidebar-footer .nav-item-label {
+  display: none;
+}
+.collapse-sidebar .content-wrapper {
+  margin-left: 55px;
+}
+#nav-sidebar ul li.nav-heading {
+  /*border-bottom: 1px solid lighten(@gray-darker, 62.05%);*/
+
+}
+#nav-sidebar ul li.nav-heading a.nav-heading-item {
+  font-weight: bold;
+  color: #999999;
+  text-transform: uppercase;
+}
+#nav-sidebar ul li.nav-heading a.nav-heading:hover {
+  background-color: transparent;
+}
+#nav-sidebar ul li ul {
+  padding-left: 0px;
+}
+#nav-sidebar ul li ul li a:hover {
+  background-color: #e6e6e6;
+}
+#nav-sidebar ul li ul li a {
+  padding: 10px 15px;
+  position: relative;
+  display: block;
+  text-decoration: none;
+}
+#nav-sidebar ul li ul li a span {
+  margin-right: 10px;
+}
+#nav-sidebar ul li ul li.active {
+  background-color: #e6e6e6;
+}
+ul.sidebar-footer {
+  margin-top: 32.5px;
+  cursor: pointer;
+}
+.left-sidebar .company-logo-image-area {
+  position: relative;
+}
+.left-sidebar .company-logo-image-area .edit-btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.left-sidebar .company-logo-image-area .edit-btn a {
+  color: #999999;
+}
+.left-sidebar .company-logo-image-area .edit-btn a:hover {
+  color: #2f9ca6;
+}
+.left-sidebar .company-logo-image-area h5 {
+  color: #555555;
+}
+.left-sidebar ul.left-sidebar-menu-gray a {
+  color: #555555;
+}
+.left-sidebar ul.left-sidebar-menu-gray a:hover {
+  color: #53c4ce;
+}
+.left-sidebar ul.left-sidebar-menu-gray a.not-implemented {
+  cursor: text;
+}
+.left-sidebar ul.left-sidebar-menu-gray a.not-implemented:hover {
+  color: #555555;
+}
+.left-sidebar .nav-heading {
+  border-bottom: 1px solid #999;
+  padding-bottom: 10px;
+}
+.left-sidebar .nav-heading:first-child {
+  border-bottom: none;
+}
+.left-sidebar .nav-heading ul li a {
+  color: #555555;
+}
+.left-sidebar .nav-heading ul li a .nav-item-label:hover {
+  color: #53c4ce;
+}
+.left-sidebar .sidebar-footer a {
+  color: #555555;
+}
+.left-sidebar .sidebar-footer a .nav-item-label:hover {
+  color: #53c4ce;
+}
+/*
+	Apply style for all listing page
+*/
+/* 
+    Created on : Jun 13, 2014, 3:31:17 PM
+    Author     : Trexanhlab
+*/
+.listing-page .navbar-form {
+  margin-bottom: 20px;
+  padding-right: 0;
+  margin-top: 0px;
+}
+.listing-page .filter-box {
+  min-width: 100%;
+}
+/*
+	Apply for the edit forms
+*/
+/* 
+    Created on : Jun 13, 2014, 3:59:03 PM
+    Author     : Trexanhlab
+*/
+.edit-page {
+  margin-bottom: 20px;
+}
+.edit-page .user-action-group {
+  padding-top: 100px;
+}
+.header-controls {
+  position: fixed;
+  z-index: 1031;
+  top: 10px;
+  left: 200px;
+}
+.header-controls a {
+  color: white;
+  text-decoration: none;
+}
+.header-controls .company-picker-container {
+  min-width: 220px;
+}
+#payroll-app-container {
+  /* re-style tab */
+
+}
+#payroll-app-container .bpay-details,
+#payroll-app-container .eft-details {
+  border: 1px solid #999999;
+  padding-left: 10px;
+}
+#payroll-app-container .fa-question {
+  font-size: 18px;
+  cursor: pointer;
+  color: #dddddd;
+}
+#payroll-app-container table button.close {
+  float: none;
+}
+#payroll-app-container table.table-border-outline {
+  border: 1px solid #cccccc;
+}
+#payroll-app-container table.table-border-outline th {
+  font-size: 12px;
+}
+#payroll-app-container table.table-border-outline tr,
+#payroll-app-container table.table-border-outline td,
+#payroll-app-container table.table-border-outline th {
+  border: none;
+}
+#payroll-app-container table.table-border-outline th {
+  background: #eeeeee;
+}
+#payroll-app-container .inline-block-element {
+  display: inline-block;
+  width: auto;
+}
+#payroll-app-container .main-container {
+  z-index: 1029;
+}
+#payroll-app-container fieldset legend {
+  color: #2f9ca6;
+  font-size: 14px;
+  font-weight: bold;
+  border-bottom: none;
+}
+#payroll-app-container .form-horizontal .btn-primary {
+  min-width: 110px;
+}
+#payroll-app-container .form-horizontal .has-feedback .form-control-feedback {
+  top: -2px;
+  right: -13px;
+}
+#payroll-app-container .form-horizontal .has-feedback .form-control.input-sm {
+  padding-right: 5px;
+}
+#payroll-app-container .form-horizontal .control-label {
+  font-weight: normal;
+  font-size: 13px;
+}
+#payroll-app-container .form-horizontal .control-label.left-indent {
+  padding-left: 36.666666666666664px;
+}
+#payroll-app-container .form-horizontal .control-label.left-indent::before {
+  content: "\2022";
+  margin-right: 5px;
+}
+#payroll-app-container .form-horizontal .control-label-align-left .control-label {
+  text-align: left;
+}
+#payroll-app-container .form-horizontal .form-group {
+  margin-bottom: 10px;
+}
+#payroll-app-container .form-horizontal .form-group .text-danger {
+  font-size: 13px;
+  margin-top: 5px;
+}
+#payroll-app-container .form-horizontal .form-group.label-left-indent label {
+  padding-left: 55px;
+}
+#payroll-app-container .toggle-switch {
+  min-width: 80px;
+  border: 1px solid #999999;
+}
+#payroll-app-container .toggle-switch .switch-left {
+  background: #2f9ca6;
+}
+#payroll-app-container .toggle-switch span {
+  font-size: 12px;
+  padding: 2px;
+}
+#payroll-app-container .toggle-switch .toggle-switch-animate {
+  transition: left 0.2s;
+  -o-transition: left 0.2s;
+  -moz-transition: left 0.2s;
+  -webkit-transition: left 0.2s;
+}
+#payroll-app-container .select2-container {
+  min-width: 110px;
+}
+#payroll-app-container .select2-container.company-picker-container {
+  min-width: 220px;
+}
+#payroll-app-container .select2-container.bank-container {
+  min-width: 100%;
+}
+#payroll-app-container .select2-container.payrun-schedule-container {
+  min-width: 440px;
+}
+#payroll-app-container .select2-container .close {
+  top: 2.5px;
+  position: relative;
+}
+#payroll-app-container .select2-container .select2-choice > .select2-chosen,
+#payroll-app-container .select2-container .select2-results .select2-result-label {
+  font-size: 13px;
+  color: black;
+}
+#payroll-app-container .select2-container .select2-choice .select2-arrow b {
+  background-position: 0 -1px;
+}
+#payroll-app-container .box-container {
+  border: 1px solid #2f9ca6;
+  padding: 15px;
+}
+#payroll-app-container .button-containers {
+  margin-top: 10px;
+}
+#payroll-app-container .button-containers .btn {
+  min-width: 80px;
+}
+#payroll-app-container .nav-tabs.nav-justified {
+  border-bottom: none;
+}
+#payroll-app-container .nav-tabs.nav-justified > li.active > a,
+#payroll-app-container .nav-tabs.nav-justified > li.active > a:hover,
+#payroll-app-container .nav-tabs.nav-justified > li.active > a:focus {
+  border: none;
+  border-bottom: 2.5px solid #2f9ca6;
+  color: #2f9ca6;
+}
+#payroll-app-container .nav-tabs.nav-justified > li > a {
+  color: #999999;
+}
+#payroll-app-container .metarial-float-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  border-radius: 60px;
+  width: 60px;
+  height: 60px;
+  padding-top: 15px;
+  -webkit-box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.3), 0px 0px 1px rgba(0, 0, 0, 0.1), inset 0px 1px 0px rgba(255, 255, 255, 0.25), inset 0px -1px 0px rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.3), 0px 0px 1px rgba(0, 0, 0, 0.1), inset 0px 1px 0px rgba(255, 255, 255, 0.25), inset 0px -1px 0px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.3), 0px 0px 1px rgba(0, 0, 0, 0.1), inset 0px 1px 0px rgba(255, 255, 255, 0.25), inset 0px -1px 0px rgba(0, 0, 0, 0.15);
+  -webkit-transition-duration: 0.25s;
+  transition-duration: 0.25s;
+  -webkit-transition-property: background-color, -webkit-box-shadow;
+  transition-property: background-color, box-shadow;
+}
+#payroll-app-container .metarial-float-btn .fa {
+  font-size: 30px;
+}
+#payroll-app-container .metarial-float-btn:hover {
+  -webkit-box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2), 0px 10px 14px rgba(0, 0, 0, 0.1), inset 0px 1px 0px rgba(255, 255, 255, 0.25), inset 0px -1px 0px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2), 0px 10px 14px rgba(0, 0, 0, 0.1), inset 0px 1px 0px rgba(255, 255, 255, 0.25), inset 0px -1px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2), 0px 10px 14px rgba(0, 0, 0, 0.1), inset 0px 1px 0px rgba(255, 255, 255, 0.25), inset 0px -1px 0px rgba(0, 0, 0, 0.1);
+  border-color: transparent;
+}
+.payroll-header .navbar-header a.payroll-logo {
+  background-image: url('../../image/logo/payroll-logo.png');
+  width: 96px;
+  height: 40px;
+  margin-top: 5px;
+  display: block;
+  background-size: cover;
+  background-position: center;
+}
+.payroll-header ul.admin-bar-my-account a.user-avatar {
+  padding-top: 9px;
+  padding-bottom: 9px;
+}
+.payroll-header ul.admin-bar-my-account a.user-avatar img {
+  width: 32px;
+}
+.payroll-header #app-btn {
+  padding: 15px;
+  cursor: pointer;
+}
+.payroll-header #app-btn .application-icon {
+  background-image: url('../../image/app-circle-icon.png');
+  width: 20px;
+  height: 20px;
+  display: block;
+  background-size: cover;
+  background-position: center;
+}
+.payroll-header .app-box {
+  width: 300px;
+  padding: 15px;
+}
+.payroll-header .app-box .panel {
+  border: 0;
+  box-shadow: none;
+}
+.payroll-header .app-box .panel .app-image {
+  display: block;
+  width: 64px;
+  height: 64px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+.payroll-header .app-box .panel a.payroll-button {
+  background-image: url('../../image/square-logo/payroll-logo.png');
+}
+.payroll-header .app-box .panel a.eE-button {
+  background-image: url('../../image/square-logo/eE-logo.png');
+}
+.payroll-header .app-box .panel a.userfed-logo {
+  background-image: url('../../image/square-logo/userfed-logo-example.png');
+}
+.header-controls a.add-company-btn {
+  background-color: #C0C0C0;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+.header-controls a.add-company-btn:hover,
+.header-controls a.add-company-btn:active,
+.header-controls a.add-company-btn:focus {
+  color: white;
+  background-color: #999999;
+}
+.employee-2-panels-view-container {
+  width: 100%;
+}
+.employee-2-panels-view-container .employee-detail-container {
+  padding-left: 15px;
+  vertical-align: top !important;
+}
+.employee-2-panels-view-container .employees-list-container {
+  width: 330px;
+  border-right: 1px solid #dddddd;
+  vertical-align: top !important;
+  padding-right: 15px;
+}
+.employee-2-panels-view-container .employees-list-container.empty {
+  border-right: none !important;
+}
+.employee-2-panels-view-container .ui-resizable-e {
+  cursor: col-resize;
+  background-image: url("data:image/png;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAIBAQIBAQICAgICAgICAwUDAwMDAwYEBAMFBwYHBwcGBwcICQsJCAgKCAcHCg0KCgsMDAwMBwkODw0MDgsMDAz/2wBDAQICAgMDAwYDAwYMCAcIDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAz/wAARCAAMAAIDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD9BP8AhWnwN/6Ng+Pn/gq1D/5MorwP/h598cv+h4/8o2n/APxiigD/2Q==");
+  background-position: 5px 45%;
+  background-repeat: no-repeat;
+}
+.userfed-users-container {
+  min-height: 100px;
+}
+.userfed-users-container .opacity-shadow {
+  box-shadow: 0 2px 15px 15px white;
+  -webkit-transform: translateZ(0);
+}
+.userfed-users-container .instruction {
+  margin-bottom: 8px;
+}
+.userfed-users-container .statistic-container {
+  margin-bottom: 0;
+}
+.userfed-users-container .list-container {
+  max-height: 400px;
+  overflow: auto;
+}
+.userfed-users-container .list-container .checkbox {
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+[ng\:cloak],
+[ng-cloak],
+[data-ng-cloak],
+[x-ng-cloak],
+.ng-cloak,
+.x-ng-cloak {
+  display: none !important;
+}
+.dropbox {
+  background: #eeeeee;
+  border: 5px dashed #dddddd;
+  width: 100%;
+  text-align: center;
+  padding-top: 36.666666666666664px;
+  padding-bottom: 36.666666666666664px;
+  margin: 10px 0;
+}
+.dragover {
+  border: 5px dashed #2f9ca6;
+}
+.no-padding {
+  padding: 0!important;
+}
+.breadcrumb {
+  padding-left: 0;
+  padding-right: 0;
+}
+.payroll-calculator-icon,
+.payroll-company-icon,
+.payroll-download-icon,
+.payroll-invoice-icon,
+.payroll-leave-manage-icon,
+.payroll-report-icon,
+.payroll-timesheet-icon,
+.payroll-users {
+  display: inline-block;
+  background: url('../../image/icons-image.png') no-repeat;
+  overflow: hidden;
+  text-indent: -9999px;
+  text-align: left;
+}
+.payroll-calculator-icon {
+  background-position: -5px 0px;
+  width: 20px;
+  height: 20px;
+  vertical-align: bottom;
+}
+.payroll-company-icon {
+  background-position: -30px 0px;
+  width: 20px;
+  height: 20px;
+  vertical-align: bottom;
+}
+.payroll-download-icon {
+  background-position: -5px -25px;
+  width: 20px;
+  height: 20px;
+  vertical-align: bottom;
+}
+.payroll-invoice-icon {
+  background-position: -30px -25px;
+  width: 20px;
+  height: 20px;
+  vertical-align: bottom;
+}
+.payroll-leave-manage-icon {
+  background-position: -5px -50px;
+  width: 20px;
+  height: 20px;
+  vertical-align: bottom;
+}
+.payroll-report-icon {
+  background-position: -30px -50px;
+  width: 20px;
+  height: 20px;
+  vertical-align: bottom;
+}
+.payroll-timesheet-icon {
+  background-position: -5px -75px;
+  width: 20px;
+  height: 20px;
+  vertical-align: bottom;
+}
+.payroll-users {
+  background-position: -30px -75px;
+  width: 20px;
+  height: 20px;
+  vertical-align: bottom;
+}

@@ -1,0 +1,11 @@
+<!-- fake breadcrumb -->
+<ol class="breadcrumb">
+    <li><a href="/payroll/company">Payroll</a></li>
+    <li><a ui-sref="company-list">Companies</a></li>
+    <li class="active">Add company</li>
+</ol>
+<!-- end fake breadcrumb -->
+<fieldset>
+    <legend>Company Details</legend>
+</fieldset>
+<div ng-include="'/app/payroll/company/templates/form.html'" onload="formLoaded()"></div>

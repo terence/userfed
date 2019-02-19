@@ -1,0 +1,26 @@
+<div class="modal-header">
+    <h4 class="modal-title">New payrun</h4>
+</div>
+<div class="modal-body">
+    <div class="form-group">
+        <label class="control-label col-sm-12">Period ending:</label>
+        <div class="control-group col-sm-4">
+            <select ng-model="data.period_ending" ng-options="p.id as p.period_ending for p in periods.items" class="form-control input-sm">
+                <option value="">Pick a value</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <p class="text-muted col-sm-12">
+        <small>Timesheet for the selected period ending will be fetched automatically from easyEmployer</small>
+    </p>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-sm btn-default" type="button" ng-click="cancel()" ng-disabled="loading">Cancel</button>
+    <button class="btn btn-sm btn-primary" type="button" ng-click="create()" ng-disabled="!data.period_ending || loading" style="width:60px;">
+        <span ng-hide="loading">Submit</span>
+        <span ng-show="loading">
+            <i class="fa fa-spinner fa-spin"></i>
+        </span>
+    </button>
+</div>

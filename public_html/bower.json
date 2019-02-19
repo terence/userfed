@@ -1,0 +1,40 @@
+{
+  "name": "userfed",
+  "version": "0.0.1",
+  "authors": [
+    "service@trexanhlab.com"
+  ],
+  "license": "private",
+  "homepage": "trexanhlab.com",
+  "private": true,
+  "dependencies": {
+    "angular": "1.3.11",
+    "angular-route": "1.3.0",
+    "xtform": "*",
+    "ng-grid": "2.0.14",
+    "angular-bootstrap": "0.11.0",
+    "bootstrap": "3.1.1",
+    "jquery": "1.11.1",
+    "jquery-validation": "1.12.0",
+    "fontawesome": "4.1.0",
+    "select2": "3.4.8",
+    "select2-bootstrap-css": "1.3.0",
+    "datatables": "1.10.0",
+    "datatables-plugins": "*",
+    "input-with-clear-button": "*",
+    "multiselect": "0.9.12",
+    "quicksearch": "2.0.4",
+    "angular-toggle-switch": "~1.0.0",
+    "angular-ui-select": "0.9.6",
+    "angular-ui-router": "0.2.13",
+    "angular-resource": "1.3.11",
+    "AngularJS-Toaster": "0.4.10",
+    "ng-file-upload": "3.0.2",
+    "jquery-ui": "1.11.2",
+    "angular-sanitize": "~1.3.14",
+    "spin.js" : "2.0.2"
+  },
+  "resolutions": {
+    "angular": "1.3.11"
+  }
+}

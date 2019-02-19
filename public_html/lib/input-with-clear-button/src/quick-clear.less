@@ -1,0 +1,30 @@
+.input-control {
+	position:relative;
+	input.clearable {
+		padding-right:34px;
+	}
+	.btn-clear {
+		position: absolute;
+		top: 0;
+		padding: 10px;
+		right: 0;
+		color: gray;
+		display: block;
+		line-height: 1;
+		opacity: .2;
+		z-index: 99;
+		height: 100%;
+		width: 34px;
+		&:hover {
+			opacity:1;
+		}
+		&:focus {
+			outline:none !important;
+		}
+	}
+	&.input-hover, &.input-focus {
+		.btn-clear {
+			opacity:1;	
+		}
+	}
+}

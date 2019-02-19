@@ -1,0 +1,21 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="close()" ng-disabled="loading">x</button>
+    <h3 class="title">Delete permanently</h3>
+</div>
+<div class="modal-body">
+    <p ng-hide="permanentlyDeleted">
+        Are you sure you want to permanently delete this user?<br>
+        Please be noticed that you will not be able to undo this action.
+    </p>
+    <p ng-show="permanentlyDeleted">
+        User deleted permanently. You're being brought back to the list.
+    </p>
+</div>
+<div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true" ng-click="close()" ng-disabled="loading" ng-hide="permanentlyDeleted">Cancel</button>
+    <button class="btn btn-danger confirm-btn" ng-click="permanentDelete()" ng-disabled="loading" style="width:80px;">
+        <i class="fa fa-spinner fa-spin" ng-show="loading"></i>
+        <span ng-hide="loading || permanentlyDeleted">Delete</span>
+        <span ng-show="permanentlyDeleted">Deleted</span>
+    </button>
+</div>

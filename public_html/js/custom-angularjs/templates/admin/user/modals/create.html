@@ -1,0 +1,58 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="close()">x</button>
+    <h3 class="title">Create new user</h3>
+</div>
+<div class="modal-body">
+    <form novalidate method="post" name="create">
+        <div class="form-group" ng-class="{ 'has-error': create.firstname.$invalid && create.firstname.$dirty }">
+            <input
+                name="firstname"
+                placeholder="First name"
+                class="form-control"
+                required="required"
+                value=""
+                ng-model="data.firstname"
+                ng-disabled="status.loading"
+            />
+            <div class="text-danger text-right" ng-show="create.firstname.$dirty && create.firstname.$error.required">Please tell us your first name</div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': create.lastname.$invalid && create.lastname.$dirty }">
+            <input
+                name="lastname"
+                placeholder="Last name"
+                class="form-control"
+                required="required"
+                value=""
+                ng-model="data.lastname"
+                ng-disabled="status.loading"
+            />
+            <div class="text-danger text-right" ng-show="create.lastname.$dirty && create.lastname.$error.required">Please tell us your last name</div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': create.email.$invalid && create.email.$dirty }">
+            <input
+                name="email"
+                type="email"
+                placeholder="Email address"
+                class="form-control"
+                required="required"
+                value=""
+                ng-model="data.email"
+                ng-disabled="status.loading"
+            />
+            <p class="text-right text-muted">Password will be automatically generated and sent to user via email.</p>
+            <div class="text-danger text-right" ng-show="create.email.$dirty && create.email.$error.required">Please tell us your email address</div>
+            <div class="text-danger text-right" ng-show="create.email.$dirty && create.email.$error.email">Please provide a valid email</div>
+        </div>
+        <div class="alert alert-danger" ng-show="!status.loading && status.error">{{message}}</div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true" ng-click="close()" ng-disabled="status.loading">Cancel</button>
+    <button name="submit" type="submit" class="btn btn-primary" ng-disabled="status.loading || create.$invalid" ng-click="submit()">
+        <span class="hide" ng-class="{ 'show' : status.loading }">
+            <i class="fa fa-spinner fa-spin"></i>
+        </span>
+        <span ng-show="!status.loading && !status.success">Create</span>
+        <span class="hide" ng-class="{ 'show' : status.success }">Successful!</span>
+    </button>
+</div>

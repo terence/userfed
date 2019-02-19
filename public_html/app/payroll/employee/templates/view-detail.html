@@ -1,0 +1,162 @@
+<style>
+    label {
+        min-width: 180px;
+        display:inline-block;
+        color:gray;
+        font-weight:normal;
+    }
+    label.long {
+        min-width: 360px;
+    }
+</style>
+<!-- fake breadcrumb -->
+<ol class="breadcrumb" ng-if="showBreadcrumb">
+    <li><a href="/">Payroll</a></li>
+    <li><a ui-sref="company-list">Companies</a></li>
+    <li><a ui-sref="company-console({companyId:companyId, companyName:companyName})">{{companyName}}</a></li>
+    <li><a ui-sref="employees({companyId:companyId, companyName:companyName})">Employees</a></li>
+    <li class="active" ng-show="employee.lastname">{{employee.lastname}}, {{employee.firstname}}</li>
+</ol>
+<!-- end fake breadcrumb -->
+
+<div role="tabpanel">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" ng-class="{'active' : active =='general'}"><a href="" aria-controls="home" role="tab" data-toggle="tab" ng-click="setActiveTab('general', $event)">General</a></li>
+        <li role="presentation" ng-class="{'active' : active =='timesheets'}"><a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-click="setActiveTab('timesheets', $event)">Timesheets</a></li>
+        <!--<li role="presentation" ng-class="{'active' : active =='payslips'}"><a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-click="setActiveTab('payslips', $event)">Payslips</a></li>-->
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane" ng-class="{'active' : active =='general'}">
+            <br>
+            <div ng-hide="dataLoaded">
+                Loading data...
+            </div>
+            <div ng-show="dataLoaded" ng-cloak>
+                <fieldset>
+                    <legend>Personal Details</legend>
+                </fieldset>
+                <div>
+                    <label>Name:</label><a ui-sref="employee-detail({companyId:companyId, companyName:companyName, employeeId: employeeId})">{{employee.lastname}}, {{employee.firstname}}</a>
+                </div>
+                <div>
+                    <label>Email:</label>{{employee.email}}
+                </div>
+                <div>
+                    <label>Home phone:</label>{{employee.home_phone}}
+                </div>
+                <div>
+                    <label>Mobile phone:</label>{{employee.mobile_phone}}
+                </div>
+<!--                <br>
+                <fieldset>
+                    <legend>Bank Account</legend>
+                </fieldset>
+                <div>
+                    <label>Account Name:</label>{{employee.client.account.name}}
+                </div>
+                <div>
+                    <label>Financial Institution:</label>{{employee.client.account.bank}}
+                </div>
+                <div>
+                    <label>BSB:</label>{{employee.client.account.bsb}}
+                </div>
+                <div>
+                    <label>Account Number:</label>{{employee.client.account.number}}
+                </div>
+                <br>
+                <fieldset>
+                    <legend>
+                        Superannuation
+                    </legend>
+                </fieldset>
+                <div>
+                    <label class="long">Eligible for Superannuation Guarantee?:</label>{{employee.superOptions.sgcEligible ? "Yes" : "No"}}
+                </div>
+                <div>
+                    <label class="long">Salary Sacrifice:</label>{{employee.superOptions.sacrifice ? "Yes" : "No"}}
+                </div>
+                <div>
+                    <label class="long">Is superannuation included in the rate of pay?:</label>{{employee.superOptions.rateInclusive ? "Yes" : "No"}}
+                </div>
+                <div>
+                    <label class="long">Post-tax super payment per payslip?:</label>{{employee.superOptions.postTax | currency : "$"}}
+                </div>-->
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane" ng-class="{'active' : active =='timesheets'}">
+            <br>
+            <div ng-show="noTimesheets">
+                No timesheets logged
+            </div>
+            <div class="panel panel-default" ng-repeat="timesheet in timesheets" ng-cloak>
+                <div class="panel-heading text-center" style="padding:5px;">
+                    <h4 title="Period Ending {{timesheet.period_ending}}">
+                        <i class="fa fa-calendar"></i> {{timesheet.period_ending}}&nbsp;
+                        <small>
+                            <i class="fa fa-clock-o"></i> {{timesheet.total_hours}} hours&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;<i class="fa fa-dollar"></i> {{timesheet.total_paid}}
+                        </small>
+                    </h4>
+                </div>
+                <div class="panel-body" style="padding:10px;" ng-repeat="employee in timesheet.employees" ng-if="employee.total_paid > 0">
+                    <table class="table table-condensed">
+                        <th width="20%">Type</th>
+                        <th>Standard</th>
+                        <th>OTE</th>
+                        <th class="text-right">Amount</th>
+                        <th class="text-right">Hours</th>
+                        <th class="text-right">Sub-total</th>
+                        <tr ng-repeat="ts in employee.timesheets">
+                            <td>{{ts.rate_type.name}}</td>
+                            <td>{{ts.standard ? "Yes" : "No"}}</td>
+                            <td>{{ts.ote ? "Yes" : "No"}}</td>
+                            <td class="text-right">{{ts.amount | currency : "$"}}</td>
+                            <td class="text-right">{{ts.quantity}}</td>
+                            <td class="text-right">{{ts.total | currency : "$"}}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted"><strong>Total</strong></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td class="text-right">{{employee.total_hours}}</td>
+                            <td class="text-right">{{employee.total_paid | currency : "$"}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+<!--        <div role="tabpanel" class="tab-pane" ng-class="{'active' : active =='payslips'}">
+            <br>
+            <table class="table table-condensed">
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td colspan="3" class="text-center text-danger"><strong>Deductions</strong></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><strong>Process Date</strong></td>
+                    <td class="text-success"><strong>Gross</strong></td>
+                    <td class="text-danger"><strong>Pre-Tax</strong></td>
+                    <td class="text-danger"><strong>PAYG</strong></td>
+                    <td class="text-danger"><strong>Post-Tax</strong></td>
+                    <td class="text-primary"><strong>Super</strong></td>
+                    <td><strong>Net</strong></td>
+                </tr>
+                <tr ng-repeat="ps in payslips">
+                    <td>{{ps.procdate}}</td>
+                    <td>{{ps.gross || 0 | currency : "$"}}</td>
+                    <td>{{ps.pre_tax_pmts || 0 | currency : "$"}}</td>
+                    <td>{{ps.payg || 0 | currency : "$"}}</td>
+                    <td>{{ps.post_tax_pmts || 0 | currency : "$"}}</td>
+                    <td>{{ps.super || 0 | currency : "$"}}</td>
+                    <td>{{ps.net || 0 | currency : "$"}}</td>
+                </tr>
+            </table>
+        </div>-->
+    </div>
+</div>

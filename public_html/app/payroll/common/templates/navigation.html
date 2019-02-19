@@ -1,0 +1,61 @@
+<li class="nav-heading text-center company-logo-image-area" ng-if='companyId' ng-cloak>
+    <div class="edit-btn">
+        <a ui-sref="company-edit({companyId: companyId})" title="Edit company">
+            <i class="fa fa-pencil"></i>
+        </a>
+    </div>
+    <img class="img-circle" ng-src="../image/ubuntu-logo.png" title="company placeholder image" width="100px" height="100px"/>
+    <h5>
+        {{companyName}}
+    </h5>
+</li>
+<li class="nav-heading">
+    <a class="nav-heading-item" style="padding: 10px 15px;">
+        <!--<span class=""></span>-->
+        <span class="nav-item-label">Payroll</span>
+    </a>
+    <ul class="left-sidebar-menu-gray">
+        <li ng-class="{'active' : active == 'payruns'}" ng-if='companyId'>
+            <a ui-sref="payruns({companyName: companyName, companyId: companyId})">
+                <span class="payroll-calculator-icon"></span>
+                <span class="nav-item-label">Payrun</span>
+            </a>
+        </li>
+        <li ng-class="{'active' : active == 'employees'}" ng-if='companyId'>
+            <a ui-sref="employees({companyName: companyName, companyId: companyId})">
+                <span class="payroll-users"></span>
+                <span class="nav-item-label">Employees</span>
+            </a>
+        </li>
+        <li ng-class="{'active' : active == 'timesheet'}" ng-if='companyId'>
+            <a ui-sref="company-timesheet({companyName: companyName, companyId: companyId})">
+                <span class="payroll-users"></span>
+                <span class="nav-item-label">Timesheet</span>
+            </a>
+        </li>
+        <li ng-if='!companyId' ng-cloak>
+            <a style='color:gray;' ng-click="showWarning()">
+                <span class="payroll-calculator-icon"></span>
+                <span class="nav-item-label">Payrun</span>
+            </a>
+        </li>
+        <li ng-if='!companyId' ng-cloak>
+            <a style='color:gray;' ng-click="showWarning()">
+                <span class="payroll-users"></span>
+                <span class="nav-item-label">Employees</span>
+            </a>
+        </li>
+        <li ng-if='!companyId' ng-cloak>
+            <a style='color:gray;' ng-click="showWarning()">
+                <span class="payroll-timesheet-icon"></span>
+                <span class="nav-item-label">Timesheet</span>
+            </a>
+        </li>
+        <li ng-class="{'active':active == 'company'}">
+            <a href="/">
+                <span class="payroll-company-icon"></span>
+                <span class="nav-item-label">Company</span>
+            </a>
+        </li>
+    </ul>
+</li>

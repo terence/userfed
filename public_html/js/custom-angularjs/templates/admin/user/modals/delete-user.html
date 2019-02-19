@@ -1,0 +1,14 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="close()" ng-disabled="loading">x</button>
+    <h3 class="title">Delete user</h3>
+</div>
+<div class="modal-body">
+    <p class="message">Are you sure want to delete this user?</p>
+</div>
+<div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true" ng-click="close()" ng-disabled="loading">Cancel</button>
+    <button class="btn btn-danger confirm-btn" ng-click="delete()" ng-disabled="loading" style="width:80px;">
+        <i class="fa fa-spinner fa-spin" ng-show="loading"></i>
+        <span ng-hide="loading">Delete</span>
+    </button>
+</div>

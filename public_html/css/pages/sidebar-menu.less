@@ -1,0 +1,195 @@
+@sidebar-bg: lighten(@gray-darker, 82.5%);
+
+@sidebar-width-large: 180px;
+@sidebar-width-small: 55px;
+
+@sidebar-margin-top: 51px;
+
+@nav-heading-height: 40px;
+
+@content-wrapper-margin-left-large: @sidebar-width-large;
+@content-wrapper-margin-left-small: @sidebar-width-small;
+@content-wrapper-margin-top: 65px;
+@content-wrapper-padding-horizontal: 20px;
+
+// Remove spacing below top menu
+#wrapper{
+    .navbar{
+        margin-bottom: 0px;
+    }
+}
+// Style for left sidebar
+.left-sidebar{
+    padding-left: 0px;
+    width: @sidebar-width-large;
+    padding-right: 0;
+    background-color: @sidebar-bg;
+    margin-top: 2*@padding-large-vertical;
+    position: fixed;
+    z-index: 3;
+    top: @navbar-height;
+    .menu-name{
+        width: 100%;
+        display: block;
+        text-decoration: none;
+    }
+    nav{
+        i{
+            margin-right: @padding-small-horizontal;
+        }
+    }
+}
+// Make background for sidebar menu
+#adminmenuback{
+    position: fixed;
+    top: @sidebar-margin-top;
+    bottom: 0;
+    z-index: 2;
+    width: @sidebar-width-large;
+    background-color: @sidebar-bg;
+}
+
+.content-wrapper{
+    margin-left: @content-wrapper-margin-left-large;
+    padding-left: @content-wrapper-padding-horizontal;
+    padding-right: @content-wrapper-padding-horizontal;
+    position: relative;
+    z-index: 1;
+    padding-top: @content-wrapper-margin-top;
+}
+// Style for collapse sidebar menu
+.collapse-sidebar{
+    #adminmenuback, .left-sidebar{
+        width: @sidebar-width-small;
+    }
+    #nav-sidebar{
+        // Hide menu item label
+        .nav-item-label{
+            display: none;
+        }
+        ul{
+            li{
+                a{
+                    height: @nav-heading-height;
+                    span{
+                        margin-right: 0;
+                    }
+                }
+            }
+        }
+    }
+    ul.sidebar-footer{
+        // Hide menu item label
+        .nav-item-label{
+            display: none;
+        }
+    }
+    .content-wrapper{
+        margin-left: @content-wrapper-margin-left-small;
+    }
+}
+
+#nav-sidebar{
+    ul{
+        li.nav-heading{
+            a.nav-heading-item{
+                font-weight: bold;
+                color: @gray-light;
+                text-transform: uppercase;
+            }
+            a.nav-heading:hover{
+                background-color: transparent;
+            }
+            /*border-bottom: 1px solid lighten(@gray-darker, 62.05%);*/
+        }
+        li{
+            ul{
+                padding-left: 0px;
+                li{
+                    a:hover{
+                        background-color: lighten(@gray-darker, 76.5%);
+                    }
+                    a{
+                        padding: @nav-link-padding;
+                        position: relative;
+                        display: block;
+                        text-decoration: none;
+                        span{
+                            margin-right: @padding-small-horizontal;
+                        }
+                    }
+                }
+                li.active{
+                    background-color: lighten(@gray-darker, 76.5%);
+                }
+            }
+        }
+    }
+}
+// Style for collapse button
+ul.sidebar-footer{
+    margin-top: @content-wrapper-margin-top/2;
+    cursor: pointer;
+}
+
+// Left sidebar menu
+.left-sidebar{
+    .company-logo-image-area{
+        position: relative;
+        .edit-btn{
+            position: absolute;
+            right: 0;
+            top: 0;
+            a{
+                color: @gray-light;
+                &:hover{
+                    color: @link-color;
+                }
+            }
+        }
+        h5{
+            color: @gray;
+        }
+    }
+    ul.left-sidebar-menu-gray{
+        a{
+            color: @gray;
+            &:hover{
+                color: @link-hover-color;
+            }
+        }
+        a.not-implemented{
+            cursor: text;
+            &:hover{
+                color: @gray;
+            }
+        }
+    }
+    .nav-heading{
+        border-bottom: 1px solid #999;
+        padding-bottom: 10px;
+        &:first-child{
+          border-bottom: none;  
+        }
+        ul{
+            li{
+                a{
+                    color: @gray;
+                    .nav-item-label{
+                        &:hover{
+                            color: @link-hover-color;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .sidebar-footer{
+        a{
+            color: @gray;
+            .nav-item-label:hover{
+                color: @link-hover-color;
+            }
+        }
+    }
+}

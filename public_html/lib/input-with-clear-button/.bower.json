@@ -1,0 +1,23 @@
+{
+  "name": "input-with-clear-button",
+  "homepage": "https://github.com/trexanhlab/input-with-clear-button",
+  "authors": [
+    "Dang Khuat <dangkd@trexanhlab.com>"
+  ],
+  "description": "Input with clear button",
+  "keywords": [
+    "clear",
+    "button",
+    "input"
+  ],
+  "license": "BSD",
+  "_release": "bc9caec3a0",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "bc9caec3a0bb33665fb9ac2119ca1fdc5118e024"
+  },
+  "_source": "git://github.com/trexanhlab/input-with-clear-button.git",
+  "_target": "*",
+  "_originalSource": "input-with-clear-button"
+}

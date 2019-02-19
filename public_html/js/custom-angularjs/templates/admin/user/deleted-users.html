@@ -1,0 +1,26 @@
+<div ng-include src="'/js/custom-angularjs/templates/admin/user/partials/grid-nav.html'"></div>
+<!-- controls -->
+<div class="row form-inline">
+	<div class="form-group col-md-9">
+		<!-- action -->
+		<select class="form-control input-sm" ng-model="action">
+			<option value="restore" selected>Restore</option>
+		</select>
+		<button class="btn btn-default btn-sm" ng-click="showConfirm()">Apply</button>
+		<!-- end action -->
+	</div>
+	<!-- search block -->
+	<div class="form-group col-md-3">
+        <div class="input-group input-group-sm">
+            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+            <input type="text" class="form-control pull-right input-sm" ng-model="filterOptions.filterText" placeholder="Enter email or name">
+        </div>
+	</div>
+	<!-- end search block -->
+</div>
+<!-- end controls -->
+<!-- grid -->
+<div class="gridStyle" ng-grid="gridOptions">
+	<div class="loading-overlay" ng-class="{ 'hide' : !gridLoading }"><span class="loading-message">{{ gridLoadingMessage }}</span></div>
+</div>
+<!-- end grid -->

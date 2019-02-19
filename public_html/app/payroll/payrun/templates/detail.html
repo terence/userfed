@@ -1,0 +1,69 @@
+<!-- fake breadcrumb -->
+<ol class="breadcrumb">
+    <li><a href="/payroll/company">Payroll</a></li>
+    <li><a ui-sref="company-list">Companies</a></li>
+    <li><a ui-sref="company-console({companyId:companyId, companyName:companyName})">{{companyName}}</a></li>
+    <li>
+        <a ui-sref="payruns({companyName: companyName, companyId: companyId})">
+            Payruns
+        </a>
+    </li>
+    <li class="active" ng-cloak>{{payrunId}}</li>
+</ol>
+<!-- end fake breadcrumb -->
+<fieldset>
+    <legend>Payrun Summary</legend>
+</fieldset>
+<div>Payrun Status: <strong ng-class="{'text-success' : payrun.status=='complete'}">{{payrun.status}}</strong></div>
+<div>Process Date: <strong>{{payrun.proc_date}}</strong></div>
+<div>Number of Payslips: <strong>{{payrun.payslip_count}}</strong></div>
+<div>Payrun Fee: <strong>{{payrun.total_fee | currency: "$"}}</strong></div>
+<div>Transfer Amount: <strong>{{payrun.transfer_amount | currency: "$"}}</strong></div>
+<br>
+<table class="table table-condensed">
+    <th>Base</th>
+    <th>Super</th>
+    <th>ACIRT</th>
+    <th>LSL</th>
+    <th>Total Cost</th>
+    <tr class="success">
+        <td>{{payrun.total_gross | currency : "$"}}</td>
+        <td>{{payrun.total_super | currency : "$"}}</td>
+        <td>{{payrun.total_acirt | currency : "$"}}</td>
+        <td>{{payrun.total_lsl | currency : "$"}}</td>
+        <td>{{payrun.payrun_cost | currency : "$"}}</td>
+    </tr>
+</table>
+<br>
+<fieldset>
+    <legend>Payslips</legend>
+</fieldset>
+<div class="payslips-container">
+    <table class="table table-condensed">
+        <tr>
+            <td></td>
+            <td></td>
+            <td colspan="3" class="text-center text-danger"><strong>Deductions</strong></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><strong>Employee</strong></td>
+            <td class="text-success"><strong>Gross</strong></td>
+            <td class="text-danger"><strong>Pre-Tax</strong></td>
+            <td class="text-danger"><strong>PAYG</strong></td>
+            <td class="text-danger"><strong>Post-Tax</strong></td>
+            <td class="text-primary"><strong>Super</strong></td>
+            <td><strong>Net</strong></td>
+        </tr>
+        <tr ng-repeat="ps in payrun.payslips">
+            <td>{{ps.name}}</td>
+            <td>{{ps.gross || 0 | currency : "$"}}</td>
+            <td>{{ps.pre_tax_pmts || 0 | currency : "$"}}</td>
+            <td>{{ps.payg || 0 | currency : "$"}}</td>
+            <td>{{ps.post_tax_super || 0 | currency : "$"}}</td>
+            <td>{{ps.super || 0 | currency : "$"}}</td>
+            <td>{{ps.net || 0 | currency : "$"}}</td>
+        </tr>
+    </table>
+</div>

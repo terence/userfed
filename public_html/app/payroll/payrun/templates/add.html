@@ -1,0 +1,126 @@
+<!-- fake breadcrumb -->
+<ol class="breadcrumb">
+    <li><a href="/payroll/company">Payroll</a></li>
+    <li><a ui-sref="company-list">Companies</a></li>
+    <li><a ui-sref="company-console({companyId:companyId, companyName:companyName})">{{companyName}}</a></li>
+    <li><a ui-sref="payruns({companyId:companyId, companyName:companyName})">Payruns</a></li>
+    <li class="active">Add New Pay Run</li>
+</ol>
+<!-- end fake breadcrumb -->
+<fieldset>
+    <legend>Process Date</legend>
+</fieldset>
+<div class="input-group col-sm-4">
+    <input
+        type="text"
+        placeholder="Select process date"
+        class="form-control input-sm"
+        datepicker-popup="{{'MMMM dd yyyy'}}"
+        ng-model="data.proc"
+        is-open="isProccessDateDatePickerOpened"
+        date-disabled="disabledWeekend(date, mode)"
+        ng-required="true"
+    />
+    <span class="input-group-btn">
+        <button type="button" class="btn btn-default input-sm" ng-click="openProcessDateDatePicker($event)"><i class="fa fa-calendar"></i></button>
+    </span>
+</div><br>
+<fieldset>
+    <legend>Payslips <span>({{payslips.length}})</span></legend>
+</fieldset>
+<p>
+    <button ng-click="addPayslip()" class="btn btn-xs btn-primary" type="button">
+        <i class="fa fa-plus-circle"></i> Add New Payslip
+    </button>
+</p>
+<table class="table table-condensed">
+    <tr ng-show="payslips.length">
+        <td></td>
+        <td></td>
+        <td colspan="3" class="text-center text-danger"><strong>Deductions</strong></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr ng-show="payslips.length">
+        <td><strong>Employee</strong></td>
+        <td class="text-success"><strong>Gross</strong></td>
+        <td class="text-danger"><strong>Pre-Tax</strong></td>
+        <td class="text-danger"><strong>PAYG</strong></td>
+        <td class="text-danger"><strong>Post-Tax</strong></td>
+        <td class="text-primary"><strong>Super</strong></td>
+        <td>Net</td>
+    </tr>
+    <tr ng-repeat="ps in payslips" ng-show="payslips.length">
+        <td>{{ps.lastname + ', ' + ps.firstname}}</td>
+        <td>{{ps.gross | currency:"$"}}</td>
+        <td>{{ps.pre_tax | currency:"$"}}</td>
+        <td>{{ps.payg | currency:"$"}}</td>
+        <td>{{ps.post_tax | currency:"$"}}</td>
+        <td>{{ps.super | currency:"$"}}</td>
+        <td>
+            {{(ps.gross - ps.pre_tax - ps.payg - ps.post_tax) | currency:"$"}}
+            <button type="button" class="close pull-right" aria-label="Close" title="Remove payslip" ng-click="removePayslip($index)"><span aria-hidden="true">&times;</span></button>
+        </td>
+    </tr>
+    <tr ng-show="isAddPayslipFormShown">
+        <td colspan="7">
+            <div class="well">
+                <div class="form-group">
+                    <div class="col-sm-2">Employee:</div>
+                    <ui-select name="addingPayslip" ng-model="data.addingPayslip" style="min-width:300px;">
+                        <ui-select-match placeholder="Select employee">
+                            {{data.addingPayslip.lastname + ', ' + data.addingPayslip.firstname}}
+                        </ui-select-match>
+                        <ui-select-choices repeat="item in employees.items | filter: $select.search">
+                            <div>{{item.lastname + ', ' + item.firstname}}</div>
+                        </ui-select-choices>
+                    </ui-select>
+                    <div class="help-block col-sm-12" ng-if="isAddingEmployeeHasPayslipAddedToPayRun()">There's already a payslip for this user. If you continue, the payslip will be updated</div>
+                </div>
+                <div class="form-group" ng-show="data.addingPayslip">
+                    <div class="col-sm-2">Period Ending:</div>
+                    <div class="input-group col-sm-4">
+                        <input type="text" class="form-control input-sm" datepicker-popup="{{'MMMM dd yyyy'}}" ng-model="data.addingPayslip.periodEnding" is-open="isPeriodEndingDatePickerOpened" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default input-sm" ng-click="openPeriodEndingDatePicker($event)"><i class="fa fa-calendar"></i></button>
+                        </span>
+                    </div>
+                </div>
+                <div ng-show="data.addingPayslip && data.addingPayslip.periodEnding">
+                    <table class="table table-condensed">
+                        <caption><strong>Payslip Details</strong></caption>
+                        <th width="20%">Rate</th>
+                        <th width="20%">Type</th>
+                        <th width="20%">Standard</th>
+                        <th width="20%">OTE</th>
+                        <th width="20%">Quantity</th>
+                        <tr ng-repeat="rate in data.addingPayslip.rates">
+                            <td>{{rate.amount | currency : "$"}} / {{rate.period}}</td>
+                            <td>{{rate.type}}</td>
+                            <td>{{rate.standard ? "Yes" : "No"}}</td>
+                            <td>{{rate.ote ? "Yes" : "No"}}</td>
+                            <td><input type="text" class="form-control input-sm" ng-model="rate.quantity" value="{{rate.quantity}}" /></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="text-center">
+                <button type="button" class="btn btn-default btn-xs" ng-click="cancelAddPayslip()">
+                    Cancel
+                </button>
+                <button type="button" class="btn btn-default btn-xs" ng-click="addToPayRun()">
+                    Add to Pay Run
+                </button>
+                <button type="button" class="btn btn-default btn-xs" ng-click="addToPayRunAndAddAnother()">
+                    Add to Pay Run and Add Another
+                </button>
+            </div>
+        </td>
+    </tr>
+</table>
+<hr>
+<div class="text-center" ng-if="payslips.length">
+    <button type="button" class="btn btn-primary btn-xs" ng-disabled="!data.proc">
+        Submit Payrun For Processing
+    </button>
+</div>

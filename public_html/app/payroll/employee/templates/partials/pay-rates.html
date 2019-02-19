@@ -1,0 +1,128 @@
+<br>
+<fieldset>
+    <legend>Current Pay Rates & Allowances</legend>
+</fieldset>
+<div>
+    <table class="table table-border-outline">
+        <caption><strong>Pay Rates</strong></caption>
+        <thead ng-if="data.pay_rates.length">
+            <th class="text-center">Rate Type</th>
+            <th class="text-center">Amount</th>
+            <th class="text-center">Default Per Pay</th>
+            <th class="text-center">Comment</th>
+            <th></th>
+        </thead>
+        <tbody>
+            <tr ng-if="!data.pay_rates.length">
+                <td colspan="5" class="text-muted">No pay rates added yet</td>
+            </tr>
+            <tr ng-repeat="payrate in data.pay_rates">
+                <td class="col-sm-3">
+                    <ui-select name="rate_type" ng-model="data.pay_rates[$index].rate_type" style="width:300px;">
+                        <ui-select-match placeholder="Select Pay Type">
+                            {{data.pay_rates[$index].rate_type.text}}
+                        </ui-select-match>
+                        <ui-select-choices repeat="item in payRateOptions | filter: $select.search">
+                            <div>{{item.text}}</div>
+                        </ui-select-choices>
+                    </ui-select>
+                </td>
+                <td class="col-sm-5">
+                    $ <input name="amount" ng-model="data.pay_rates[$index].amount" type="number" class="input-sm form-control inline-block-element" placeholder="Amount"> / 
+                    <select name="rate_period" ng-model="data.pay_rates[$index].rate_period" class="input-sm form-control inline-block-element">
+                        <option value="1">hour</option>
+                        <option value="2">day</option>
+                        <option value="3">week</option>
+                        <option value="5">month</option>
+                        <option value="9">unit</option>
+                    </select>
+                </td>
+                <td class="col-sm-2">
+                    <input type="number" name="default_per_pay" ng-model="data.pay_rates[$index].default_per_pay" value="" class="form-control input-sm">
+                </td>
+                <td class="col-sm-2">
+                    <input type="text" name="comment" ng-model="data.pay_rates[$index].comment" placeholder="Comment here" class="form-control input-sm">
+                </td>
+                <td class="col-sm-1 text-center">
+                    <button type="button" class="close" aria-label="Close" ng-click="removePayrate($index)">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <a href="" ng-click="addPayRate()">
+        <i class="fa fa-plus-circle"></i> Add Pay Rate
+    </a>
+    <i class="fa fa-question text-muted" title="Get help" ng-click="isAddPayRateHelpShown = !isAddPayRateHelpShown"></i>
+</div>
+<div class="alert" ng-show="isAddPayRateHelpShown">
+    <span>To add a new pay rate:</span>
+    <ul>
+        <li>Select the rate type, this will usually be <code>Primary</code></li>
+        <li>Enter the rate of pay, and select the rate period. Eg. <code>$65.00 / hour</code></li>
+        <li>Add a comment if necessary. This will be used to identify the pay rate. Useful if the employee has more than one primary rate.</li>
+    </ul>
+</div>
+<div>
+    <table class="table table-border-outline">
+        <caption><strong>Allowances</strong></caption>
+        <thead ng-if="data.allowances.length">
+            <th class="text-center">Allowance Type</th>
+            <th class="text-center">Amount</th>
+            <th class="text-center">Default Per Pay</th>
+            <th class="text-center">Comment</th>
+            <th></th>
+        </thead>
+        <tbody>
+            <tr ng-if="!data.allowances.length">
+                <td colspan="5" class="text-muted">No allowances added yet</td>
+            </tr>
+            <tr ng-repeat="allowance in data.allowances">
+                <td class="col-sm-3">
+                    <ui-select name="rate_type" ng-model="data.allowances[$index].rate_type" style="width:300px;">
+                        <ui-select-match placeholder="Select Allowance Type">
+                            {{data.allowances[$index].rate_type.text}}
+                        </ui-select-match>
+                        <ui-select-choices repeat="item in allowanceOptions | filter: $select.search">
+                            <div>{{item.text}}</div>
+                        </ui-select-choices>
+                    </ui-select>
+                </td>
+                <td class="col-sm-5">
+                        $ <input name="amount" ng-model="data.allowances[$index].amount" type="number" class="input-sm form-control inline-block-element" placeholder="Amount"> / 
+                        <select name="rate_period" ng-model="data.allowances[$index].rate_period" class="input-sm form-control inline-block-element">
+                            <option value="1">hour</option>
+                            <option value="2">day</option>
+                            <option value="3">week</option>
+                            <option value="5">month</option>
+                            <option value="9">unit</option>
+                        </select>
+                </td>
+                <td class="col-sm-2">
+                    <input type="number" name="default_per_pay" ng-model="data.allowances[$index].default_per_pay" value="" class="form-control input-sm">
+                </td>
+                <td class="col-sm-2">
+                    <input type="text" name="comment" ng-model="data.allowances[$index].comment" placeholder="Comment here" class="form-control input-sm">
+                </td>
+                <td class="col-sm-1 text-center">
+                    <button type="button" class="close" aria-label="Close" ng-click="removeAllowance($index)">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <a href="" ng-click="addAllowance()">
+        <i class="fa fa-plus-circle"></i> Add Allowance
+    </a>
+    <i class="fa fa-question text-muted" title="Get help" ng-click="isAddAllowanceHelpShown = !isAddAllowanceHelpShown"></i>
+</div>
+<div class="alert" ng-show="isAddAllowanceHelpShown">
+    <span>To add a new allowance:</span>
+    <ul>
+        <li>Select the allowance type, if you require an allowance type which doesn't currently exist, please contact Callaghans.</li>
+        <li>Enter the allowance rate, and select the rate period. Eg. <code>$200.00 / week</code></li>
+        <li>Add a comment if necessary. This will be used to identify the allowance rate. Useful if the employee has more than one allowance of a given type.</li>
+    </ul>
+</div>

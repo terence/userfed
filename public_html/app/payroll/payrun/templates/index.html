@@ -1,0 +1,64 @@
+<!-- fake breadcrumb -->
+<ol class="breadcrumb">
+    <li><a href="/payroll/company">Payroll</a></li>
+    <li><a ui-sref="company-list">Companies</a></li>
+    <li><a ui-sref="company-console({companyId:companyId, companyName:companyName})">{{companyName}}</a></li>
+    <li class="active">Payruns</li>
+</ol>
+<!-- end fake breadcrumb -->
+<fieldset>
+    <legend>Add New Payrun</legend>
+</fieldset>
+<div class="row">
+    <div class="col-sm-12">
+        <a class="btn btn-primary btn-xs" ng-click="openNewPayrunModal()">
+            Submit new payrun
+        </a>
+        <div ng-bind-html="message" class="text-danger"></div>
+<!--        <div class="col-sm-6 text-center">
+            <a class="btn btn-primary btn-xs" ui-sref="payruns-add({companyId:companyId, companyName:companyName})">
+                Add manually
+            </a>
+        </div>
+        <div class="col-sm-6 text-center">
+            <a class="btn btn-primary btn-xs" ng-click="openUploadModal()">
+                Add using T&A file
+            </a>
+        </div>-->
+    </div>
+</div>
+<hr>
+<fieldset>
+    <legend>Previous payruns</legend>
+</fieldset>
+<div ng-show="loading">
+    Loading data...
+</div>
+<table class="table table-condensed" ng-hide="loading">
+    <th>Process Date</th>
+    <th>Payslip</th>
+    <th>Base</th>
+    <th>Leave Loading</th>
+    <th>Super</th>
+    <th>ACIRT</th>
+    <th>LSL</th>
+    <th class="text-danger">PAYG</th>    
+    <th>Payrun Total</th>
+    <!--<th></th>-->
+    <tr ng-repeat="pr in payruns" ng-if="pr.total_payslip > 0">
+        <td>{{pr.processing_schedule}}</td>
+        <td>{{pr.total_payslip}}</td>
+        <td>{{pr.total_income | currency : "$"}}</td>
+        <td>{{pr.pr_leave_loading || 0 | currency : "$"}}</td>
+        <td>{{pr.pr_super || 0 | currency : "$"}}</td>
+        <td>{{pr.pr_acirt || 0 | currency : "$"}}</td>
+        <td>{{pr.pr_lsl || 0 | currency : "$"}}</td>
+        <td class="text-danger">{{pr.total_payg || 0 | currency : "$"}}</td>
+        <td>{{pr.total_income | currency: "$"}}</td>
+<!--        <td>
+            <a ui-sref="payruns-detail({companyId:companyId, companyName:companyName, payrunId:pr.id})">
+                View
+            </a>
+        </td>-->
+    </tr>
+</table>

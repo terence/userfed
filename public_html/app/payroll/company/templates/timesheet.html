@@ -1,0 +1,57 @@
+<!-- fake breadcrumb -->
+<ol class="breadcrumb">
+    <li><a href="/">Payroll</a></li>
+    <li><a ui-sref="company-list">Companies</a></li>
+    <li><a ui-sref="company-console({companyId:companyId,companyName:companyName})">{{companyName}}</a></li>
+    <li class="active">Timesheet</li>
+</ol>
+<!-- end fake breadcrumb -->
+<!--<button class="btn btn-xs btn-primary" ng-click="openUploadModal()">
+    <i class="fa fa-upload"></i> Upload timesheet
+</button>
+<br><br>-->
+<div id="loading" ng-show="!dataLoaded"></div>
+<div class="panel panel-default" ng-repeat="timesheet in timesheets" ng-cloak>
+    <div class="panel-heading text-center" style="padding:5px;">
+        <h4 title="Period Ending {{timesheet.period_ending}}">
+            <i class="fa fa-calendar"></i> {{timesheet.period_ending}}&nbsp;
+            <small>
+                <i class="fa fa-clock-o"></i> {{timesheet.total_hours}} hours&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;<i class="fa fa-users"></i> {{timesheet.total_employees}} employees&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;<i class="fa fa-dollar"></i> {{timesheet.total_paid}}
+            </small>
+        </h4>
+    </div>
+    <div class="panel-body" style="padding:10px;">
+        <div ng-repeat="employee in timesheet.employees">
+            <h5>
+                <strong>{{employee.name}}</strong>&nbsp;
+                <small class="text-success">
+                    <i class="fa fa-clock-o"></i> {{employee.total_hours}} hours&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;<i class="fa fa-dollar"></i> {{employee.total_paid}}<br>
+                </small>
+            </h5>
+            <table class="table table-condensed" ng-if="employee.total_paid > 0">
+                <th width="20%">Type</th>
+                <th>Standard</th>
+                <th>OTE</th>
+                <th class="text-right">Amount</th>
+                <th class="text-right">Hours</th>
+                <th class="text-right">Sub-total</th>
+                <tr ng-repeat="rate in employee.timesheets" ng-if="rate.quantity > 0">
+                    <td>{{rate.rate_type.name}}</td>
+                    <td>{{rate.standard ? "Yes" : "No"}}</td>
+                    <td>{{rate.ote ? "Yes" : "No"}}</td>
+                    <td class="text-right">{{rate.amount | currency : "$"}}</td>
+                    <td class="text-right">{{rate.quantity}}</td>
+                    <td class="text-right">{{rate.total | currency : "$"}}</td>
+                </tr>
+                <tr>
+                    <td class="text-muted"><strong>Total</strong></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="text-right">{{employee.total_hours}}</td>
+                    <td class="text-right">{{employee.total_paid | currency : "$"}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

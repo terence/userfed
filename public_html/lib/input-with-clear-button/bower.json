@@ -1,0 +1,15 @@
+{
+  "name": "input-with-clear-button",
+  "version": "0.0.1",
+  "homepage": "https://github.com/trexanhlab/input-with-clear-button",
+  "authors": [
+    "Dang Khuat <dangkd@trexanhlab.com>"
+  ],
+  "description": "Input with clear button",
+  "keywords": [
+    "clear",
+    "button",
+	"input"
+  ],
+  "license": "BSD"
+}

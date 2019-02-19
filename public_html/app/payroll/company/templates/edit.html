@@ -1,0 +1,148 @@
+<!-- fake breadcrumb -->
+<ol class="breadcrumb">
+    <li><a href="/">Payroll</a></li>
+    <li><a ui-sref="company-list">Companies</a></li>
+    <li ng-if="data.name"><a ui-sref="company-console({companyId: companyId, companyName: data.name})">{{data.name}}</a></li>
+    <li class="active" ng-if="data.name">Setup company</li>
+</ol>
+<!-- end fake breadcrumb -->
+
+<ul class="nav nav-tabs" data-tabs="tabs" ng-init="activeTab = 'company-details'">
+    <li role="presentation" ng-class="{'active' : activeTab === 'company-details'}">
+        <a href="" data-toggle="tab" ng-click="activeTab = 'company-details'">Company Details</a>
+    </li>
+    <li role="presentation" ng-class="{'active' : activeTab === 'contact-details'}">
+        <a href="" data-toggle="tab" ng-click="activeTab = 'contact-details'">Contact Details</a>
+    </li>
+    <li role="presentation" ng-class="{'active' : activeTab === 'people'}">
+        <a href="" data-toggle="tab" ng-click="activeTab = 'people'">People</a>
+    </li>
+    <li role="presentation" ng-class="{'active' : activeTab === 'myob-accounts'}">
+        <a href="" data-toggle="tab" ng-click="activeTab = 'myob-accounts'">MYOB Accounts</a>
+    </li>
+</ul>
+<div class="tab-content">
+    <div class="tab-pane" id="company-details" ng-class="{'active' : activeTab === 'company-details'}">
+        <br>
+        <form class="form-horizontal" role="form" name="form" novalidate ng-submit="submit()">
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Company Name</label>
+                <div class="col-sm-9">
+                    <strong class="help-block">{{data.name}}</strong>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Abbreviated Name</label>
+                <div class="col-sm-5">
+                    <input type="text" class="input-sm form-control" placeholder="Abbreviated Name" name="abbr" ng-model="data.abbr">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Status</label>
+                <div class="col-sm-2">
+                    <toggle-switch on-label='Active' off-label='Inactive' name="is_active" ng-model="data.is_active"></toggle-switch>
+                </div>
+            </div>
+            <div class="form-group has-feedback" ng-class="{'has-error' : form.abn.$dirty && !form.abn.$valid, 'has-success' : form.abn.$valid}">
+                <label class="col-sm-3 control-label">ABN</label>
+                <div class="col-sm-3">
+                    <input class="input-sm form-control" placeholder="ABN" name="abn" ng-model="data.abn" required ng-maxlength="50">
+                    <div class="text-danger" ng-cloak ng-show="form.abn.$dirty && form.abn.$error.required">
+                        ABN is required
+                    </div>
+                    <div class="text-danger" ng-cloak ng-show="form.abn.$error.maxlength">
+                        ABN must be less than 50 characters
+                    </div>
+                    <span class="fa fa-times form-control-feedback" aria-hidden="true" ng-show="form.abn.$dirty && !form.abn.$valid"></span>
+                    <span class="fa fa-check form-control-feedback" aria-hidden="true" ng-show="form.abn.$valid"></span>
+                </div>
+            </div>
+            <div class="form-group has-feedback" ng-class="{'has-error' : form.acn.$dirty && !form.acn.$valid, 'has-success' : form.acn.$valid}">
+                <label class="col-sm-3 control-label">ACN</label>
+                <div class="col-sm-3">
+                    <input type="text" class="input-sm form-control" placeholder="ACN" name="acn" ng-model="data.acn" required ng-maxlength="50">
+                    <div class="text-danger" ng-cloak ng-show="form.acn.$dirty && form.acn.$error.required">
+                        ACN is required
+                    </div>
+                    <div class="text-danger" ng-cloak ng-show="form.acn.$error.maxlength">
+                        ACN must be less than 50 characters
+                    </div>
+                    <span class="fa fa-times form-control-feedback" aria-hidden="true" ng-show="form.acn.$dirty && !form.acn.$valid"></span>
+                    <span class="fa fa-check form-control-feedback" aria-hidden="true" ng-show="form.acn.$valid"></span>
+                </div>
+            </div>
+            <div class="form-group has-feedback" ng-class="{'has-error' : form.tfn.$dirty && !form.tfn.$valid, 'has-success' : data.tfn && form.tfn.$valid}">
+                <label class="col-sm-3 control-label">TFN</label>
+                <div class="col-sm-3">
+                    <input class="input-sm form-control" placeholder="TFN" name="tfn" ng-model="data.tfn" ng-maxlength="50">
+                    <span class="fa fa-times form-control-feedback" aria-hidden="true" ng-show="form.tfn.$dirty && !form.tfn.$valid"></span>
+                    <span class="fa fa-check form-control-feedback" aria-hidden="true" ng-show="data.tfn && form.tfn.$valid"></span>
+                    <div class="text-danger" ng-cloak ng-show="form.tfn.$error.maxlength">
+                        TFN must be less than 50 characters
+                    </div>
+                </div>
+            </div>
+            <div class="form-group has-feedback" ng-class="{'has-error' : form.hours_per_week.$dirty && !form.hours_per_week.$valid, 'has-success' : data.hours_per_week && form.hours_per_week.$valid}">
+                <label class="col-sm-3 control-label">Standard Week Hours</label>
+                <div class="col-sm-2">
+                    <input type="number" step="0.01" class="input-sm form-control" placeholder="Standard week hours" name="hours_per_week" ng-model="data.hours_per_week">
+                    <div class="text-danger" ng-cloak ng-show="form.hours_per_week.$error.number">
+                        Please enter a valid number
+                    </div>
+                    <span class="fa fa-times form-control-feedback" aria-hidden="true" ng-show="form.hours_per_week.$dirty && !form.hours_per_week.$valid"></span>
+                    <span class="fa fa-check form-control-feedback" aria-hidden="true" ng-show="data.hours_per_week && form.hours_per_week.$valid"></span>
+                </div>
+            </div>
+            <div class="form-group has-feedback" ng-class="{'has-error' : form.cost_per_ps.$dirty && !form.cost_per_ps.$valid, 'has-success' : data.cost_per_ps && form.cost_per_ps.$valid}">
+                <label class="col-sm-3 control-label">Cost Per Payslip</label>
+                <div class="col-sm-2">
+                    <input type="number" step="0.01" class="input-sm form-control" placeholder="Cost Per Payslip" name="cost_per_ps" ng-model="data.cost_per_ps">
+                    <div class="text-danger" ng-cloak ng-show="form.cost_per_ps.$error.number">
+                        Please enter a valid number
+                    </div>
+                    <span class="fa fa-times form-control-feedback" aria-hidden="true" ng-show="form.cost_per_ps.$dirty && !form.cost_per_ps.$valid"></span>
+                    <span class="fa fa-check form-control-feedback" aria-hidden="true" ng-show="data.cost_per_ps && form.cost_per_ps.$valid"></span>
+                </div>
+                <div class="col-sm-4">
+                    <span class="help-block">
+                        dollars (ex-GST)
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Payrun Schedule</label>
+                <div class="col-sm-9">
+                    <ui-select name="schedule" ng-model="data.schedule" class="payrun-schedule-container">
+                        <ui-select-match placeholder="Select schedule">
+                            Process: {{data.schedule.desc}}
+                            <button type="button" class="close" aria-label="Close" ng-click="clearProperty('schedule', $event)"><span aria-hidden="true">&times;</span></button>
+                        </ui-select-match>
+                        <ui-select-choices repeat="item in payrun_schedules.items | filter: $select.search">
+                            <div>Process: {{item.desc}}</div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary" ng-disabled="saving || !data.id">
+                    <span ng-show="!saving" ng-cloak>Save</span>
+                    <span ng-show="saving" ng-cloak>
+                        <i class="fa fa-spin fa-spinner"></i>
+                    </span>
+                    <span ng-show="success" ng-cloak>Successful!</span>
+                </button>
+            </div>
+        </form>
+    </div>
+    <div class="tab-pane" id="contact-details" ng-class="{'active' : activeTab === 'contact-details'}">
+        <h1>Contact details - under construction</h1>
+    </div>
+    <div class="tab-pane" id="people" ng-class="{'active' : activeTab === 'people'}">
+        <h1>People - under construction</h1>
+    </div>
+    <div class="tab-pane" id="myob-accounts" ng-class="{'active' : activeTab === 'myob-accounts'}">
+        <h1>MYOB Accounts - under construction</h1>
+    </div>
+</div>
+<toaster-container toaster-options="{'close-button':true, 'position-class': 'toast-bottom-right'}"></toaster-container>

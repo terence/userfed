@@ -1,0 +1,45 @@
+html, body {
+	height: 100%;
+}
+
+.main{
+	min-height: 100%;
+	height: auto;
+	margin: 0 auto -60px;
+	padding: 0 0 60px;
+}
+
+.btn[disabled], fieldset[disabled] .btn {
+    //black color is easier to read
+    color: @gray-dark !important;
+}
+
+// Turn off feature responsive of bootstrap 3
+body{
+	min-width: @container-large-desktop;
+}
+.container {
+	min-width: @container-large-desktop;
+	max-width: none !important;
+}
+
+// Style for breadcrumb
+.breadcrumb{
+    background-color: white;
+    a{
+        color: @gray;
+        font-size: large;
+        &:hover, &:active, &:focus{
+            color: @link-hover-color;
+            text-decoration: none;
+        }
+    }
+    li+li:before, .active{
+        font-size: large;
+    }
+    li+li:before{
+        content: "\003e";
+        font-family: monospace;
+        font-size: x-large;
+    }
+}

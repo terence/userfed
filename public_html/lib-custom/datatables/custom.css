@@ -1,0 +1,19 @@
+/*
+Custom less for datatables:
+- Apply style for Delete, Restore, Apply, Filter
+*/
+.dataTables_wrapper .dataTables_ex_actions .action-wrapper,
+.dataTables_wrapper .dataTables_ex_actions .filter-wrapper {
+  margin-right: 16px;
+  float: left;
+}
+.dataTables_wrapper .dataTables_ex_actions .action-wrapper button,
+.dataTables_wrapper .dataTables_ex_actions .filter-wrapper button {
+  margin-left: 5px;
+}
+.dataTables_wrapper .dataTables_ex_actions .dataTables_filter {
+  float: right;
+}
+.dataTables_wrapper .dataTables_filter input {
+  margin-left: 5px;
+}

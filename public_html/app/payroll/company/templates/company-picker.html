@@ -1,0 +1,10 @@
+<div class="header-controls" ng-controller="CompanyPickerCtrl" ng-cloak>
+    <ui-select ng-model="data.selectedCompany" class="company-picker-container">
+        <ui-select-match placeholder="Select company">
+            {{data.selectedCompany.name}}
+        </ui-select-match>
+        <ui-select-choices repeat="company in payrollCompanies | filter: $select.search">
+            {{company.name}}
+        </ui-select-choices>
+    </ui-select>
+</div>

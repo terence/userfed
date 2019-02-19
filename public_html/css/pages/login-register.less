@@ -1,0 +1,91 @@
+//Customize boxmodel and sizing of forms
+.positioning-style{
+	max-width: 300px;
+	padding: @padding-base-vertical;
+	margin: 0 auto;
+}
+
+// layout
+.layout-plain{
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	background: @yellow-light;
+	overflow-y: auto;
+	.row{
+		width: 500px;
+		margin: 0 auto;
+		padding: 20px;
+		margin-top: 20px;
+		background: lighten(@gray-darker, 100%);
+		border: 1px solid @gray-dark;
+		.box-shadow(@shadow);
+	}
+	header{
+		margin-top: @padding-large-horizontal;
+	}
+	.footer{
+		background-color: transparent;
+	}
+}
+.form-signin, .form-register{
+	.positioning-style;
+	.btn-group{
+		width: 100%;
+	}
+}
+
+.separator{
+	background: url(/image/bg-sep.gif) repeat-x center;
+	margin: @padding-large-horizontal 0;
+	h3{
+		display: inline-block;
+		background: @gray-lighter;
+		margin: 0 auto;
+		padding: @padding-large-vertical;
+		border-radius: 100%;
+		font-family: "Open Sans",Helvetica,arial,sans-serif;
+		font-size: larger;
+		font-style: normal;
+		font-weight: 300;
+		line-height: 16px;
+		color: @gray-light;
+	}
+}
+
+.form-signin {
+    .form-group {
+        .form-control-feedback {
+            top: 6px;
+            right:0;
+        }
+        .form-control {
+            position: relative;
+            font-size: larger;
+            height: auto;
+            padding: @padding-large-vertical;
+            .box-sizing(border-box);
+        }
+        &.has-error input {
+            border-bottom: 1px solid @state-danger-text;
+        }
+    }
+    .form-signin-heading{
+        margin-top: 0px;
+    }
+}
+
+label.error {
+	color: @brand-danger;
+	padding: 2px 8px;
+	margin-top: 2px;
+	font-weight: inherit;
+}
+
+.overlay-bg {
+	opacity: 0.1;
+    .transition(all 0.3s ease-out);
+    &:hover {
+        opacity:1;
+    }
+}

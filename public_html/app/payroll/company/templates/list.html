@@ -1,0 +1,82 @@
+<style>
+.img-responsive {
+    filter: gray; /* IE6-9 */
+    -webkit-filter: grayscale(100%);
+    -webkit-transition: 0.8s ease-in-out;
+    -moz-filter: grayscale(100%); 
+    -moz-transition: 0.8s ease-in-out;
+    -o-filter: grayscale(100%); 
+    -o-transition: 0.8s ease-in-out;
+    -webkit-box-shadow: 0px 1px 1px 1px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 1px 1px 1px rgba(0,0,0,0.75);
+    box-shadow: 0px 1px 1px 1px rgba(0,0,0,0.75);
+    width:150px;
+    height:150px;
+    opacity:0.6;
+}
+
+.img-responsive:hover {
+    filter: none; /* IE6-9 */
+     -webkit-filter: grayscale(0%);
+    -webkit-transition: 0.8s ease-in-out;
+    -moz-filter: grayscale(0%);
+    -moz-transition: 0.8s ease-in-out;
+    -o-filter: grayscale(0%);
+    -o-transition: 0.8s ease-in-out;
+    opacity:1;
+}
+</style>
+<!-- fake breadcrumb -->
+<ol class="breadcrumb">
+    <li><a href="/">Payroll</a></li>
+    <li class="active">Companies</li>
+</ol>
+<!-- end fake breadcrumb -->
+<div id="loading">
+</div>
+<div ng-hide="loading">
+    <div class="col-md-12 col-sm-12">
+        <h5><strong>Ready for Payroll</strong></h5>
+    </div>
+    <div class="col-md-12 col-sm-12 text-info" ng-show="!companies.ready_for_payroll.length">
+        No companies ready for payroll
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-sm-4 col-xs-6 text-center" ng-repeat="company in companies.ready_for_payroll">
+            <a
+                ui-sref="company-console({companyId: company.payroll_data.id, companyName: company.payroll_data.name})"
+                class="text-center"
+                style="display:inline-block;"
+                title="Go to company console"
+            >
+                <img class="img-responsive img-rounded" ng-src="{{company.photo}}/" />
+            </a>
+            <h5 class="text-center">
+                <a
+                    ui-sref="company-console({companyId: company.payroll_data.id, companyName: company.payroll_data.name})"
+                    title="Go to company console"
+                >
+                    {{company.title}}
+                </a>
+            </h5>
+        </div>
+    </div>
+    <br>
+    <div ng-show="companies.not_ready_for_payroll.length">
+        <div class="col-md-12 col-sm-12">
+            <h5><strong>Not ready for Payroll yet</strong></h5>
+        </div>
+        <div class="row">
+            <div class="col-md-3 col-sm-4 col-xs-6 text-center" ng-repeat="company in companies.not_ready_for_payroll">
+                <a ui-sref="company-setup({ufCompanyId: company.organisation_id})" class="text-center" style="display:inline-block;" title="Start setting up for Payroll">
+                    <img class="img-responsive img-rounded" ng-src="{{company.photo}}/" />
+                </a>
+                <h5 class="text-center">
+                    <a ui-sref="company-setup({ufCompanyId: company.organisation_id})" title="Start setting up for Payroll">
+                        {{company.title}}
+                    </a>
+                </h5>
+            </div>
+        </div>
+    </div>
+</div>

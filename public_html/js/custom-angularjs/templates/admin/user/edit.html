@@ -1,0 +1,14 @@
+<div>
+    <a href="" class="btn btn-link" ng-click="back()">
+        <i class="fa fa-reply"></i> Back to list
+    </a>
+</div>
+<div>
+    <tabset>
+        <tab ng-repeat="tab in tabs" heading="{{tab.title}}" select="active(tab.id)" active="tab.active">
+            <div ng-if="tab.active">
+                <ng-include src="tab.templateUrl"></ng-include>
+            </div>
+        </tab>
+    </tabset>
+</div>

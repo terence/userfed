@@ -1,0 +1,31 @@
+/*
+Custom less for datatables:
+- Apply style for Delete, Restore, Apply, Filter
+*/
+@basePath:"../../lib/bootstrap/less/";
+@import "@{basePath}variables.less";
+
+.dataTables_wrapper {
+    .dataTables_ex_actions {
+        .action-wrapper, .filter-wrapper {
+            margin-right: @padding-large-horizontal;
+            float: left;
+        }
+        .action-wrapper button, .filter-wrapper button{
+            margin-left: @padding-xs-horizontal;
+        }
+        
+        .dataTables_filter {
+            float: right;
+        }        
+    }
+    
+    .dataTables_filter {
+        input {
+            margin-left: @padding-xs-horizontal;
+        }
+    }
+
+}
+
+

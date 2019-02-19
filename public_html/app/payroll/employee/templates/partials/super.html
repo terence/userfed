@@ -1,0 +1,145 @@
+<br>
+<div class="well well-sm" ng-init="showGuideline = false">
+    <h5>
+        <i class="fa fa-chevron-down text-muted" title="Collapse Guideline" style="cursor:pointer;" ng-click="showGuideline = false" ng-show="showGuideline"></i>
+        <i class="fa fa-chevron-up text-muted" title="Show Guideline" style="cursor:pointer;" ng-click="showGuideline = true" ng-hide="showGuideline"></i>
+        <strong>What is Superannuation?</strong>
+    </h5>
+    <div class="guideline-details" collapse="!showGuideline">
+        <small>
+            As an employer you have an obligation to pay super contributions on behalf of all your eligible employees. These contributions are in addition to your employees’ salaries and wages.<br>
+            This compulsory contribution is called the Superannuation Guarantee and it requires you to:<br>
+            <ul>
+                <li>pay super for your eligible employees</li>
+                <li>contribute to the correct super funds, and</li>
+                <li>pay contributions by the cut off date each quarter.</li>
+            </ul>
+            The <code><big>minimum super amount</big></code> you have to pay is <code><big>9%</big></code> of each eligible employee’s earnings base.
+        </small><br><br>
+        <h5><strong>Who do you have to pay super for?</strong></h5>
+        <small>
+            Generally, you have to pay super for your employees if they:
+            <ul>
+                <li>are aged between 18 and 70</li>
+                <li>are paid $450 (before tax) or more in a calendar month, and</li>
+                <li>work full-time, part-time or on a casual basis.</li>
+            </ul>
+            You also have to pay super for any employee who:<br>
+            <ul>
+                <li>is under 18 years of age</li>
+                <li>you pay $450 or more (before tax) in a calendar month, and</li>
+                <li>works full-time, part-time or on a casual basis for more than 30 hours in a week.</li>
+            </ul>
+        </small>
+        <div class="alert bg-success" style="margin-bottom:0;">
+            <small>
+                The ATO provide a tool to assist in determining eligibility for the Superannuation Guarantee. <a href="http://calculators.ato.gov.au/scripts/axos/axos.asp?CONTEXT=&KBS=SGEligibility.xr4&go=ok" target="_blank">Click here to use it</a><br>
+                <span class="text-danger">NOTE:</span> When using the tool, if you are unsure whether the employee will be paid more than $450.00 in any calendar month, you should answer "Yes"
+            </small>
+        </div>
+    </div>
+</div>
+<div class="control-label-align-left">
+    <div ng-repeat="groupFields in formFields.superannuation">
+        <fieldset ng-if="groupFields.groupLabel && groupFields.groupLabel.length">
+            <legend>{{groupFields.groupLabel}}</legend>
+        </fieldset>
+        <div
+            class="form-group"
+            ng-repeat="field in groupFields.fields"
+            ng-show="field.showOn === undefined || (field.showOn !== undefined && data[field.showOn.field] == field.showOn.value || (field.showOn.value.indexOf(data[field.showOn.field]) > -1))"
+        >
+            <label class="col-sm-{{field.labelWidth}} control-label {{field.labelClass || ''}}">{{field.label}}</label>
+            <div class="col-sm-{{field.inputWidth}}">
+                <input
+                    type="{{field.type}}"
+                    class="input-sm form-control"
+                    placeholder="{{field.placeholder}}"
+                    name="{{field.name}}"
+                    ng-if="(field.type=='text' || field.type=='email' || field.type=='number') && !field.inputPrefix && !field.inputPostfix"
+                    ng-model="data[field.name]"
+                />
+                <div class="input-group" ng-if="field.inputPrefix || field.inputPostfix">
+                    <span class="input-group-addon" ng-if="field.inputPrefix">{{field.inputPrefix}}</span>
+                    <input
+                        type="{{field.type}}"
+                        class="input-sm form-control"
+                        placeholder="{{field.placeholder}}"
+                        name="{{field.name}}"
+                        ng-if="(field.type=='text' || field.type=='email' || field.type=='number')"
+                        ng-model="data[field.name]"
+                    />
+                    <span class="input-group-addon" ng-if="field.inputPostfix">{{field.inputPostfix}}</span>
+                </div>
+                <select class="input-sm form-control" name="{{field.name}}" ng-if="field.type=='select'" ng-model="data[field.name]">
+                    <option value="">Pick an option</option>
+                    <option ng-repeat="item in field.options" value="{{item.id}}">{{item.text}}</option>
+                </select>
+                <ui-select name="{{field.name}}" ng-if="field.type=='ui-select'" ng-model="data[field.name]" style="min-width:300px;">
+                    <ui-select-match placeholder="Select an option">
+                        {{data[field.name].text}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="item in field.options | filter: $select.search">
+                        <div>{{item.text}}</div>
+                    </ui-select-choices>
+                </ui-select>
+                <p class="input-group" ng-if="field.type=='datepicker'">
+                    <input type="text" class="input-sm form-control" placeholder="{{field.placeholder}}" is-open="datepickers[field.name]" ng-model="data[field.name]" datepicker-popup="{{field.format || 'MMMM dd yyyy'}}" close-text="Close" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-sm btn-default" ng-click="openDatepicker(field.name, $event)"><i class="fa fa-calendar"></i></button>
+                    </span>
+                </p>
+                <toggle-switch on-label='{{field.onLabel || "Yes"}}' off-label='{{field.offLabel || "No"}}' name="{{field.name}}" ng-model="data[field.name]" ng-if="field.type=='switcher'"></toggle-switch>
+            </div>
+        </div>
+    </div>
+    <div class="bpay-details" ng-show="data.sp_type == 1 && data.is_new_fund_used == true">
+        <h5>BPAY Details</h5>
+        <div class="form-group ng-scope">
+            <label class="col-sm-3 control-label">BPAY Biller Code</label>
+            <div class="col-sm-3">
+                <input type="text" class="input-sm form-control ng-scope" placeholder="" name="bpay_code" ng-model="data.bpay_code">
+            </div>
+        </div>
+            <div class="form-group ng-scope">
+            <label class="col-sm-3 control-label">BPAY Reference</label>
+            <div class="col-sm-3">
+                <input type="text" class="input-sm form-control ng-scope" placeholder="" name="bpay_ref" ng-model="data.bpay_ref">
+            </div>
+        </div>
+    </div>
+    <div class="eft-details" ng-show="data.sp_type == 2 && data.is_new_fund_used == true">
+        <h5>EFT Details</h5>
+        <div class="form-group ng-scope">
+            <label class="col-sm-3 control-label">Fund BSB</label>
+            <div class="col-sm-3">
+                <input type="text" class="input-sm form-control ng-scope" placeholder="" name="eft_bsb" ng-model="data.eft_bsb">
+            </div>
+        </div>
+        <div class="form-group ng-scope">
+            <label class="col-sm-3 control-label">Fund Account</label>
+            <div class="col-sm-3">
+                <input type="text" class="input-sm form-control ng-scope" placeholder="" name="eft_acc" ng-model="data.eft_acc">
+            </div>
+        </div>
+        <div class="form-group ng-scope">
+            <label class="col-sm-3 control-label">Account Name</label>
+            <div class="col-sm-3">
+                <input type="text" class="input-sm form-control ng-scope" placeholder="" name="eft_name" ng-model="data.eft_name">
+            </div>
+        </div>
+        <div class="form-group ng-scope">
+            <label class="col-sm-3 control-label">Account Ref</label>
+            <div class="col-sm-3">
+                <input type="text" class="input-sm form-control ng-scope" placeholder="" name="eft_ref" ng-model="data.eft_ref">
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="form-group ng-scope">
+        <label class="col-sm-7 control-label">Are the employee's Superannuation Contributions included in their salary?</label>
+        <div class="col-sm-3">
+            <toggle-switch on-label='Yes' off-label="No" name="sgc_inc" ng-model="data.sgc_inc"></toggle-switch>
+        </div>
+    </div>
+</div>

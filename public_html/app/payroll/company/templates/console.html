@@ -1,0 +1,39 @@
+<!-- fake breadcrumb -->
+<ol class="breadcrumb">
+    <li><a href="/">Payroll</a></li>
+    <li><a ui-sref="company-list">Companies</a></li>
+    <li class="active">{{companyName}}</li>
+</ol>
+<!-- end fake breadcrumb -->
+<fieldset>
+    <legend>Console</legend>
+</fieldset>
+<div class="row">
+    <div class="col-md-4 text-center">
+        <a ui-sref="payruns({companyName: companyName, companyId: companyId})">
+            <span class="fa fa-credit-card fa-5x"></span><br><br>
+            <strong>Payrun</strong>
+        </a>
+    </div>
+    <div class="col-md-4 text-center">
+        <a ui-sref="employees({companyName: companyName, companyId: companyId})">
+            <span class="fa fa-users fa-5x"></span><br><br>
+            <strong>Employees</strong>
+        </a>
+    </div>
+    <div class="col-md-4 text-center">
+        <a ui-sref="company-edit({companyName: companyName, companyId: companyId})">
+            <span class="fa fa-cogs fa-5x"></span><br><br>
+            <strong>Company Setup</strong>
+        </a>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-4 text-center">
+        <a ui-sref="company-timesheet({companyName: companyName, companyId: companyId})">
+            <span class="fa fa-clipboard fa-5x"></span><br><br>
+            <strong>Timesheet</strong>
+        </a>
+    </div>
+</div>

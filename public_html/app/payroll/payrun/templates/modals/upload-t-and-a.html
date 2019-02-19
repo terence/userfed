@@ -1,0 +1,38 @@
+<div class="modal-header">
+    <h4 class="modal-title">Upload T&A file</h4>
+</div>
+<div class="modal-body">
+    <div class="col-sm-5 no-padding">
+        <select ng-model="data.period_ending" ng-options="p.period_ending as p.period_ending for p in periods.items" class="form-control input-sm">
+            <option value="">Select period ending</option>
+        </select>
+    </div>
+    <div class="clearfix"></div>
+    <div ng-show="data.period_ending">
+        <br>
+        <button class="btn btn-default btn-sm" ng-file-select ng-model="timesheetFile" ng-file-change="fileChange($files)" accept="text/xml">Select File</button>
+        <span class="text-muted">(Please choose a xml file)</span>
+        <div
+            class="dropbox text-muted visible-sm visible-md visible-lg"
+            ng-file-drop
+            ng-file-select
+            drag-over-class="dragover"
+            allow-dir="false"
+            accept="text/xml"
+            ng-file-change="fileChange($files)"
+        >
+            Drop xml file or click here to upload file
+        </div>
+        <div ng-no-file-drop>
+            File Drag/Drop is not supported for this browser
+        </div>
+        <ul class="list-unstyled" ng-show="timesheetFile.length">
+            <li class="text-muted">File name: {{timesheetFile[0].name}} - Size: {{(timesheetFile[0].size / 1024 / 1024) | number: 3}} MB</li>
+        </ul>
+        <progressbar class="progress-striped active" value="progressPercentage" type="success" ng-show="progressPercentage">{{progressPercentage}}% completed</progressbar>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-sm btn-default" type="button" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-sm btn-primary" type="button" ng-click="upload(timesheetFile)" ng-disabled="!timesheetFile.length || !data.period_ending">Upload</button>
+</div>

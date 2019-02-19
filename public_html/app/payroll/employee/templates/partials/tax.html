@@ -1,0 +1,48 @@
+<br>
+<div class="control-label-align-left">
+    <div ng-repeat="groupFields in formFields.taxSetup">
+        <fieldset ng-if="groupFields.groupLabel && groupFields.groupLabel.length">
+            <legend>{{groupFields.groupLabel}}</legend>
+        </fieldset>
+        <div
+            class="form-group"
+            ng-repeat="field in groupFields.fields"
+            ng-show="field.showOn === undefined || (field.showOn !== undefined && data[field.showOn.field] == field.showOn.value || (field.showOn.value.indexOf(data[field.showOn.field]) > -1))"
+        >
+            <label class="col-sm-{{field.labelWidth}} control-label {{field.labelClass || ''}}">{{field.label}}</label>
+            <div class="col-sm-{{field.inputWidth}}">
+                <input
+                    type="{{field.type}}"
+                    class="input-sm form-control"
+                    placeholder="{{field.placeholder}}"
+                    name="{{field.name}}"
+                    ng-if="(field.type=='text' || field.type=='email' || field.type=='number') && !field.inputPrefix && !field.inputPostfix"
+                    ng-model="data[field.name]"
+                />
+                <div class="input-group" ng-if="field.inputPrefix || field.inputPostfix">
+                    <span class="input-group-addon" ng-if="field.inputPrefix">{{field.inputPrefix}}</span>
+                    <input
+                        type="{{field.type}}"
+                        class="input-sm form-control"
+                        placeholder="{{field.placeholder}}"
+                        name="{{field.name}}"
+                        ng-if="(field.type=='text' || field.type=='email' || field.type=='number')"
+                        ng-model="data[field.name]"
+                    />
+                    <span class="input-group-addon" ng-if="field.inputPostfix">{{field.inputPostfix}}</span>
+                </div>
+                <select class="input-sm form-control" name="{{field.name}}" ng-if="field.type=='select'" ng-model="data[field.name]">
+                    <option value="">Pick an option</option>
+                    <option ng-repeat="item in field.options" value="{{item.id}}">{{item.text}}</option>
+                </select>
+                <p class="input-group" ng-if="field.type=='datepicker'">
+                    <input type="text" class="input-sm form-control" placeholder="{{field.placeholder}}" is-open="datepickers[field.name]" ng-model="data[field.name]" datepicker-popup="{{field.format || 'MMMM dd yyyy'}}" close-text="Close" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-sm btn-default" ng-click="openDatepicker(field.name, $event)"><i class="fa fa-calendar"></i></button>
+                    </span>
+                </p>
+                <toggle-switch on-label='{{field.onLabel || "Yes"}}' off-label='{{field.offLabel || "No"}}' name="{{field.name}}" ng-model="data[field.name]" ng-if="field.type=='switcher'"></toggle-switch>
+            </div>
+        </div>
+    </div>
+</div>
