@@ -1,0 +1,27 @@
+<?php
+use HtApplication\Model\Acl\Role;
+?>
+<h3 class="text-center"><?php echo $this->escapeHtml($role->getDescription()); ?></h3>
+<?php
+	echo $this->partial('partial/tab', array(
+		'tabs' => array(
+			array(
+				'name' => $this->translate('General Info'),
+				'url' => $this->url('admin/role/common', array('action' => 'edit', 'id' => $role->getRoleId())),
+				'isActive' => ($activeTab == 1),
+			),
+			array(
+				'name' => $this->translate('Permission'),
+				'url' =>  $this->url('admin/role/permission', array('id' => $role->getRoleId())),
+				'isActive' => ($activeTab == 2),
+                'isHidden' => Role::isDisabledEditPermission($role->getRoleId()),
+			),
+			array(
+				'name' => $this->translate('User'),
+				'url' =>  $this->url('admin/role/user', array('id' => $role->getRoleId())),
+				'isActive' => ($activeTab == 3)
+			),
+		)
+	));
+?>
+<br />

@@ -1,0 +1,56 @@
+<?php
+$name =  trim($this->escapeHtml($user->getFirstName() . ' ' .$user->getLastName()));
+if (empty($name)) {
+    $name = $user->getEmail();
+    if (empty($name)) {
+        $name = $this->translate('Update user');
+    }
+}
+$userId = $user->getUserId();
+?>
+<h3 class="text-center"><?php echo $name; ?>
+<?php
+$enabled = (bool) $user->getIsEnabled();
+if ($enabled) { ?>
+<span class="label-success label label-status"><?php echo $this->translate('Enabled');?></span>
+<?php } else { ?>
+<span class="label-default label label-status"><?php echo $this->translate('Disabed');?></span>
+<?php }
+?>
+</h3>
+<?php
+	echo $this->partial('partial/tab', array(
+		'tabs' => array(
+			array(
+				'name' => $this->translate('General Info'),
+				'url' => $this->url('admin/user/default', array('action' => 'edit', 'id' => $userId)),
+				'isActive' => ($activeTab == 1),
+			),
+			array(
+				'name' => $this->translate('Role'),
+				'url' =>  $this->url('admin/user/role', array('id' => $userId)),
+				'isActive' => ($activeTab == 5)
+			),
+			array(
+				'name' => $this->translate('Identity'),
+				'url' =>  $this->url('admin/user/identity', array('id' => $userId)),
+				'isActive' => ($activeTab == 6)
+			),            
+			array(
+				'name' => $this->translate('Organisation'),
+				'url' => $this->url('admin/user/org', array('id' => $userId)),
+				'isActive' => ($activeTab == 2)
+			),
+			array(
+				'name' => $this->translate('Application'),
+				'url' => $this->url('admin/user/app', array('id' => $userId)),
+				'isActive' => ($activeTab == 3)
+			),
+			array(
+				'name' => $this->translate('Log'),
+				'url' => $this->url('admin/user/log', array('userId' => $userId)),
+				'isActive' => ($activeTab == 4)
+			),
+		)
+	));
+?>

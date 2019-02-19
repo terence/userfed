@@ -1,0 +1,63 @@
+<?php
+$this->headTitle($this->translate('Server Management'));
+?>
+<div class="listing-page">
+    <?php echo $this->message($this); ?>
+    <?php
+    echo $this->partial('ht-admin/partial/head-management-page.phtml', array(
+        'createBtnUrl' => $this->url('admin/server/common', array('action' => 'create')),
+        'createBtnLabel' => $this->translate('Create server'),
+        'filterForm' => $filterForm,
+		'titlePage' => $this->translate('Server'),
+    ));
+    ?>
+    <!-- Modal -->
+    <?php
+    echo $this->partial('partial/confirm-modal', array(
+        'title' => $this->translate('Delete server'),
+    ));
+    ?>
+    <!-- end Modal -->
+            <?php if ($servers->count() > 0) { ?>
+        <table class="table table-striped">
+            <tbody>
+                <?php
+                /* @var $server \HtAuthentication\Model\Server */
+                foreach ($servers as $server) {
+                    $serverId = $server->getServerId();
+                    $confirmMessage = sprintf(
+                            $this->translate('Are you sure you want to delete <b>%s</b>?<br />You will not be able to undo this action.'),
+                            $this->escapeHtmlAttr($server->getTitle())
+                            );
+                    ?>
+                    <tr>
+                        <td>
+                            <a href="<?php echo $this->url('admin/server/common', array('action' => 'edit', 'id' => $serverId)); ?>">
+        <?php echo $this->escapeHtml($server->getTitle()); ?>
+                            </a>
+                        </td>
+                        <td class="text-center">
+                            <a data-confirm-message="<?php echo $confirmMessage; ?>"
+                               href="<?php echo $this->url('admin/server/common', array('action' => 'delete', 'id' => $serverId)); ?>"
+                               title="<?php echo $this->translate('Delete this application'); ?>">
+                                <i class="fa fa-times fa-lg icon-remove"></i>
+                            </a>
+                        </td>
+                    </tr>
+    <?php } ?>
+            </tbody>
+        </table>
+
+        <?php
+        echo $this->paginationControl($this->paginator, 'Sliding', 'partial/pagination-control', array('route' => null));
+        ?>
+<?php } else { ?>
+        <table class="table table-striped">
+            <tbody>
+                <tr>
+                    <td class="text-center"><?php echo $this->translate('No server found'); ?></td>
+                </tr>
+            </tbody>
+        </table>
+<?php } ?>
+</div>

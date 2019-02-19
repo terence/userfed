@@ -1,0 +1,12 @@
+<div class="span6">
+	<div class="btn">
+		<span><?php echo $this->translate('Create Internal Account'); ?></span>
+	</div>
+</div>
+<div class="span6">
+	<div>
+		<span><?php echo $this->translate('Or register with'); ?></span><br/>
+		<a class="btn btn-facebook" href="/invite/activate-oauth/facebook?invite-code=<?php echo $code;?>"><i class="icon-facebook"></i>&nbsp;<?php echo $this->translate('Facebook') ?></a> &nbsp;
+		<a class="btn btn-goolge-plus" href="/invite/activate-oauth/google?invite-code=<?php echo $code;?>"><i class="icon-google-plus"></i>&nbsp;<?php echo $this->translate('Google') ?></a>
+	</div>
+</div>

@@ -1,0 +1,132 @@
+<?php echo $this->doctype(); ?>
+<html lang="en">
+	<head>
+		<?php echo $this->headTitle(); ?>
+		<meta charset="utf-8">
+		<?php
+		echo $this->headLink()
+				->appendStylesheet($this->basePath('css/bootstrap.form.min.css'))
+				->appendStylesheet($this->basePath('lib/bootstrap/dist/css/bootstrap.min.css'))
+				->appendStylesheet($this->basePath('lib/fontawesome/css/font-awesome.min.css'))
+				->appendStylesheet($this->basePath('lib/select2/select2.css'))
+				->appendStylesheet($this->basePath('lib/input-with-clear-button/src/quick-clear.css'))
+				->appendStylesheet($this->basePath('css/style.min.css'));
+		echo $this->headScript();
+		?>
+		<script type="text/javascript">
+			var appcore = {};
+			appcore.baseUrl = '<?php echo $this->url('home', array(), array('force_canonical' => true)) ?>';
+		</script>
+	</head>
+	<body>
+		<div class="main">
+			<?php
+			if (!isset($identity)) {
+				$identity = null;
+			}
+			?>
+			<?php // echo $this->partial("layout/header.phtml", array('identity' => $identity)); ?>
+
+			<!-- menu -->
+			<div class="navbar navbar-custom navbar-default navbar-static-top navbar-inverse">
+				<div class="container">
+					<div class="navbar-header">
+<!--						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>-->
+						<a href="/" class="navbar-brand btn-link"><?php echo $this->translate("User Federation"); ?></a>
+					</div>
+                    <div class="navbar-collapse collapse">            
+						<?php
+						//@link https://github.com/fabiopaiva/zf2-navigation-bootstrap3
+						echo $this->navigation('navigation')->menu()
+								->setMaxDepth(1)
+								->setUlClass('nav navbar-nav')
+								->setPartial(array('partial/menu.phtml', 'HtApplication'));
+						?>
+						<?php
+						if (isset($identity)) {
+							if (is_object($identity)) {
+								switch ($identity->authenticationProvider) {
+									case "internal":
+										/* $identity has property (userId, firstName, lastName, email, authenticationProvider, isEnabled) */
+										$name = $identity->firstName . ' ' . $identity->lastName;
+										$name = trim($name);
+										$name = $this->escapeHtml($name);
+										if (empty($name)) {
+											$name = $identity->email;
+										}
+										break;
+									case "facebook":
+										$name = "<img src='https://graph.facebook.com/" . $identity->oauthProviderId . "/picture'>";
+										break;
+									case "google":
+										if (!empty($identity->oauthProfile->picture)) {
+											$name = '<img style="width: 18px;" src="' . $identity->oauthProfile->picture . '?sz=50"/>';
+										}
+									default:
+										break;
+								}
+							} elseif (is_string($identity)) {
+								$name = $identity;
+							}
+							?>
+							<ul class="nav navbar-nav navbar-right admin-bar-my-account">
+								<li class="dropdown">
+									<a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class=""></span>
+										<?php
+										if (isset($name)) {
+											echo sprintf($this->translate('Hello %s'), $name);
+										}
+										?><b class="caret"></b>
+									</a>
+									<ul class="dropdown-menu">
+										<li>
+											<a href="<?php echo $this->basePath("/internal/update"); ?>"><?php echo $this->translate('Change Password'); ?></a>
+										</li>
+										<li>
+											<a href="<?php echo $this->basePath("/logout"); ?>"><?php echo $this->translate("Logout"); ?></a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+<?php } ?>
+                    </div>
+
+				</div>
+			</div>    
+
+			<!-- main -->
+			<div class="container">
+				<?php
+				if (isset($identity)) {
+					echo $this->navigation('navigation')->breadcrumbs()
+							->setMinDepth(0)
+							->setPartial(array('partial/breadcrumb.phtml', 'HtApplication'))->render();
+				}
+				?>
+			<?php echo $this->content; ?>
+			</div>
+			<?php
+			$this->inlineScript()
+					->prependFile($this->basePath('lib/input-with-clear-button/src/quick-clear.js'))
+					->prependFile($this->basePath('js/appcore.js'))
+					->prependFile($this->basePath('js/custom/common.js'))
+					->prependFile($this->basePath('lib/select2/select2.min.js'))
+					->prependFile($this->basePath('lib/bootstrap/js/dropdown.js'))
+					->prependFile($this->basePath('lib/bootstrap/js/tab.js'))
+					->prependFile($this->basePath('lib/bootstrap/js/alert.js'))
+					->prependFile($this->basePath('lib/bootstrap/js/modal.js'))
+					->prependFile($this->basePath('lib/jquery-validation/dist/additional-methods.min.js'))
+					->prependFile($this->basePath('lib/jquery-validation/dist/jquery.validate.min.js'))
+					->prependFile($this->basePath('lib/jquery/dist/jquery.min.js'));
+
+			echo $this->inlineScript();
+			?>
+		</div>
+		<!-- footer -->
+<?php echo $this->partial("layout/footer.phtml"); ?>
+	</body>
+</html>

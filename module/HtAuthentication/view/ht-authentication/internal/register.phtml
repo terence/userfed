@@ -1,0 +1,87 @@
+<?php $this->headTitle($this->translate('Register')); ?> 
+<div ng-controller="RegisterController">
+    <div class='form-register' ng-class="{ 'hide' : status.success }">
+        <h3><?php echo $this->translate("Register"); ?></h3>
+        <div class="btn-group">
+            <a class="btn btn-default" ng-class="{ 'overlay-bg' : !isFormEmpty()}" href="<?php echo $this->url('oauth', array('action' => 'register', 'provider' => 'facebook')); ?>">
+                <i class="fa fa-facebook-square fa-lg"></i>&nbsp; <?php echo $this->translate('With Facebook') ?>
+            </a>
+            <a style="float: right;" class="btn btn-default" ng-class="{ 'overlay-bg' : !isFormEmpty()}" href="<?php echo $this->url('oauth', array('action' => 'register', 'provider' => 'google')); ?>">
+                <i class="fa fa-google-plus-square fa-lg"></i>&nbsp; <?php echo $this->translate('With Google') ?> &nbsp;
+            </a>
+        </div>
+        <div class="separator text-center">
+            <h3><?php echo $this->translate('Or')?></h3>
+        </div>
+        <?php
+            $this->inlineScript()->appendFile($this->basePath('lib/angular/angular.js'));
+            $this->inlineScript()->appendFile($this->basePath('js/custom-angularjs/directives/directives.js'));
+            $this->inlineScript()->appendFile($this->basePath('js/custom-angularjs/services/CheckUniqueService.js'));
+            $this->inlineScript()->appendFile($this->basePath('js/custom-angularjs/directives/ngMatch.js'));
+            $this->inlineScript()->appendFile($this->basePath('js/custom-angularjs/register.js'));
+        ?>
+        <form action="/register" method="post" name="form" novalidate="1" data-ng-submit="submit($event)" id="register">
+            <div class="form-group has-feedback" ng-class="{'has-error' : form.firstname.$dirty && form.firstname.$invalid}">
+                <p class="control-label" for="firstname">First name:</p>
+                <input type="text" name="firstname" required="required" data-ng-model="data.firstname" data-ng-disabled="status.loading" class="form-control" value="" ng-model-options="{ updateOn: 'blur' }">
+                <span class="fa fa-times form-control-feedback" aria-hidden="true" ng-show="form.firstname.$dirty && form.firstname.$invalid" ng-cloak=""></span>
+                <span class="help-block" ng-show="form.firstname.$dirty && form.firstname.$error.required" ng-cloak>First name is required</span>
+            </div>
+            <div class="form-group has-feedback" ng-class="{'has-error' : form.lastname.$dirty && form.lastname.$invalid}">
+                <p class="control-label" for="lastname">Last name:</p>
+                <input type="text" name="lastname" required="required" data-ng-model="data.lastname" data-ng-disabled="status.loading" class="form-control" value="" ng-model-options="{ updateOn: 'blur' }">
+                <span class="fa fa-times form-control-feedback" aria-hidden="true" ng-show="form.lastname.$dirty && form.lastname.$invalid" ng-cloak=""></span>
+                <span class="help-block" ng-show="form.lastname.$dirty && form.lastname.$error.required" ng-cloak>Last name is required</span>
+            </div>
+            <div class="form-group has-feedback" ng-class="{'has-error' : form.email.$dirty && form.email.$invalid}">
+                <p class="control-label" for="email">Email: </p>
+                <input type="email" name="email" required="required" data-ng-model="data.email" data-ng-disabled="checking.username || status.loading" class="form-control" value="" ng-model-options="{ updateOn: 'blur' }" ng-blur="checkUniqueEmail(form.email.$error)">
+                <span class="fa fa-times form-control-feedback" aria-hidden="true" ng-show="form.email.$dirty && form.email.$invalid" ng-cloak=""></span>
+                <span class="help-block" ng-show="form.email.$dirty && form.email.$error.required" ng-cloak>Email is required</span>
+                <span class="help-block" ng-show="form.email.$error.email" ng-cloak>Not a valid email</span>
+                <span class="help-block" ng-show="form.email.$error.unique" ng-cloak>This email has been taken by other</span>
+            </div>
+            <i class="fa fa-spinner fa-spin hide" style="position: relative;float: right;top: -38px;right: -20px;" ng-class="{ 'show' : checking.username }"></i>
+            <div class="form-group has-feedback" ng-class="{'has-error' : form.email_confirm.$dirty && form.email_confirm.$invalid}">
+                <p class="control-label" for="email_confirm">Confirm Email: </p>
+                <input type="email" name="email_confirm" required="required" data-ng-model="data.email_confirm" data-ng-match="email" data-ng-disabled="checking.username || status.loading" class="form-control" value="" ng-model-options="{ updateOn: 'blur' }">
+                <span class="fa fa-times form-control-feedback" aria-hidden="true" ng-show="form.email_confirm.$dirty && form.email_confirm.$invalid" ng-cloak=""></span>
+                <span class="help-block" ng-show="form.email_confirm.$error.match" ng-cloak>Email does not match</span>
+            </div>
+            <div class="form-group has-feedback" ng-class="{'has-error' : form.password.$dirty && form.password.$invalid}">
+                <p class="control-label" for="password">Password: </p>
+                <input type="password" name="password" size="30" required="required" data-ng-model="password" data-ng-minlength="6" data-ng-disabled="status.loading" class="form-control" value="" ng-model-options="{ updateOn: 'blur' }">
+                <span class="fa fa-times form-control-feedback" aria-hidden="true" ng-show="form.password.$dirty && form.password.$invalid" ng-cloak=""></span>
+                <span class="help-block" ng-show="form.password.$dirty && form.password.$error.required" ng-cloak>Password is required</span>
+                <span class="help-block" ng-show="form.password.$error.minlength" ng-cloak>Password must be at least 6 characters length</span>
+            </div>
+            <div class="form-group has-feedback" ng-class="{'has-error' : form.password_confirm.$dirty && form.password_confirm.$invalid}">
+                <p class="control-label" for="password_confirm">Confirm Password: </p>
+                <input type="password" name="password_confirm" size="30" required="required" data-ng-model="data.password_confirm" data-ng-match="password"  data-ng-disabled="status.loading" class="form-control" value="" ng-model-options="{ updateOn: 'blur' }">
+                <span class="fa fa-times form-control-feedback" aria-hidden="true" ng-show="form.password_confirm.$dirty && form.password_confirm.$invalid" ng-cloak=""></span>
+                <span class="help-block" ng-show="form.password_confirm.$error.match" ng-cloak>Password does not match</span>
+            </div>
+            <button name="submit" type="submit" class="btn btn-primary btn-lg btn-block" id="submitbutton" ng-disabled="status.loading" disabled="disabled">
+                <span class="hide" ng-class="{ 'show' : status.loading }">
+                    <i class="fa fa-spinner fa-spin"></i>
+                </span>
+                <span ng-show="!status.loading &amp;&amp; !status.success">Register</span>
+                <span class="hide" ng-class="{ 'show' : status.success }">Successful!</span>
+            </button>
+        </form>
+        <h5 class="text-center"><?php echo $this->translate('Already have an account? ');?><a href="<?php echo $this->url('home'); ?>"><strong><?php echo $this->translate('Log In.'); ?></strong></a></h5>
+        <div class="result-message" ng-show="status.error" ng-cloak>
+            <div class="alert alert-danger">
+                <h3><?php echo $this->translate("Register failed."); ?></h3>
+            </div>
+            <div class="message-detail">{{ message }}</div>
+        </div>
+    </div>
+    <div class="result-message" ng-show="status.success" ng-cloak>
+        <div class="alert alert-success">
+            <h3><?php echo $this->translate("Register successfully!"); ?></h3>
+        </div>
+        <div class="message-detail">{{ message }}</div>
+    </div>
+    
+</div>

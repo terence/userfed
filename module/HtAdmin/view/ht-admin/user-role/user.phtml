@@ -1,0 +1,74 @@
+<?php /* @var $user \HtUser\Model\User */
+$this->headTitle($this->translate('User\'s Roles'));
+echo $this->message($this);
+echo $this->partial('ht-admin/user/partial/tab-navigator', array(
+    'activeTab' => 5,
+    'user' => $user,
+));
+
+$disableForm = true;
+if ($roles->count() > 0) {
+    $disableForm = false;
+}
+?>
+<!-- show list application user allow access -->
+<div class="tab-content">
+    <form method="post" action="<?php echo $this->url('admin/user/role', array('action' => 'add-role', 'id' => $user->getUserId())); ?>">
+        <table class="table table-condensed borderless">
+            <tr>
+                <td>
+                    <select name="role_id" class="form-control" <?php echo $disableForm ? 'disabled="disabled"': ''; ?>>
+                    <?php if (!$disableForm) { ?>
+                        <?php foreach ($roles as $role) { ?>
+                            <option value="<?php echo $this->escapeHtmlAttr($role->getRoleId()); ?>">
+                                <?php echo $this->escapeHtml($role->getDescription()); ?>
+                            </option>
+                        <?php } ?>
+                    <?php } else { ?>
+                            <option><?php echo $this->translate('No role available');?></option>
+                    <?php } ?>
+                    </select>
+                </td>
+                <td class="text-right col-sm-1">
+                    <button type="submit" class="btn btn-link" id="save-btn" <?php echo $disableForm ? 'disabled="disabled"': ''; ?>>
+                        <i class="fa fa-plus-circle fa-lg icon-add"></i>
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </form>
+	<table class="table table-striped">
+		<tr>
+			<th><?php echo $this->translate('Role'); ?></th>
+            <th><?php echo $this->translate('Description'); ?></th>
+            <th>&nbsp;</th>
+		</tr>
+		<?php
+        $totalRoles = $userRoles->count();
+        foreach ($userRoles as $userRole ) { ?>
+		<tr>
+			<td>
+				<?php echo $this->escapeHtml($userRole->getRoleId());?>
+			</td>
+            <td>
+                <?php echo $this->escapeHtml($userRole->getDescription()); ?>
+            </td>
+            <td class="text-right col-sm-1">
+            <?php if ($totalRoles > 1) { ?>
+                <a 
+                    href="<?php
+                    echo $this->url(
+                            'admin/user/role', array('id' => $user->getUserId(), 'roleId' => $userRole->getRoleId(), 'action' => 'delete')
+                    );
+                    ?>"
+                    class="delete-application btn-link btn">
+                    <i class="fa fa-times fa-lg icon-remove"></i>
+                </a>
+            <?php } ?>
+            </td>
+		</tr>
+		<?php } ?>
+	</table>
+</div>
+<?php $this->inlineScript()->appendFile($this->basePath('js/custom/server.js', 'text/javascript')); ?>
+

@@ -1,0 +1,99 @@
+<?php
+$this->headTitle($this->translate('Role Management'));
+?>
+<div class="listing-page">
+<?php echo $this->message($this); ?>
+    <h3><?php echo $this->translate('Roles'); ?>
+        <a href="<?php echo $this->url('admin/role/common', array('action' => 'create')); ?>" class="btn btn-link">
+            <i class="fa fa-plus"></i> <?php echo $this->translate('Create role'); ?>
+        </a>
+    </h3>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                <?php echo $this->translate('Role ID'); ?>
+            </th>
+            <th>
+                <?php echo $this->translate('Description'); ?>
+            </th>
+            <th>
+                &nbsp;
+            </th>
+            <th>
+                &nbsp;
+            </th>
+            <th>
+                &nbsp;
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        /* @var $server \HtAuthentication\Model\Server */
+        echo $this->partial('partial/confirm-modal', array('title' => $this->translate('Delete role')));
+        
+        foreach ($roles as $role) {
+            $confirmMessage = sprintf(
+            $this->translate('Are you sure you want to delete <b>%s</b>?<br />You will not be able to undo this action.'),
+            $this->escapeHtmlAttr($role['role_id'])
+            );
+            ?>
+            <tr>
+                <td>
+                    <a href="<?php echo $this->url('admin/role/common', array('action' => 'edit', 'id' => $role['role_id'])); ?>">
+                        <?php echo $this->escapeHtml($role['role_id']); ?>
+                    </a>
+                </td>
+                <td>
+                    <?php echo $this->escapeHtml($role['description']); ?>
+                </td>
+                <td>
+                    <?php
+                    if (empty($role['hidden_number_user'])) {
+                    ?>
+                    <a href="<?php echo $this->url('admin/role/user', array('id' => $role['role_id'])); ?>">
+						<i class="fa fa-group fa-lg"></i>&nbsp;
+						<?php
+						if (!empty($countUsers[$role['role_id']])) {
+							if ($countUsers[$role['role_id']] > 1) {
+								echo sprintf($this->translate("%s users"), $countUsers[$role['role_id']]);
+							} else {
+								echo sprintf($this->translate("%s user"), $countUsers[$role['role_id']]);
+							}
+						} else {
+							echo $this->translate('add user');
+						}
+						?>
+					</a>
+                    <?php
+                    }
+                    ?>
+				</td>
+                <td>
+                    <?php
+                    if (!$role['disabled_edit_permission']) {
+                    ?>
+                    <a href="<?php echo $this->url('admin/role/permission', array('id' => $role['role_id'])); ?>">
+                        <?php echo $this->translate('Permission') ?>
+                    </a>
+                    <?php
+                    }
+                    ?>
+                </td>
+                <td class="text-right">
+                    <?php if ($role['allowed_delete']) { ?>
+                    <a data-confirm-message="<?php echo $confirmMessage; ?>"
+                        href="<?php echo $this->url('admin/role/common', array('action' => 'delete', 'id' => $role['role_id']))?>">
+                        <i class="fa fa-times fa-lg icon-remove"></i>
+                    </a>
+                    <?php } ?>
+                </td>
+            </tr>
+<?php } ?>
+    </tbody>
+</table>
+<?php
+echo $this->paginationControl($paginator, 'Sliding', 'partial/pagination-control', array('route' => null));
+?>
+</div>

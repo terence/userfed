@@ -1,0 +1,76 @@
+<div class="edit-page">
+    <?php
+    $name =  trim($this->escapeHtml($user->getFirstName() . ' ' .$user->getLastName()));
+    $userId = $user->getUserId();
+    if (empty($name)) {
+        $name = $user->getEmail();
+        if (empty($name)) {
+            $name = $this->translate('View deleted user');
+        }
+    }
+    ?>
+    <h3 class="text-center"><?php echo $name; ?>
+        <span class="label label-warning label-status"><?php echo $this->translate('Deleted'); ?></span>
+    </h3>
+    <br>
+    <div class="tab-content">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-2 right-border">
+                <?php if ($successMessage) { ?>
+                    <div class="alert alert-success">
+                        <?php echo $successMessage; ?>
+                    </div>
+                <?php
+                } else {
+                    $form->prepare();
+                    echo $this->form()->openTag($form);
+                    echo $this->tbFormRow($form->get('firstname')->setAttribute('disabled', 'disabled'));
+                    echo $this->tbFormRow($form->get('lastname')->setAttribute('disabled', 'disabled'));
+                    echo $this->tbFormRow($form->get('email'));
+                    echo $this->tbFormRow($form->get('role')->setAttribute('disabled', 'disabled'));
+                    ?>
+                    <div class="control-group">
+                        <div class="controls">
+                            <p class="checkbox">
+                                <?php echo $this->formElement($form->get('is_enabled')->setAttribute('disabled', 'disabled')); ?>
+    <?php echo $form->get('is_enabled')->getLabel(); ?>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label"></label>
+                        <div class="controls">
+                            <a class="btn btn-default" href="<?php echo $this->url(null, array('action' => 'index'), array('query' => array('status' => 'deleted'))); ?>">
+    <?php echo $this->translate('Cancel'); ?>
+                            </a>
+                        </div>
+                    </div>
+                    <?php echo $this->form()->closeTag();
+                }
+                ?>
+            </div>
+            <div class="col-md-6 user-action-group">
+                <p>
+                    <a href="<?php echo $this->url(null, array('action' => 'restore', 'id' => $userId)); ?>"
+                       class="btn btn-link"
+                       title="<?php echo $this->translate('Restore this user'); ?>"
+                       >
+                        <i class="fa fa-repeat"></i> <?php echo $this->translate('Restore'); ?>
+                    </a>
+                </p>
+                <a href="<?php echo $this->url(null, array('action' => 'permanently-delete', 'id' => $userId)); ?>" 
+                   class="btn btn-danger btn-permanently-delete"
+                   data-confirm-message="<?php echo $this->translate('Are you sure you want to permanently delete this user?'
+                        . '<br />You will not be able to undo this action.');
+                ?>">
+<?php echo $this->translate('Permanently Delete'); ?>
+                </a>
+            </div>
+        </div>
+        <!-- Modal -->
+        <?php
+        echo $this->partial('partial/confirm-modal', array('title' => $this->translate('Delete user')));
+        ?>
+        <!-- end Modal -->
+    </div>
+</div><!-- end edit-page -->

@@ -1,0 +1,52 @@
+<div class="container">
+	<?php 
+		if (isset($identity)) {
+			if (is_object($identity)) {
+				switch ($identity->authenticationProvider) {
+					case "internal":
+						/* $identity has property (userId, firstName, lastName, email, authenticationProvider, isEnabled)*/
+						$name = $identity->firstName . ' ' . $identity->lastName;
+						$name = trim($name);
+						$name = $this->escapeHtml($name);
+						if (empty($name)) {
+							$name = $identity->email;
+						}
+						break;
+					case "facebook":
+						$name = "<img src='https://graph.facebook.com/" . $identity->oauthProviderId . "/picture'>";
+						break;
+					case "google":
+						if (!empty($identity->oauthProfile->picture)) {
+							$name = '<img src="' . $identity->oauthProfile->picture . '?sz=50"/>';
+						}
+					default:
+						break;
+				}
+			} elseif (is_string($identity)) {
+				$name = $identity;
+			}
+	?>
+	<div class='identity pull-right'>
+		<div class="btn-group">
+			<a class="btn dropdown-toggle btn-link" data-toggle="dropdown" href="#">
+              <?php if (isset($name)) { echo sprintf($this->translate('Hello %s'), $name); } ?>
+			</a>
+			<ul class="dropdown-menu login-menu">
+<!--				<li>
+					<a href="<?php //echo $this->basePath("/profile"); ?>"><?php echo $this->translate('Profile'); ?></a>
+				</li>-->
+				<li>
+					<a href="<?php echo $this->basePath("/internal/update"); ?>"><?php echo $this->translate('Change Password'); ?></a>
+				</li>
+				<li>
+					<a href="<?php echo $this->basePath("/logout"); ?>"><?php echo $this->translate("Logout");?></a>
+				</li>
+			</ul>
+	  	</div>
+		
+	</div>
+	<?php } ?>
+	<h1 style="text-align:center;margin-top:20px;">
+		<?php echo $this->translate("User Federation"); ?>
+	</h1>
+</div>

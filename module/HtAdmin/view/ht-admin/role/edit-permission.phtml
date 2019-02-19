@@ -1,0 +1,35 @@
+<?php
+$this->headTitle('Update permission');
+$this->headLink()
+	->appendStylesheet($this->basePath('lib/multiselect/css/multi-select.css'));
+?>
+<?php
+    echo $this->message($this);
+    echo $this->partial('ht-admin/role/partial/tab-navigator', array(
+        'activeTab' => 2,
+        'role' => $role,
+    ));
+?>
+<div class="tab-content">
+    <form method="POST">
+        <select multiple="multiple" id="permissions" name="permissions[]">
+            <?php foreach ($optionGroups as $group) { ?>
+                <optgroup label='<?php echo $this->escapeHtmlAttr($group['label']); ?>'>
+                    <?php foreach ($group['options'] as $option) { ?>
+                    <option value='<?php echo $this->escapeHtmlAttr($option['value']); ?>' <?php echo !$option['selected'] ?: "selected"; ?>>
+                        <?php echo $this->escapeHtml($option['text']); ?>
+                    </option>
+                <?php } ?>
+                </optgroup>
+        <?php } ?>
+        </select>
+        <button class="btn btn-primary" type="submit"><?php echo $this->translate('Update'); ?></button>
+        <a href="<?php echo $this->url('admin/role'); ?>" class="btn">
+            <?php echo $this->translate('Cancel'); ?>
+        </a>
+    </form>
+</div>
+<?php
+$this->inlineScript()->appendFile($this->basePath('lib/multiselect/js/jquery.multi-select.js'));
+$this->inlineScript()->appendFile($this->basePath('lib/quicksearch/dist/jquery.quicksearch.min.js'));
+$this->inlineScript()->appendFile($this->basePath('js/custom/admin/role/edit-permission.js'));

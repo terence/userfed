@@ -1,0 +1,53 @@
+<?php $this->headTitle('Logs');
+
+echo $this->message($this); ?>
+<h3><?php echo $this->translate('Logs'); ?></h3>
+<?php if ($count > 0) { ?>
+    <table class="table table-hover">
+        <tr>
+            <th><?php echo $this->translate('Ip'); ?></th>
+            <th><?php echo $this->translate('User'); ?></th>
+            <th><?php echo $this->translate('Time'); ?></th>
+            <th><?php echo $this->translate('Event'); ?></th>
+            <th><?php echo $this->translate('Message'); ?></th>
+        </tr>
+        <?php foreach ($logs as $log) { ?>
+            <?php if (!$log['isError']) { ?>
+                <tr class="success">
+                <?php } else { ?>
+                <tr class="alert-danger">
+                <?php } ?>
+                <td>
+                    <?php echo $this->escapeHtml($log['ipAddress']); ?>
+                </td>
+                <td>
+                    <?php echo $log['username']; ?>
+                </td>
+                <td>
+                    <?php echo $log['time']; ?>
+                </td>
+                <td>
+                    <a href="<?php echo $this->url('admin/log/details', array('id' => $log['log_id'])); ?>">
+                        <?php echo $log['typename']; ?>
+                    </a>
+                </td>
+                <td>
+                    <a href="<?php echo $this->url('admin/log/details', array('id' => $log['log_id'])); ?>">
+                        <?php echo $this->escapeHtml($log['message']); ?>
+                    </a>
+                </td>
+                <td>
+                </td>
+            </tr>
+        <?php } ?>
+    </table>
+    <?php
+    echo $this->paginationControl($this->paginator, 'Sliding', 'partial/pagination-control', array('route' => null));
+    ?>
+<?php } else { ?>
+    <div class="alert alert-info">
+        <p class="text-center">
+            <?php echo $this->translate('No activity found.'); ?>
+        </p>
+    </div>
+<?php } ?>

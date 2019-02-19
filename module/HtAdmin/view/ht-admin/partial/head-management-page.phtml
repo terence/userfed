@@ -1,0 +1,14 @@
+<h3><?php echo $titlePage;?>
+	<a href="<?php echo $createBtnUrl; ?>" class="btn btn-link">
+	<i class="fa fa-plus"></i> <?php echo $createBtnLabel; ?>
+</a>
+</h3>
+<form class="navbar-form navbar-right form-inline" role="search">
+	<div class="form-group">
+		<label><?php echo $this->translate('Status:'); ?></label> <?php echo $this->formRow($filterForm->get('status')); ?>
+	</div>
+	<div class="form-group">
+		<?php echo $this->formRow($filterForm->get('keyword')->setAttribute('data-clear-btn', 'true')); ?>
+	</div>
+	<button class="btn" type="submit" id="filter-button"><?php echo $this->translate('Search') ?></button>
+</form>

@@ -1,0 +1,33 @@
+<div class="create-form">
+<?php
+echo $this->headTitle($this->translate('Create user'));
+?>
+	<h3 class="text-center"><?php echo $this->translate("Create user"); ?></h3>
+	<?php if($successMessage) { ?>
+		<div class="alert alert-success">
+			<?php echo $successMessage; ?>
+		</div>
+	<?php } else { ?>
+		<?php $this->inlineScript()->appendFile($this->basePath('js/custom/create-user.js', 'text/javascript')); ?>
+		<?php if($errorMessage) { ?>
+			<div class="alert alert-danger">
+				<?php echo $errorMessage; ?>
+			</div>
+		<?php } ?>
+			<?php
+			$form->prepare();
+			echo $this->form()->openTag($form);
+			echo $this->tbFormRow($form->get('firstname'));
+			echo $this->tbFormRow($form->get('lastname'));
+			echo $this->tbFormRow($form->get('email'));
+			echo $this->tbFormRow($form->get('email_confirm'));
+			?>
+			<p>
+				<?php echo $this->translate('Password will be automatically generated and sent to user via email.'); ?>
+			</p>	
+			
+			<?php echo $this->formSubmit($form->get('submit')); ?>
+			<a class="btn" href="<?php echo $this->url('admin/user'); ?>"><?php echo $this->translate('Cancel'); ?></a>
+			<?php echo $this->form()->closeTag(); ?>
+	<?php } ?>
+</div>

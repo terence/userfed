@@ -1,0 +1,35 @@
+<?php echo $this->message($this);
+$this->headTitle($this->translate('Access'));
+?>
+<h3><?php echo $this->translate("Access"); ?></h3>
+<div class="row">
+	<table class="table table-hover">
+		<?php if (count($userAppsInfo) == 0) {?>
+		<tr class="text-center">
+			<td>
+			 <?php echo $this->translate("No application found");?>
+			</td>
+		</tr>
+		<?php } else {?>
+		<tr>
+			<th><?php echo $this->translate('Application'); ?></th>
+			<th><?php echo $this->translate('Organisation'); ?></th>
+			<th><?php echo $this->translate('Server'); ?></th>
+		</tr>
+		<?php foreach ($userAppsInfo as $userAppInfo ) {
+		/* @var $userApp \HtAuthentication\Model\UserApplication */
+		?>
+		<tr>
+			<td><?php echo $userAppInfo["applicationTitle"];?></td>
+			<td><?php echo $userAppInfo["organisationTitle"];?></td>
+			<td><?php if (array_key_exists('serverRedirectLink', $userAppInfo)) {?>
+				<a href="<?php echo $userAppInfo['serverRedirectLink'];?>" class="btn btn-link" title="Go"><?php echo $userAppInfo['serverTitle']?></a>
+			<?php } else {?>
+				<?php echo $userAppInfo['serverTitle'];?>
+			<?php }?>
+			</td>
+		</tr>
+		<?php } ?>
+		<?php } ?>
+	</table>
+</div>

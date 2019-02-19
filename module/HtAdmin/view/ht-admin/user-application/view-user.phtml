@@ -1,0 +1,107 @@
+<?php /* @var $user \HtUser\Model\User */ ?>
+<?php echo $this->headTitle(' User\'s Application'); ?>
+<?php
+echo $this->message($this);
+$disabled = $user->getIsDeleted() ? 'disabled="disabled"' : '';
+?>
+<script type="text/javascript">
+	var userId = "<?php echo $user->getUserId(); ?>";
+</script>
+<?php
+echo $this->partial('ht-admin/user/partial/tab-navigator', array(
+    'activeTab' => 3,
+    'user' => $user,
+));
+?>
+<!-- show list application user allow access -->
+<div class="tab-content">
+	<form class="form-inline" role="form" method="post" action="<?php echo $this->url('admin/user-application', array('action' => 'add-app', 'id' => $user->getUserId())); ?>">
+		<table class="table borderless">
+			<tbody>
+				<tr>
+					<td>
+						<input <?php echo $disabled; ?> placeholder="<?php echo $this->translate('Application title'); ?>" name="application_id" />
+					</td>
+					<td>
+						<select <?php echo $disabled; ?> name="server_id" class="form-control server-select">
+							<option><?php echo $this->translate('Server'); ?></option>
+						</select>
+						<i class="fa fa-spinner fa-spin" id="icon-loading" style="display:none;"></i>
+					</td>
+					<td class="text-center">
+						<button type="submit" 
+						<?php
+						if ($disabled) {
+							echo $disabled;
+						} else {
+							if ($serverDefault->count() == 0) {
+								echo 'disabled="disabled"';
+							}
+						}
+						?>
+								class="btn btn-link" id="save-btn">
+							<i class="fa fa-plus-circle fa-lg icon-add"></i>
+						</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+	<!--</div>-->
+	<?php if ($userApplications->count() > 0) { ?>
+		<table class="table table-striped">
+			<tbody>
+				<tr>
+					<th><?php echo $this->translate('Name'); ?></th>
+					<th><?php echo $this->translate('Server Name'); ?></th>
+					<th><?php echo $this->translate('Domain'); ?></th>
+					<th></th>
+				</tr>
+				<?php foreach ($userApplications as $application) { ?>
+					<tr id="application-user-<?php echo $application->user_application_id; ?>">
+						<td>
+							<?php echo $this->escapeHtml($application->app_title); ?>
+						</td>
+						<td>
+							<?php echo $this->escapeHtml($application->server_title); ?>
+						</td>
+						<td>
+							<?php echo $this->escapeHtml($application->domain); ?>
+						</td>
+						<td class="text-center">
+							<?php if (!$application->is_deleted) { ?>
+								<a href="<?php echo $this->url('admin/user-application', array('action' => 'delete-app', 'id' => $application->user_application_id)); ?>"
+								   class="delete-application btn-link btn">
+									<i class="fa fa-times fa-lg icon-remove"></i>
+								</a>
+							<?php } ?>
+						</td>
+					</tr>
+			<?php
+			}
+			?>
+				</tbody>
+			</table>
+	<?php
+		echo $this->paginationControl($paginator, 'Sliding', 'partial/pagination-control', array('route' => null));
+	} else { ?>
+	<table class="table table-striped">
+		<tbody>
+			<tr>
+				<td class="text-center">
+					<?php echo $this->translate('No application found.'); ?>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<?php } ?>
+</div>
+<?php
+$this->inlineScript()->appendFile($this->basePath('js/custom/server.js', 'text/javascript'))
+		->appendFile($this->basePath('js/custom/application.js', 'text/javascript'));
+$this->inlineScript()->appendScript(<<<END
+	$(document).ready(function () {
+		handleLoadApplication();
+	});
+END
+);

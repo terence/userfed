@@ -1,0 +1,32 @@
+<?php
+/**
+format of tab.
+$this->partial('partial/tab.phtml', array());
+'tabs' => array(
+			array(
+				'name' => 'Application',
+				'url' => 'url link tab',
+                'isHidden' => false, // (optional) Not show in tab if this value is true.
+				'isActive' => true
+			)
+		)
+*/
+?>
+<ul class="nav nav-tabs<?php if (!empty($navClass)) { echo " $navClass";} ?>">
+	<?php foreach ($tabs as $tab) {
+        if (array_key_exists('isHidden', $tab) && $tab['isHidden']) {
+            continue;
+        }
+    ?>
+	<li <?php if (array_key_exists('isActive', $tab) && $tab['isActive']) { echo 'class="active"'; }?>>
+		<a href="
+		<?php if (array_key_exists('url', $tab)) {
+			echo $tab['url'];
+		} else {
+			echo "#";
+		}?>">
+			<?php echo $tab['name']; ?>
+		</a>
+	</li>
+	<?php } ?>
+</ul>

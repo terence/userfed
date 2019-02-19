@@ -1,0 +1,84 @@
+<?php $this->headTitle($organisation->getTitle() . $this->translate(' - Application management')); ?>
+<?php echo $this->message($this); ?>
+<h3 class="text-center"><?php echo $this->escapeHtml($organisation->getTitle()); ?> <?php echo $this->translate('Organisation');?></h3>
+<?php
+	echo $this->partial('ht-admin/organisation/partial/tab-navigator.phtml', array('organisationId' => $organisation->getOrganisationId(), 'activeTab' => '2'));
+?>
+<script>
+	var organisationId = <?php echo $organisation->getOrganisationId() ?>
+</script>
+<div class="tab-content">
+	<form class="form-inline" method="post" action="<?php echo $this->url('admin/application-organisation', 
+			array('action' => 'add-application', 'id' => $organisation->getOrganisationId())); ?>">
+		<table class="table">
+			<tbody>
+				<tr>
+					<td>
+						<input type="text" name="application_id" placeholder="<?php echo $this->translate('Application Title'); ?>" >
+					</td>
+					<td>
+						<select class="form-control server-select" name="server_id">
+							<option><?php echo $this->translate('Server'); ?></option>
+						</select>
+						<i class="fa fa-spinner fa-spin" id="icon-loading" style="display: none;"></i>
+					</td>
+					<td class="text-center">
+						<button class="btn btn-link" type="submit">
+							<i class="fa fa-plus-circle fa-lg icon-add"></i>
+						</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+
+<?php if ($totalApps > 0) {  ?>
+	
+	<!-- Modal -->
+	<?php
+	echo $this->partial('partial/confirm-modal', array('title' => $this->translate('Delete appication')));
+	?>
+	<!-- end Modal -->
+	
+	<table class="table table-striped">
+		<tbody>
+			<?php foreach ($apps as $app) {
+                $confirmMessage = sprintf(
+                        $this->translate('Are you sure you want to delete <b>%s</b> application?<br />You will not be able to undo this action.'),
+                        $this->escapeHtmlAttr($app->app_title)
+                        );
+            ?>
+			<tr>
+				<td>
+					<?php echo $this->escapeHtml($app->app_title); ?>
+				</td>
+				<td>
+					<?php echo $this->escapeHtml($app->server_title); ?>
+				</td>
+				<td class="text-center">
+					<a class="btn btn-link" 
+					   data-id="<?php echo $app->application_server_organisation_id?>"
+					   data-confirm-message="<?php echo $confirmMessage; ?>"
+					   href="<?php echo $this->url('admin/application-organisation',
+								array('action' => 'delete-application', 'id' => $app->application_server_organisation_id));
+						?>">
+						<i class="fa fa-times fa-lg icon-remove"></i>
+					</a>
+				</td>
+			</tr>
+			<?php } ?>
+		</tbody>
+	</table>
+	<?php echo $this->paginationControl($this->paginator, 'Sliding', 'partial/pagination-control', array('route' => null)); ?>
+<?php } else { ?>
+	<table class="table table-striped">
+		<tbody>
+			<tr>
+				<td class="text-center"><?php echo $this->translate('No application found.'); ?></td>
+			</tr>
+		</tbody>
+	</table>
+<?php }
+	$this->inlineScript()->appendFile($this->basePath('js/custom/organisation-add-app.js'));
+	?>
+</div>

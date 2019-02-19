@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="Bootstrap.php">
+	<testsuites>
+		<testsuite name="AppCoreTest">
+			<directory>./AppCoreTest</directory>
+		</testsuite>
+	</testsuites>
+	<filter>
+		<whitelist processUncoveredFilesFromWhitelist="true">
+			<!-- module folder : ../../-->
+			<directory suffix=".php">../../</directory>
+		</whitelist>
+	</filter>
+	<php>
+		<env name="APPLICATION_ENV" value="development"/>
+	</php>
+</phpunit>

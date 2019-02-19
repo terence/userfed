@@ -1,0 +1,66 @@
+<?php
+
+use HtAuthentication\Model\AuthenticationAccount as AuthAccount;
+
+/* @var $user \HtUser\Model\User */
+$this->headTitle(' User\'s Identity');
+echo $this->message($this);
+echo $this->partial('ht-admin/user/partial/tab-navigator', array(
+    'activeTab' => 6,
+    'user' => $user,
+));
+?>
+<div class="tab-content">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    <?php echo $this->translate('Provider'); ?>
+                </th>
+                <th>
+                    <?php echo $this->translate('Email / Image'); ?>
+                </th>
+                <th>
+                    &nbsp;
+                </th>
+            </tr>
+        </thead>
+        <?php foreach ($logins as $login) { ?>
+		<tr>
+			<td>
+				<?php
+				if ($login->type == AuthAccount::TYPE_INTERNAL) {
+					echo $this->translate('Internal');
+				} elseif ($login->type == AuthAccount::TYPE_OAUTH) {
+					echo ucfirst($login->provider);
+				}
+				?>
+			</td>
+			<td>
+				<?php
+					if ($login->type == AuthAccount::TYPE_INTERNAL) {
+						echo $login->username;
+					} elseif ($login->type == AuthAccount::TYPE_OAUTH) {
+						if ($login->provider == 'facebook') {
+							echo "<img src='https://graph.facebook.com/" . $login->provider_user_id . "/picture'>";
+						} elseif ($login->provider == 'google') {
+                            echo '<img data-google-id="' . $login->provider_user_id . '"/>';
+						}
+					}
+				?>
+			</td>
+			<td>
+				<?php if ($totalLogins > 1) { ?>
+					<a href="<?php echo $this->url('admin/user/identity', array('action' => 'delete', 'id' => $login->auth_account_id)); ?>">
+						<i class="fa fa-times icon-remove"></i>&nbsp;<?php echo $this->translate('Delete'); ?>
+					</a>
+                <?php } ?>
+			</td>
+		</tr>
+		<?php } ?>
+    </table>
+    <?php echo $this->paginationControl($this->paginator, 'Sliding', 'partial/pagination-control', array('route' => null)); ?>
+</div>
+<?php
+$this->inlineScript()->appendFile($this->basePath('js/custom/google-profile-image.js'));
+?>

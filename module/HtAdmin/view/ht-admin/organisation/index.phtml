@@ -1,0 +1,91 @@
+<div class="listing-page">
+	<?php
+	$this->headTitle($this->translate('Organisation Management'));
+	echo $this->message($this);
+	?>
+	<?php
+	echo $this->partial('ht-admin/partial/head-management-page.phtml', array(
+		'createBtnUrl' => $this->url('admin/org/common', array('action' => 'create')),
+		'createBtnLabel' => $this->translate('Create organisation'),
+		'filterForm' => $filterForm,
+		'titlePage' => $this->translate('Organisation'),
+	));
+	?>
+	<!-- end Modal -->
+	<?php if ($organisations->count() > 0) { ?>
+		<table class="table table-striped">
+			<tbody>
+				<!-- Modal -->
+				<?php
+				echo $this->partial('partial/confirm-modal', array('title' => $this->translate('Delete organisation')));
+				/* @var $org \HtAuthentication\Model\Organisation */
+				foreach ($organisations as $org) {
+					$orgId = $org->getOrganisationId();
+                    $confirmMessage = sprintf(
+                            $this->translate('Are you sure you want to delete <b>%s</b>?<br />You will not be able to undo this action.'),
+                            $this->escapeHtmlAttr($org->getTitle())
+                            );
+					?>
+					<tr>
+						<td>
+							<a href="<?php echo $this->url('admin/org/common', array('action' => 'edit', 'id' => $orgId)); ?>">
+								<?php echo $this->escapeHtml($org->getTitle()); ?>
+							</a>
+						</td>
+						<td>
+							<a href="<?php echo $this->url('admin/org/user', array('id' => $orgId)); ?>">
+								<i class="fa fa-users fa-lg"></i>&nbsp;
+								<?php
+								if (!empty($countUsers[$orgId])) {
+									if ($countUsers[$orgId] > 1) {
+										echo sprintf($this->translate("%s users"), $countUsers[$orgId]);
+									} else {
+										echo sprintf($this->translate("%s user"), $countUsers[$orgId]);
+									}
+								} else {
+									echo $this->translate('add user');
+								}
+								?>
+							</a>
+						</td>
+						<td>
+							<a href="<?php echo $this->url('admin/org/app', array('id' => $orgId)); ?>">
+								<i class="fa fa-tasks fa-lg"></i>&nbsp;
+								<?php
+								if (!empty($countApplications[$orgId])) {
+									if ($countApplications[$orgId] > 1) {
+										echo sprintf($this->translate("%s apps"), $countApplications[$orgId]);
+									} else {
+										echo sprintf($this->translate("%s app"), $countApplications[$orgId]);
+									}
+								} else {
+									echo $this->translate('add app');
+								}
+								?>
+							</a>
+						</td>
+						<td>
+							<a data-confirm-message="<?php echo $confirmMessage; ?>"
+							   href="<?php echo $this->url('admin/org/common', array('action' => 'delete', 'id' => $orgId)); ?>" title="<?php echo $this->translate('Delete this organisation'); ?>">
+								<i class="fa fa-times fa-lg icon-remove"></i>
+							</a>
+						</td>
+						<?php }
+					?>
+				</tr>
+			</tbody>
+		</table>
+		<?php
+		echo $this->paginationControl($this->paginator, 'Sliding', 'partial/pagination-control', array('route' => null));
+	} else {
+		?>
+		<table class="table table-striped">
+			<tbody>
+				<tr>
+					<td class="text-center"><?php echo $this->translate('No orgnisation found'); ?></td>
+				</tr>
+			</tbody>
+		</table>
+
+	<?php } ?>
+</div>

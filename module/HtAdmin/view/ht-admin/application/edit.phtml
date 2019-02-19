@@ -1,0 +1,28 @@
+<?php
+$this->headTitle(sprintf($this->translate('%s application'), $application->getTitle()));
+?>
+
+<h3 class="text-center"><?php echo sprintf($this->translate("%s Application"), $application->getTitle()); ?></h3>
+<?php
+echo $this->partial('ht-admin/application/partial/tab-navigator.phtml', array(
+	'appId' => $application->getApplicationId(),
+	'activeTab' => 1,
+));
+?>
+<div class="tab-content">
+	<?php
+	$form->prepare();
+	echo $this->form()->openTag($form);
+	echo $this->formHidden($form->get('application_id'));
+	echo $this->tbFormRow($form->get('title'));
+	echo $this->tbFormRow($form->get('description'));
+	?>
+	<div class="control-group">
+		<label class="control-label"></label>
+		<div class="controls">
+			<?php echo $this->formSubmit($form->get('submit')->setValue($this->translate('Update'))); ?>
+			<a class="btn" href="<?php echo $this->url('admin/app'); ?>"><?php echo $this->translate('Cancel'); ?></a>
+		</div>
+	</div>
+	<?php echo $this->form()->closeTag(); ?>
+</div>

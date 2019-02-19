@@ -1,0 +1,68 @@
+<?php
+/**
+ * View role's user
+ */
+$this->headTitle($this->translate('View role\'s user'));
+echo $this->message($this);
+echo $this->partial('ht-admin/role/partial/tab-navigator', array(
+    'activeTab' => 3,
+    'role' => $role,
+));
+?>
+<div class="tab-content">
+    <form class="form-inline" method="post" action="<?php echo $this->url('admin/role/user',
+            array('action' => 'add-user', 'id' => $role->getRoleId())); ?>">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>
+                        <input type="text" name="user_id" data-role-id="<?php echo $this->escapeHtmlAttr($role->getRoleId()); ?>" placeholder="<?php echo $this->translate('Firstname, lastname or email'); ?>" >
+                    </td>
+                    <td class="text-right col-lg-1">
+                        <button class="btn btn-link" type="submit">
+                            <i class="fa fa-plus-circle fa-lg icon-add"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+    <?php if ($count > 0) {
+        echo $this->partial('partial/confirm-modal', array('title' => $this->translate('Delete role\'s user')));
+    ?>
+    <table class="table table-striped">
+        <tbody>
+            <?php foreach ($users as $user) {
+                $name = $user->getName();
+                $confirmMessage = sprintf(
+                $this->translate('Are you sure you want to delete <b>%s</b>?<br />You will not be able to undo this action.'),
+                $this->escapeHtmlAttr($name)
+                );
+            ?>
+            <tr>
+                <td><?php echo $this->escapeHtml($name); ?></td>
+                <td><?php echo $this->escapeHtml($user->getEmail()); ?></td>
+                <td class="text-right">
+                    <a href="<?php echo $this->url('admin/role/user', array('action' => 'delete-user', 'id' => $role->getRoleId(), 'userId' => $user->getUserId())); ?>" data-confirm-message="<?php echo $confirmMessage; ?>" class="btn-link btn">
+                        <i class="fa fa-times fa-lg icon-remove"></i>
+                    </a>
+                </td>
+            </tr>
+            <?php } ?>
+        </tbody>
+    </table>
+    <?php echo $this->paginationControl($paginator, 'Sliding', 'partial/pagination-control'); ?>
+    <?php } else { ?>
+    <table class="table table-striped">
+        <tr>
+            <td class="text-center">
+            <?php echo $this->translate('No user found.'); ?>
+            </td>
+        </tr>
+    </table>
+    <?php } ?>
+</div>
+
+<?php
+$this->inlineScript()->appendFile($this->basePath('js/custom/admin/role/add-user.js'));
+?>

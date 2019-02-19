@@ -1,0 +1,77 @@
+<?php echo $this->doctype(); ?>
+<html lang="en" ng-app="App">
+	<head>
+		<?php echo $this->headTitle(); ?>
+		<meta charset="utf-8">
+		<?php
+		echo $this->headLink()
+				->appendStylesheet($this->basePath('css/bootstrap.form.min.css'))
+				->appendStylesheet($this->basePath('lib-custom/bootstrap/bootstrap.min.css'))
+				->appendStylesheet($this->basePath('lib/fontawesome/css/font-awesome.min.css'))
+				->appendStylesheet($this->basePath('lib/select2/select2.css'))
+				->appendStylesheet($this->basePath('lib/input-with-clear-button/src/quick-clear.css'))
+				->appendStylesheet($this->basePath('css/style.min.css'));
+		echo $this->headScript();
+		?>
+		<script type="text/javascript">
+			var appcore = {};
+			appcore.baseUrl = '<?php echo $this->url('home', array(), array('force_canonical' => true)) ?>';
+		</script>
+	</head>
+	<body>
+		<div id="wrapper">
+			<?php
+			if (!isset($identity)) {
+				$identity = null;
+			}
+			?>
+			<?php // echo $this->partial("layout/header.phtml", array('identity' => $identity)); ?>
+
+			<!-- Navigation top menu -->
+			<nav class="navbar navbar-default navbar-fixed-top payroll-header">
+                <?php echo $this->partial('layout/header-sidebar-menu.phtml'); ?>
+			</nav> <!-- End navigation top menu -->
+                        <div ng-include="'/app/payroll/company/templates/company-picker.html'"></div>
+			<!-- main -->
+			<div class="container-fluid two-column">
+                <div id="col-sb" class="row">
+                    <div id="adminmenuback"></div>
+                    <aside class="left-sidebar col-xs-2">
+                        <?php
+						//@link https://github.com/fabiopaiva/zf2-navigation-bootstrap3
+						echo $this->navigation('navigation')->menu()
+								->setMaxDepth(1)
+								->setUlClass('nav')
+								->setPartial(array('partial/sidebar-menu.phtml', 'HtApplication'));
+						?>
+                        <ul class="nav sidebar-footer">
+                            <li>
+                                <a id="trig"><i id="collapse-button" class="fa fa-caret-square-o-left fa-lg"></i><span class="nav-item-label"> Sidebar Toggle</span></a>
+                            </li>
+                        </ul>
+                    </aside><!-- End sidebar menu -->
+                    <div class="col-xs-10 content-wrapper">
+                        <?php echo $this->content; ?>
+                    </div><!-- End content-wrapper -->
+                </div>
+                
+			</div>
+			<?php
+			$this->inlineScript()
+                    ->prependFile($this->basePath('js/custom/sidebar-collapse.js'))
+					->prependFile($this->basePath('lib/input-with-clear-button/src/quick-clear.js'))
+					->prependFile($this->basePath('js/appcore.js'))
+					->prependFile($this->basePath('js/custom/common.js'))
+					->prependFile($this->basePath('lib/select2/select2.min.js'))
+					->prependFile($this->basePath('/lib/bootstrap/dist/js/bootstrap.min.js'))
+					->prependFile($this->basePath('lib/jquery-validation/dist/additional-methods.min.js'))
+					->prependFile($this->basePath('lib/jquery-validation/dist/jquery.validate.min.js'))
+					->prependFile($this->basePath('lib/jquery/dist/jquery.min.js'));
+
+			echo $this->inlineScript();
+			?>
+		</div><!-- End #wrapper -->
+		<!-- footer -->
+<?php // echo $this->partial("layout/footer.phtml"); ?>
+	</body>
+</html>

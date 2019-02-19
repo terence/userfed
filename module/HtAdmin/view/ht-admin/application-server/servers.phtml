@@ -1,0 +1,85 @@
+<?php
+$this->headTitle($application->getTitle() . $this->translate(' - Organisation Management'));
+?>
+<?php echo $this->message($this); ?>
+<script type="text/javascript">
+    var applicationId = <?php echo $application->getApplicationId(); ?>
+</script>
+<h3 class="text-center"><?php echo $this->escapeHtml($application->getTitle()) . $this->translate(' Application'); ?></h3>
+<?php
+echo $this->partial('ht-admin/application/partial/tab-navigator.phtml', array(
+    'appId' => $application->getApplicationId(),
+    'activeTab' => 4,
+));
+?>
+
+<form class="form-inline" method="post" action="<?php echo $this->url('admin/app/server', array('action' => 'add-server', 'id' => $application->getApplicationId()));
+?>">
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>
+                    <input type="text" name="server_id" placeholder="<?php echo $this->translate('Server Title'); ?>" >
+                </td>
+                <td class="text-right col-sm-1">
+                    <button class="btn btn-link" type="submit">
+                        <i class="fa fa-plus-circle fa-lg icon-add"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+
+<?php if ($totalServers > 0) { ?>
+
+    <!-- Modal -->
+    <?php
+    echo $this->partial('partial/confirm-modal', array('title' => $this->translate('Delete user')));
+    ?>
+    <!-- end Modal -->
+
+    <table class="table table-striped">
+        <tbody>
+            <?php
+            foreach ($servers as $server) {
+                $confirmMessage = sprintf(
+                        $this->translate('Are you sure you want to delete <b>%s</b>?<br />You will not be able to undo this action.'),
+                        $this->escapeHtmlAttr($server->title)
+                        );
+                ?>
+                <tr>
+                    <td>
+                        <?php echo $this->escapeHtml($server->title); ?>
+                    </td>
+                    <td>
+                        <?php echo $this->escapeHtml($server->domain); ?>
+                    </td>
+                    <td class="text-right">
+                        <a class="btn btn-link" 
+                           data-confirm-message="<?php echo $confirmMessage; ?>"
+                           href="<?php
+                        echo $this->url('admin/app/server', array('action' => 'delete-server', 'id' => $server->application_server_id));
+                        ?>">
+                            <i class="fa fa-times fa-lg icon-remove"></i>
+                        </a>
+                    </td>
+                </tr>
+            <?php } ?>
+        </tbody>
+    </table>
+    <?php
+    echo $this->paginationControl($this->paginator, 'Sliding', 'partial/pagination-control', array('route' => null));
+} else {
+    ?>
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <td class="text-center"><?php echo $this->translate('No server found.'); ?></td>
+            </tr>
+        </tbody>
+    </table>
+<?php } ?>
+<?php
+$this->inlineScript()->appendFile($this->basePath('js/custom/application-add-server.js'));
+?>

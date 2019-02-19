@@ -1,0 +1,41 @@
+<div class="create-form">
+<?php
+	echo $this->headTitle($this->translate("Add Internal Login"));
+	$this->inlineScript()->appendFile($this->basePath('js/custom/register.js', 'text/javascript'));
+?>
+	<h3 class="text-center"><?php echo $this->translate("Add Internal Login"); ?></h3>
+	<?php
+	if(!empty($successMessage)) {
+	?>
+		<div class="alert alert-success">
+			<?php echo $successMessage; ?>
+		</div>
+	<?php
+	} else {
+		if(!empty($errorMessage)) {
+	?>
+			<div class="alert alert-danger">
+				<?php echo $errorMessage; ?>
+			</div>
+	<?php
+		}
+		if (isset($form)) {
+			$form->prepare();
+			echo $this->form()->openTag($form);
+			echo $this->formHidden($form->get('user_id'));
+			echo $this->tbFormRow($form->get('email'));
+			echo $this->tbFormRow($form->get('email_confirm'));
+			echo $this->tbFormRow($form->get('password'));
+			echo $this->tbFormRow($form->get('password_confirm'));
+			?>
+			<div class="control-group">
+				<label class="control-label"></label>
+				<div class="controls">
+					<?php echo $this->formSubmit($form->get('submit')); ?>
+				</div>
+			</div>
+			<?php echo $this->form()->closeTag(); ?>
+		<?php
+			}
+		} ?>
+</div>

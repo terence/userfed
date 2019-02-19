@@ -1,0 +1,48 @@
+<div>
+	<h2><?php echo $this->translate("Register page"); ?></h2>
+	<div>
+		<div class="span8">
+			<?php if($successMessage) : ?>
+				<div class="alert alert-success">
+					<?php echo $successMessage; ?>
+				</div>
+			<?php else : ?>
+				<?php $this->inlineScript()->appendFile($this->basePath('js/custom/register.js', 'text/javascript')); ?>
+				<?php if($errorMessage) : ?>
+					<div class="alert alert-danger">
+						<?php echo $errorMessage; ?>
+					</div>
+				<?php endif; ?>
+				<div class='form-horizontal'>
+					<?php
+					$form->prepare();
+					echo $this->form()->openTag($form);
+					echo $this->formHidden($form->get('userId'));
+					echo $this->tbFormRow($form->get('firstname'));
+					echo $this->tbFormRow($form->get('lastname'));
+					echo $this->tbFormRow($form->get('email'));
+					echo $this->tbFormRow($form->get('emailConfirm'));
+					echo $this->tbFormRow($form->get('password'));
+					echo $this->tbFormRow($form->get('passwordConfirm'));
+					?>
+					<div class="control-group">
+						<label class="control-label"></label>
+						<div class="controls">
+							<?php echo $this->formSubmit($form->get('submit')); ?>
+						</div>
+					</div>
+					<?php echo $this->form()->closeTag(); ?>
+				</div>	
+			<?php endif; ?>
+		</div>
+		<div class="span4">
+			<div>
+				<span>Or register with</span><br/>
+				<a class="btn btn-facebook" href="/oauth/register/facebook"><i class="icon-facebook"></i>&nbsp;<?php echo $this->translate('Facebook') ?></a> &nbsp;
+				<a class="btn btn-goolge-plus" href="/oauth/register/google"><i class="icon-google-plus"></i>&nbsp;<?php echo $this->translate('Google') ?></a>
+			</div>
+
+		</div>
+	</div>
+
+</div>

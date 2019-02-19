@@ -1,0 +1,53 @@
+<?php echo $this->headTitle('User Log'); ?>
+<?php echo $this->message($this); ?>
+<?php
+echo $this->partial('ht-admin/user/partial/tab-navigator.phtml', array(
+    'activeTab' => 4,
+    'user' => $user
+));
+?>
+<?php if ($count > 0) { ?>
+<table class="table table-hover borderless">
+	<tr>
+		<th><?php echo $this->translate('Ip'); ?></th>
+		<th><?php echo $this->translate('Time'); ?></th>
+		<th><?php echo $this->translate('Event'); ?></th>
+		<th><?php echo $this->translate('Message'); ?></th>
+	</tr>
+	<?php foreach ($userLogs as $log ) {
+     /* @var $log HtApplication\Model\Log */
+        $isTypeError = $log->isTypeError();
+        if (!$isTypeError) { ?>
+    <tr class="success">
+	<?php } else { ?>
+	<tr class="alert-danger">
+	<?php } ?>
+		<td>
+			<?php echo $this->escapeHtml($log->getIpAddress()); ?>
+		</td>
+		<td>
+			<?php echo $this->escapeHtml($log->getTime());?>
+		</td>
+		<td>
+            <a href="<?php echo $this->url('admin/user/log/details', array('userId' => $user->getUserId(), 'id' => $log->getLogId())); ?>">
+                <?php echo $this->escapeHtml($log->getTypeName());?>
+            </a>
+		</td>
+		<td>
+            <a href="<?php echo $this->url('admin/user/log/details', array('userId' => $user->getUserId(), 'id' => $log->getLogId())); ?>">
+                <?php echo $this->escapeHtml($log->getMessage()); ?>
+            </a>
+		</td>
+	</tr>
+	<?php } ?>
+</table>
+<?php echo $this->paginationControl($this->paginator,
+                                    'Sliding',
+                                    'partial/pagination-control', array('route' => null)); ?>
+<?php } else { ?>
+<div class="alert alert-info">
+	<p class="text-center">
+		<?php echo $this->translate('No activity found.'); ?>
+	</p>
+</div>
+<?php } ?>

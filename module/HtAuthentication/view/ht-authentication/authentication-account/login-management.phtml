@@ -1,0 +1,112 @@
+<?php
+use HtAuthentication\Model\AuthenticationAccount;
+echo $this->headTitle($this->translate('Identity'));
+?>
+<?php echo $this->message($this); ?>
+<h3><?php echo $this->translate('Identity');?></h3>
+<div class="row-fluid">
+	<?php if (!$hasInternalLogin) { ?>
+	<a href="<?php echo $this->basePath($this->url('internal', array('action' => 'add'))); ?>" class="btn btn-link">
+		<i class="icon-plus"></i> <?php echo $this->translate('Add internal login'); ?>
+	</a>
+	<span><?php echo $this->translate('Or add login with'); ?></span>
+	<?php } else {?>
+	<span><?php echo $this->translate('Add login with'); ?></span>
+	<?php } ?>
+	<a class="btn btn-link" href="<?php echo $this->url('oauth', array('action' => 'add-login', 'provider' => 'facebook')); ?>"><i class="fa fa-facebook-square"></i>&nbsp;<?php echo $this->translate('Facebook') ?></a> &nbsp;
+	<a class="btn btn-link" href="<?php echo $this->url('oauth', array('action' => 'add-login', 'provider' => 'google')); ?>"><i class="fa fa-google-plus-square"></i>&nbsp;<?php echo $this->translate('Google') ?></a>
+</div>
+<br />
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th><?php echo $this->translate('Provider'); ?></th>
+			<th><?php echo $this->translate('Email / Image'); ?></th>
+			<!--<th><?php echo $this->translate('Images'); ?></th>-->
+			<th><?php echo $this->translate('Action'); ?></th>
+		</tr>
+		<?php if ($totalLogins > 0) { ?>
+		<?php foreach ($logins as $login) { ?>
+		<tr>
+			<td>
+				<?php
+				if ($login->type == AuthenticationAccount::TYPE_INTERNAL) {
+					echo $this->translate('Internal');
+				} elseif ($login->type == AuthenticationAccount::TYPE_OAUTH) {
+					echo ucfirst($login->provider);
+				}
+				?>
+			</td>
+			<td>
+				<?php
+					if ($login->type == AuthenticationAccount::TYPE_INTERNAL) {
+						echo $login->username;
+					} elseif ($login->type == AuthenticationAccount::TYPE_OAUTH) {
+						if ($login->provider == 'facebook') {
+							echo "<img src='https://graph.facebook.com/" . $login->provider_user_id . "/picture'>";
+						} elseif ($login->provider == 'google') {
+                            echo '<img data-google-id="' . $login->provider_user_id . '"/>';
+						}
+					}
+				?>
+			</td>
+			<td>
+				<?php if ($totalLogins > 1) {
+					$url = '';
+					$linkChangePassword = '';
+					$isCurrentAccount = false;
+					if ($login->type == AuthenticationAccount::TYPE_INTERNAL) {
+						$linkChangePassword = '<a href="' . $this->basePath('/internal/update') . '" class="btn btn-link">'
+								. $this->translate('Change password') . '</a>';
+						if ($identity->authenticationProvider != AuthenticationAccount::TYPE_INTERNAL) {
+							$url = $this->url('internal', array('action' => 'delete'));
+						} else {
+							$isCurrentAccount = true;
+						}
+					} elseif ($login->type == AuthenticationAccount::TYPE_OAUTH) {
+						if (($login->provider != $identity->authenticationProvider) || ($login->provider_user_id != $identity->oauthProviderId)) {
+							$url = $this->url('oauth', array('action' => 'delete-login', 'provider' => $login->id));
+						} elseif (($login->provider == $identity->authenticationProvider) || ($login->provider_user_id == $identity->oauthProviderId)) {
+							$isCurrentAccount = true;
+						}
+					}
+					?>
+					<?php
+					echo $linkChangePassword;
+					if (!empty($url)) {
+					?>
+					<a href="<?php echo $url; ?>">
+						<i class="fa fa-times icon-remove"></i>&nbsp;<?php echo $this->translate('Delete'); ?>
+					</a>
+					<?php
+					} elseif ($isCurrentAccount) {
+						if (!empty($linkChangePassword)) {
+							echo '<br />';
+						}
+						?>
+					<em>
+					<?php
+						echo $this->translate('You can not delete current logged in account. <br/>'
+								. 'To delete this account, please logout first and login using other account.');
+					?>
+					</em>
+					<?php } ?>
+				<?php } else {
+					if ($login->type == AuthenticationAccount::TYPE_INTERNAL) {
+						echo '<a href="' . $this->basePath('/internal/update') . '" class="btn btn-link">'
+										. $this->translate('Change password') . '</a>';
+					}
+				} ?>
+			</td>
+		</tr>
+		<?php } ?>
+		<?php } ?>
+	</thead>
+</table>
+<?php echo $this->paginationControl($this->paginator,
+                                    'Sliding',
+                                    'partial/pagination-control', array('route' => null)); ?>
+<?php
+$this->inlineScript()->appendFile($this->basePath('js/custom/google-profile-image.js'));
+?>

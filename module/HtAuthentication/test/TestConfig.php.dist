@@ -1,0 +1,21 @@
+<?php
+
+return array(
+	'modules' => array(
+		"AppCore",
+		'ReverseOAuth2',
+		"HtApplication",
+		"HtUser",
+		"HtAuthentication",
+		"HtAdmin",
+	),
+	'module_listener_options' => array(
+		'config_glob_paths' => array(
+			'../../../config/autoload/{,*.}{global,testing,local}.php',
+		),
+		'module_paths' => array(
+			'module',
+			'vendor',
+		),
+	),
+);

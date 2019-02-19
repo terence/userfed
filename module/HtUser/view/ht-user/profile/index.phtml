@@ -1,0 +1,23 @@
+<?php $this->headTitle($this->translate('Profile')); ?>
+<h3><?php echo $this->translate('Profile'); ?></h3>
+<?php
+$name = trim($user->getFirstName() . ' ' . $user->getLastName());
+if (!empty($name)) {
+	?>
+<p>
+<?php
+	echo sprintf($this->translate('Name: %s'), $this->escapeHtml($name));
+?>
+</p>
+<?php
+}
+if ($user->getEmail()) {
+?>
+<p>
+	<?php
+		echo sprintf($this->translate('Email: %s'), $user->getEmail());
+	?>
+	<?php
+	}
+	?>
+</p>

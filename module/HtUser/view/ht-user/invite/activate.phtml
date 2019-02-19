@@ -1,0 +1,65 @@
+<?php $this->inlineScript()->appendFile($this->basePath('js/custom/activate.js', 'text/javascript')); ?>
+<div class="form-register">
+	<?php if (isset($errorActivateCode)) { ?>
+		<div class="alert alert-danger">
+			<?php echo $errorMessage; ?>
+		</div>
+	<?php if (!empty($helpText)) { ?>
+	<div class="help-block text-center">
+		<?php echo $helpText; ?>
+	</div>
+	<br />
+	<?php }
+	?>
+	<?php } else { ?>
+	<?php echo $this->headTitle(sprintf($this->translate("%s - Register an account"), $invitedAppication)); ?>
+	<h2><?php echo sprintf($this->translate("%s - Register an account"), $invitedAppication); ?></h2>
+	<div>
+		<div class="span8">
+			<?php if(!empty($successMessage)) { ?>
+				<div class="alert alert-success">
+					<?php echo $successMessage; ?>
+				</div>
+			<?php } else { ?>
+				<?php if(!empty($errorMessage)) { ?>
+					<div class="alert alert-danger">
+						<?php echo $errorMessage; ?>
+					</div>
+				<?php } ?>
+			<?php if (isset($form)) { ?>
+					<?php
+					$form->prepare();
+					echo $this->form()->openTag($form);
+					echo $this->tbFormRow($form->get('firstname'));
+					echo $this->tbFormRow($form->get('lastname'));
+					?>
+					<div class="form-group has-feedback">
+						<p><?php echo $this->translate('Email:'); ?></p>
+						<input class="form-control" type="email" readonly="readonly" disabled="disabled" value="<?php echo $email; ?>"/>
+						<!--<span class="fa fa-asterisk form-control-feedback" style="color:red;"></span>-->
+						<span class="help-block">
+						<?php echo $this->translate("Use this email for login later."); ?>
+					</span>
+					</div>
+					
+					<?php
+					echo $this->tbFormRow($form->get('password'));
+					echo $this->tbFormRow($form->get('password_confirm'));
+					echo $this->formSubmit($form->get('submit'));
+					echo $this->form()->closeTag(); ?>
+			<?php } ?>
+			<?php } ?>
+		</div>
+		<div class="separator">
+			<h3><?php echo $this->translate('Or')?></h3>
+		</div>
+		<div style="width: 100%;" class="btn-group">
+			<!--<span><?php //echo $this->translate('Or register with'); ?></span><br/>-->
+			<a class="btn btn-default" href="<?php echo $this->url('oauth-invite-register', array('provider' => 'facebook')) . '?invite-code=' . $code; ?>">
+				<i style="color: #428bca;" class="fa fa-facebook-square fa-lg"></i>&nbsp; <?php echo $this->translate('With Facebook') ?></a>
+			<a style="float: right;" class="btn btn-default" href="<?php echo $this->url('oauth-invite-register', array('provider' => 'google')) . '?invite-code=' . $code; ?>">
+				<i style="color: red;" class="fa fa-google-plus-square fa-lg"></i>&nbsp; <?php echo $this->translate('With Google') ?> &nbsp;</a>
+		</div>
+	</div>
+	<?php } ?>
+</div>

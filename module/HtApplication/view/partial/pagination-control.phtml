@@ -1,0 +1,64 @@
+<?php
+	$url = $this->serverUrl() . getenv("REQUEST_URI");
+	$pageString = "page=";
+	$pos = strpos($url, $pageString);
+	if ($pos === false) {
+		$questionPos = strpos($url, "?");
+		if ($questionPos === false) {
+			$url .= "?page=1";
+		} else {
+			$url .= "&page=1";
+		}
+	}
+	$pageNumber = 1;
+	if ($pos !== false) {
+		$pageNumber = "";
+		$pos = $pos + strlen($pageString);
+		while (is_numeric(substr($url, $pos, 1))) {
+			$pageNumber .= substr($url, $pos, 1);
+			$pos++;
+		}
+// 		if ($pos != strlen($url) && substr($url, $pos, 1) != "&") {
+// 			echo $this->translate("Invalid page number");
+// 		}
+		$pageNumber = (int) $pageNumber;
+	}
+?>
+<?php if ($this->pageCount) { ?>
+	<ul class="pagination pull-right">
+		<!-- Previous page link -->
+		<?php if (isset($this->previous)) { ?>
+			<li>
+				<a class="previous" href="<?php echo str_replace("page=$pageNumber", "page=$this->previous", $url); //$this->url($this->route, array('page' => $this->previous));  ?>">
+					<?php echo $this->translate('Previous'); ?>
+				</a>
+			</li>
+		<?php } else { ?>
+			<li class="disabled"><a><?php echo $this->translate('Previous'); ?></a></li>
+		<?php } ?>
+
+		<!-- Numbered page links -->
+		<?php foreach ($this->pagesInRange as $page) { ?>
+			<?php if ($page != $this->current) { ?>
+				<li>
+					<a href="<?php echo str_replace("page=$pageNumber", "page=$page", $url); //$this->url($this->route, array('page' => $page));  ?>">
+						<?php echo $page; ?>
+					</a>
+				</li>
+			<?php } else { ?>
+				<li class="active"><a><?php echo $page; ?></a></li>
+			<?php } ?>
+		<?php } ?>
+
+		<!-- Next page link -->
+		<?php if (isset($this->next)) { ?>
+			<li class="next" >
+				<a href="<?php echo str_replace("page=$pageNumber", "page=$this->next", $url); //$this->url($this->route, array('page' => $this->next));  ?>">
+					<?php echo $this->translate('Next'); ?>
+				</a>
+			</li>
+		<?php } else { ?>
+			<li class="disabled"><a><?php echo $this->translate('Next'); ?></a></li>
+			<?php } ?>
+	</ul>
+<?php } ?>

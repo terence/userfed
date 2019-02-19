@@ -1,0 +1,76 @@
+<style>
+    .gridStyle {
+        width: 100%; 
+        height: 600px;
+        position: relative;
+        background: transparent;
+        margin-top:10px;
+    }
+    .loading-overlay {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background: rgba(234, 234, 234, 0.5);
+        z-index:2;
+    }
+    .loading-overlay .loading-message {
+        color: black;
+        font-weight: bold;
+        position: absolute;
+        top:50%;
+        left:50%;
+        margin-top:-10px;
+        margin-left:-34px;
+    }
+    .cell, .ngHeaderText {
+        display:table-cell;
+        vertical-align:middle;
+    }
+    .ngHeaderText {
+        height:45px;
+    }
+    // remove grid border
+    .ngVerticalBarVisible {
+        width: 0 !important;
+    }
+    .btn-link {
+        padding-left:0;
+        padding-right:0;
+    }
+</style>
+<?php $this->headTitle($this->translate('User')); ?>
+<div class="listing-page">
+    <div ng-view></div>
+</div>
+<?php
+$this->headLink()->appendStylesheet($this->basePath('lib/ng-grid/ng-grid.min.css'));
+
+$this->inlineScript()->appendFile($this->basePath('lib/angular/angular.min.js'));
+$this->inlineScript()->appendFile($this->basePath('lib/angular-route/angular-route.min.js'));
+$this->inlineScript()->appendFile($this->basePath('lib/ng-grid/build/ng-grid.min.js'));
+$this->inlineScript()->appendFile($this->basePath('lib/angular-bootstrap/ui-bootstrap-tpls.min.js'));
+$this->inlineScript()->appendFile($this->basePath('js/custom-angularjs/services/AbortableRequestService.js'));
+$this->inlineScript()->appendFile($this->basePath('js/custom-angularjs/user-app.js'));
+$this->inlineScript()->appendFile($this->basePath('js/custom-angularjs/controllers/admin/user/GridController.js'));
+$this->inlineScript()->appendFile($this->basePath('js/custom-angularjs/controllers/admin/user/EditController.js'));
+$this->inlineScript()->appendFile($this->basePath('js/custom-angularjs/controllers/admin/user/GeneralInfoController.js'));
+
+$editUrl = $this->url('admin/user/default', array('action' => 'edit'));
+$userAppUrl = $this->url('admin/user/app', array());
+$userOrgUrl = $this->url('admin/user/org', array());
+$userLogUrl = $this->url('admin/user/log', array());
+
+$this->inlineScript()->appendScript(<<<EOT
+var actionUrls = {
+    edit: '$editUrl',
+    userApp: '$userAppUrl',
+    userOrg: '$userOrgUrl',
+    userLog: '$userLogUrl',
+    list: "/admin/user/list",
+    delete: '/admin/user/delete-multiple',
+    restore: '/admin/user/restore-multiple'
+};
+EOT
+);

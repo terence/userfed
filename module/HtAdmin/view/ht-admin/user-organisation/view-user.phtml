@@ -1,0 +1,81 @@
+<?php /* @var $user \HtUser\Model\User */
+$this->headTitle(' User\'s Organisation');
+echo $this->message($this);
+$disabled = $user->getIsDeleted() ? 'disabled="disabled"' : '';
+?>
+<script type="text/javascript">
+var userId = "<?php echo $user->getUserId(); ?>";
+</script>
+<?php
+echo $this->partial('ht-admin/user/partial/tab-navigator', array(
+    'activeTab' => 2,
+    'user' => $user,
+));
+?>
+<!-- show list application user allow access -->
+<div class="tab-content">
+    <form class="form-inline" role="form" method="post" action="<?php echo $this->url('admin/user-organisation', array('action' => 'add-org', 'id' => $user->getUserId())); ?>">
+        <table class="table borderless">
+            <tbody>
+                <tr>
+                    <td>
+                        <input name="organisation_id" placeholder="<?php echo $this->translate('Organisation title'); ?>"/>
+                    </td>
+                    <td>
+                        <i class="fa fa-spinner fa-spin" id="icon-loading" style="display:none;"></i>
+                    </td>
+                    <td class="text-center">
+                        <button type="submit" class="btn btn-link" id="save-btn">
+                            <i class="fa fa-plus-circle fa-lg icon-add"></i>
+                            <?php //echo $this->translate('Save'); ?>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+	<!--</div>-->
+	<?php if ($userOrgs->count() > 0)  { ?>
+	<table class="table table-striped">
+		<tr>
+			<th><?php echo $this->translate('Name'); ?></th>
+			<th></th>
+		</tr>
+		<?php foreach ($userOrgs as $org ) { ?>
+		<tr>
+			<td>
+				<?php echo $this->escapeHtml($org->title); ?>
+			</td>
+			<td class="text-center">
+				<a href="<?php echo $this->url('admin/user-organisation', array('action' => 'delete-org', 'id' => $org->user_organisation_id)); ?>"
+				   class="delete-application btn-link btn">
+					<i class="fa fa-times fa-lg icon-remove"></i> <?php //echo $this->translate('Remove'); ?>
+				</a>
+				</td>
+		</tr>
+		<?php } ?>
+	</table>
+	<?php echo $this->paginationControl($paginator, 'Sliding', 'partial/pagination-control', array('route' => null));
+	} else { ?>
+	<table class="table table-striped">
+		<tbody>
+			<tr>
+				<td class="text-center">
+					<?php echo $this->translate('No organisation found'); ?>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<?php } ?>
+</div>
+<?php
+$this->inlineScript()->appendFile($this->basePath('js/custom/server.js'), 'text/javascript')
+		->appendFile($this->basePath('js/custom/user-add-org.js'), 'text/javascript');
+$this->inlineScript()->appendScript(<<<END
+	$(document).ready(function () {
+		handleLoadOrg();
+	});
+END
+);
+?>
+

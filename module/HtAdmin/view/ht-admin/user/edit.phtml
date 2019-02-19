@@ -1,0 +1,100 @@
+<div class="edit-page">
+<?php
+    $userId = $user->getUserId();
+	echo $this->partial('ht-admin/user/partial/tab-navigator.phtml', array(
+        'activeTab' => 1,
+        'user' => $user,
+    ));
+?>
+<div class="tab-content">
+	<div class="row">
+		<div class="col-md-4 col-md-offset-2 right-border">
+			<?php if($successMessage) { ?>
+				<div class="alert alert-success">
+					<?php echo $successMessage; ?>
+				</div>
+			<?php  } else {
+				$this->inlineScript()->appendFile($this->basePath('js/custom/register.js'), 'text/javascript')
+						->appendFile($this->basePath('js/custom/edit-user.js'), 'text/javascript');
+				if($errorMessage) { ?>
+					<div class="alert alert-danger">
+						<?php echo $errorMessage; ?>
+					</div>
+				<?php }
+					$form->prepare();
+					echo $this->form()->openTag($form);
+					echo $this->formHidden($form->get('user_id'));
+					echo $this->tbFormRow($form->get('firstname'));
+					echo $this->tbFormRow($form->get('lastname'));
+					echo $this->tbFormRow($form->get('email'));
+					?>
+					<div class="control-group">
+						<div class="controls">
+							<p class="checkbox">
+								<?php echo $this->formElement($form->get('is_enabled')); ?>
+								<?php echo $form->get('is_enabled')->getLabel(); ?>
+							</p>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label"></label>
+						<div class="controls">
+							<?php echo $this->formSubmit($form->get('submit')); ?>
+							<a class="btn" href="<?php echo $this->url(null, array('action' => 'index')); ?>">
+								<?php echo $this->translate('Cancel'); ?>
+							</a>
+						</div>
+					</div>
+					<?php echo $this->form()->closeTag();
+					} ?>
+		</div>
+		<div class="col-md-6 user-action-group">
+			<?php if ($showGeneratePassword && !$user->getIsDeleted()) {?>
+			<p>
+				<a id="btn-generate-password"
+				   data-href="<?php echo $this->url(null, array('action' => 'generate-password', 'id' => $userId)) ?>"
+				   class="btn btn-link">
+					<?php echo $this->translate('Generate password'); ?>
+				</a>
+				<i class="fa fa-spin fa-spinner" id="generate-password-loading" style="display: none;"></i>
+			</p>
+			<?php }
+				if (!$user->getIsDeleted()) {
+				?>
+				<p>
+					<a href="<?php echo $this->url(null, array('action' => 'delete', 'id' => $userId)); ?>"
+					   class="btn btn-link"
+					   data-confirm-message="<?php echo $this->translate('Are you sure you want to delete this user?'); ?>">
+						<?php echo $this->translate('Delete'); ?>
+					</a>
+				</p>
+				<hr>
+			<?php
+			}  else {
+			?>
+				<p>
+					<a href="<?php echo $this->url(null, array('action' => 'restore', 'id' => $userId)); ?>"
+					   class="btn btn-link"
+					   title="<?php echo $this->translate('Restore this user'); ?>"
+					   >
+						<i class="fa fa-repeat"></i> <?php echo $this->translate('Restore');?>
+					</a>
+				</p>	
+			<?php } ?>
+			<a href="<?php echo $this->url(null, array('action' => 'permanently-delete', 'id' => $userId)); ?>" 
+			   class="btn btn-danger btn-permanently-delete"
+			   data-confirm-message="<?php echo $this->translate('Are you sure you want to permanently delete this user?'
+						. '<br />You will not be able to undo this action.'); ?>">
+				<?php echo $this->translate('Permanently Delete'); ?>
+			</a>
+		</div>
+	</div>
+	<!-- Modal -->
+	<?php
+	echo $this->partial('partial/confirm-modal', array(
+				'title' => $this->translate('Delete user')
+		));
+	?>
+	<!-- end Modal -->
+</div>
+</div><!-- end edit-page -->

@@ -1,0 +1,19 @@
+<div class="create-form">
+<?php echo $this->headTitle($this->translate('Create organisation')); ?>
+	<h3 class="text-center"><?php echo $this->translate("Create organisation"); ?></h3>
+	<?php
+	$form->prepare();
+	echo $this->form()->openTag($form);
+	echo $this->tbFormRow($form->get('title'));
+	echo $this->tbFormRow($form->get('description'));
+	echo $this->tbFormRow($form->get('domain'));
+	?>
+	<div class="control-group">
+		<label class="control-label"></label>
+		<div class="controls">
+			<?php echo $this->formSubmit($form->get('submit'));?>
+			<a class="btn" href="<?php echo $this->url('admin/org');?>"><?php echo $this->translate('Cancel'); ?></a>
+		</div>
+	</div>
+	<?php echo $this->form()->closeTag(); ?>
+</div>

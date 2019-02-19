@@ -1,0 +1,46 @@
+<?php echo $this->doctype(); ?>
+<html lang="en" ng-app="App">
+	<head>
+		<?php echo $this->headTitle(); ?>
+		<meta charset="utf-8">
+		<?php
+			echo $this->headLink()
+				->appendStylesheet($this->basePath('css/bootstrap.form.min.css'))
+				->appendStylesheet($this->basePath('lib/bootstrap/dist/css/bootstrap.min.css'))
+				->appendStylesheet($this->basePath('lib/fontawesome/css/font-awesome.min.css'))
+				->appendStylesheet($this->basePath('css/style.min.css'));
+
+			echo $this->headScript();
+		?>
+	</head>
+	<body>
+		<!-- main -->
+		<div class="layout-plain">
+			<header class="text-center">
+				<a href="<?php echo $this->url('home'); ?>">
+					<img src="<?php echo $this->basePath('image/logo/logo.png'); ?>" title="<?php echo $this->translate('User Federation');?>" alt="<?php echo $this->translate('User Federation');?>">
+				</a>
+			</header>
+			<div class="row">
+				<?php echo $this->content; ?>
+			</div>
+			<?php echo $this->partial("layout/footer.phtml"); ?>
+		</div>
+		<?php
+		$this->inlineScript()
+
+			->prependFile($this->basePath('js/appcore.js'))
+			->prependFile($this->basePath('js/custom/common.js'))
+
+			->prependFile($this->basePath('lib/bootstrap/js/dropdown.js'))
+			->prependFile($this->basePath('lib/bootstrap/js/tab.js'))
+			->prependFile($this->basePath('lib/bootstrap/js/alert.js'))
+			->prependFile($this->basePath('lib/bootstrap/js/modal.js'))
+
+			->prependFile($this->basePath('lib/jquery-validation/dist/jquery.validate.min.js'))
+			->prependFile($this->basePath('lib/jquery/dist/jquery.min.js'));
+
+		echo $this->inlineScript();
+		?>
+	</body>
+</html>

@@ -1,0 +1,84 @@
+<?php
+$this->headTitle($this->translate('Application Management'));
+?>
+<div class="listing-page">
+<?php echo $this->message($this); ?>
+<?php echo $this->partial('ht-admin/partial/head-management-page.phtml', array(
+	'createBtnUrl' => $this->url('admin/app/common', array('action' => 'create')),
+	'createBtnLabel' => $this->translate('Create application'),
+	'titlePage' => $this->translate('Application'),
+	'filterForm' => $filterForm,
+));?>
+<!-- Modal -->
+<?php
+echo $this->partial('partial/confirm-modal', array('title' => $this->translate('Delete Application')));
+?>
+<!-- end Modal -->
+
+<table class="table table-striped">
+	<tbody>
+		<?php
+			/* @var $app \HtAuthentication\Model\Application */
+			foreach ($applications as $app) {
+                $message = sprintf(
+                        $this->translate('Are you sure you want to delete <b>%s</b>?'
+						. '<br />You will not be able to undo this action.'),
+                        $this->escapeHtmlAttr($app->getTitle())
+                        );
+				$appId = $app->getApplicationId();
+		?>
+			<tr>
+				<td>
+					<a href="<?php echo $this->url('admin/app/common', array('action' => 'edit', 'id' => $appId)); ?>">
+						<?php echo $this->escapeHtml($app->getTitle()); ?>
+					</a>
+				</td>
+				<td>
+					<a href="<?php echo $this->url('admin/app/user', array('id' => $appId)); ?>">
+						<i class="fa fa-group fa-lg"></i>&nbsp;
+						<?php
+						if (!empty($countUsers[$appId])) {
+							if ($countUsers[$appId] > 1) {
+								echo sprintf($this->translate("%s users"), $countUsers[$appId]);
+							} else {
+								echo sprintf($this->translate("%s user"), $countUsers[$appId]);
+							}
+						} else {
+							echo $this->translate('add user');
+						}
+						?>
+					</a>
+				</td>
+				<td>
+					<a href="<?php echo $this->url('admin/app/org', array('id' => $appId)); ?>">
+						<i class="fa fa-sitemap fa-lg"></i>&nbsp;
+					<?php
+						if (!empty($countOrgs[$appId])) {
+							if ($countOrgs[$appId] > 1) {
+								echo sprintf($this->translate("%s orgs"), $countOrgs[$appId]);
+							} else {
+								echo sprintf($this->translate("%s org"), $countOrgs[$appId]);
+							}
+						} else {
+							echo $this->translate('add org');
+						}
+					?>
+					</a>
+				</td>
+				<td class="text-center">
+					<a data-confirm-message="<?php echo $message;?>"
+					   href="<?php echo $this->url('admin/app/common', array('action' => 'delete', 'id' => $appId)); ?>"
+					   title="<?php echo $this->translate('Delete this application'); ?>">
+						<i class="fa fa-times fa-lg icon-remove"></i>
+					</a>
+				</td>
+			</tr>
+		<?php } ?>
+	</tbody>
+</table>
+
+<?php echo $this->paginationControl($this->paginator,
+                                    'Sliding',
+                                    'partial/pagination-control', array('route' => null)); ?>
+
+</div>

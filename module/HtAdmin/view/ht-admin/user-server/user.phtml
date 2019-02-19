@@ -1,0 +1,47 @@
+<?php
+$this->headTitle($server->getTitle());
+echo $this->message($this);
+?>
+<h3 class="text-center"><?php echo $this->escapeHtml($server->getTitle()); ?></h3>
+<?php
+echo $this->partial('ht-admin/server/partial/tab-navigator', array('serverId' => $server->getServerId(), 'activeTab' => 3));
+?>
+<?php if ($totalUsers > 0) { ?>
+    <!-- Modal -->
+    <?php
+    echo $this->partial('partial/confirm-modal', array(
+        'title' => $this->translate('Delete user'),
+        'message' => $this->translate('Are you sure you want to delete <b>%replace_string%</b>?'
+                . '<br />You will not be able to undo this action.'),
+    ));
+    ?>
+    <!-- end Modal -->
+    <table class="table table-striped">
+        <tbody>
+            <?php
+            foreach ($users as $user) {
+                $name = trim($user->firstname . ' ' . $user->lastname);
+                if (empty($name)) {
+                    $name = $user->email;
+                }
+                ?>
+                <tr>
+                    <td>
+                        <?php echo $this->escapeHtml($name); ?>
+                    </td>
+                </tr>
+            <?php } ?>
+        </tbody>
+    </table>
+    <?php
+    echo $this->paginationControl($this->paginator, 'Sliding', 'partial/pagination-control', array('route' => null));
+} else {
+    ?>
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <td class="text-center"><?php echo $this->translate('No user found.'); ?></td>
+            </tr>
+        </tbody>
+    </table>
+<?php } ?>

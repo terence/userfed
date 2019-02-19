@@ -1,0 +1,21 @@
+<?php
+echo $this->partial('partial/tab', array('tabs' => array(
+	array(
+		'name' => $this->translate('General Info'),
+		'url' => $this->url('admin/server/common', 
+				array('action' => 'edit', 'id' => $serverId)
+				),
+		'isActive' => ($activeTab == 1)
+	),
+	array(
+		'name' => $this->translate('Organisation'),
+		'url' => $this->url('admin/server/org', array('id' => $serverId)),
+		'isActive' => ($activeTab == 2)
+	),
+	array(
+		'name' => $this->translate('Users'),
+		'url' => $this->url('admin/server/user', array('id' => $serverId)),
+		'isActive' => ($activeTab == 3)
+	)
+)));
+?>

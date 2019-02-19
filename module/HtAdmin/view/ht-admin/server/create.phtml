@@ -1,0 +1,25 @@
+<div class="create-form">
+    <?php
+    $this->headTitle($this->translate('Create server'));
+    ?>
+    <h3 class="text-center"><?php echo $this->translate("Create server"); ?></h3>
+    <?php
+    $form->prepare();
+    echo $this->form()->openTag($form);
+    echo $this->tbFormRow($form->get('title'));
+    echo $this->tbFormRow($form->get('description'));
+    echo $this->tbFormRow($form->get('ip'));
+    echo $this->tbFormRow($form->get('location'));
+    echo $this->tbFormRow($form->get('status'));
+    echo $this->tbFormRow($form->get('domain'));
+    ?>
+    <div class="control-group">
+        <label class="control-label"></label>
+        <div class="controls">
+            <?php echo $this->formSubmit($form->get('submit')); ?>
+            <a class="btn" href="<?php echo $this->url('admin/server'); ?>"><?php echo $this->translate('Cancel'); ?></a>
+        </div>
+    </div>
+    <?php echo $this->form()->closeTag(); ?>
+</div>
+<?php $this->inlineScript()->appendFile($this->basePath('js/custom/create-server.js')); ?>

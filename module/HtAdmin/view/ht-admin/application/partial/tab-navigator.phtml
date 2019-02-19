@@ -1,0 +1,24 @@
+<?php
+
+echo $this->partial('partial/tab', array('tabs' => array(
+	array(
+		'name' => $this->translate('General Info'),
+		'url' => $this->url('admin/app/common', array('action' => 'edit', 'id' => $appId)),
+		'isActive' => ($activeTab == 1),
+	),
+	array(
+		'name' => $this->translate('Organisation'),
+		'url' => $this->url('admin/app/org', array('id' => $appId)),
+		'isActive' => ($activeTab == 2),
+	),
+	array(
+		'name' => $this->translate('Users'),
+		'url' => $this->url('admin/app/user', array('id' => $appId)),
+		'isActive' => ($activeTab == 3),
+	),
+	array(
+		'name' => $this->translate('Server'),
+		'url' => $this->url('admin/app/server', array('id' => $appId)),
+		'isActive' => ($activeTab == 4),
+	)
+)));
